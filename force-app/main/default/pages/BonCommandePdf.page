@@ -1,0 +1,413 @@
+<!--
+  @description       : 
+  @author            : Ajay.Kumar Tiwari
+  @group             : 
+  @last modified on  : 01-27-2022
+  @last modified by  : Ajay.Kumar Tiwari
+-->
+<apex:page applyHtmlTag="false" showHeader="false" cache="true" readOnly="false" controller="BonCommandePdfController" renderAs="pdf"
+    action="{!initData}">
+
+    <head>
+        <style>
+            /* Styles go here */
+
+            .page-header {
+                height: 80px;
+            }
+
+            .page-header-space {
+                height: 0px;
+            }
+
+            .page-footer,
+            .page-footer-space {
+                height: 40px;
+                color: rgb(137, 137, 137);
+                text-align: center;
+            }
+
+            .page-footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+
+            .page-headerr {
+                position: fixed;
+                top: 0mm;
+                width: 100%;
+                background: rgb(251, 230, 163);
+            }
+
+            @page {
+                margin: 0mm;
+            }
+
+            body {
+                margin: 0mm;
+                font-family: arial, sans-serif;
+            }
+
+            @bottom-center {
+                content: counter(page) "/" counter(pages);
+            }
+
+            @media print {
+                thead {
+                    display: table-header-group;
+                }
+                tfoot {
+                    display: table-footer-group;
+                }
+
+            }
+
+            .pagenumber:before {
+                content: counter(page);
+            }
+
+            .pagecount:before {
+                content: counter(pages);
+            }
+
+            .page-break {
+                page-break-after: always;
+            }
+
+            th {
+                border-right: 1px solid;
+                text-align: center;
+            }
+
+            .productTable {
+                border-collapse: collapse;
+            }
+
+            .productTable td,
+            th {
+                border: 1px solid black;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .productTable th {
+                background: rgb(208, 208, 208);
+            }
+
+            .emptyTh {
+                width: 70px
+            }
+
+            .categoryTd {
+                border: none !important;
+            }
+
+            .comment {
+                border: 1px solid;
+                border-collapse: collapse;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <apex:repeat value="{!commandes}" var="commande" id="theRepeat">
+            <!--<div class='{!string.cssClass}'> TO BE DEFINED-->
+            <div class='{!commande.cssClass}'>
+                <div class="header" style="text-align: center;background: rgb(251,230,163);height: 100px;width:100%">
+                    <div style="padding-left: 35%; padding-top: 35px; float: left">
+                        <u>
+                            <b style="font-size: 20px">BON DE PREPARATION</b>
+                        </u>
+                        <br/>
+                        <b>Commande n°</b> {!commande.numCommande}
+                    </div>
+                    <!--<div style="float: right">
+                        <apex:image id="theImage" rendered="{!commande.livraison.modeRetrait == 'Livraison'}" value="{!$Resource.livraisonPic}" height="40" style="margin-top: 30px; margin-right: 30px"/>
+                    </div>-->
+                </div>
+
+                <div class="page-footer">
+                    <span class="pagenumber" />/
+                    <span class="pagecount" />
+                </div>
+
+                <table style="padding: 10px; width: 100%">
+                    <thead>
+                        <tr>
+                            <td>
+                                <!--place holder for the fixed-position header-->
+                                <div class="page-header-space"></div>
+                            </td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid black; width: 100%; padding: 20px">
+                                <div style="display: inline; float: left; width: 50%">
+                                    <b>N° client</b> : {!commande.numClient}
+                                    <br/>
+                                    <!--TO BE DEFINED-->
+                                    <b>Raison sociale</b> : {!commande.raisonSociale}
+                                    <br/>
+                                    <b>Montant total TTC</b> : {!commande.montantTotalTTC}€
+                                    <br/>
+                                </div>
+                                <div style="text-align: right;">
+                                    <b>Contact </b>: {!commande.contact}
+                                    <br/>
+                                    <div>
+                                        <b>Paiement </b>:
+                                        <div style="display: inline; float: right">
+                                            <div style="text-align: left">
+                                                <apex:outputField style="display: bloc" rendered="{!commande.paiement=='Carte Bancaire'}" value="{!orderTrueValue.IsReductionOrder}"
+                                                />
+                                                <apex:outputField style="display: bloc" rendered="{!commande.paiement!='Carte Bancaire'}" value="{!orderFalseValue.IsReductionOrder}"
+                                                /> Carte Bancaire
+                                            </div>
+                                            <div style="text-align: left">
+                                                <apex:outputField rendered="{!commande.paiement=='Paiement Différé'}" value="{!orderTrueValue.IsReductionOrder}" />
+                                                <apex:outputField rendered="{!commande.paiement!='Paiement Différé'}" value="{!orderFalseValue.IsReductionOrder}" /> Paiement Différé
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <div style="overflow: hidden;margin-right:13px; margin-left:13px;">
+                    <table style="border-collapse: collapse">
+                        <tr class="comment">
+                            <td class="comment" style="padding: 20px">
+                                <div>
+                                    <b>Commentaires</b> : {!commande.commentaires}
+                                    <br/>
+                                </div>
+                            </td>
+                            <td class="comment" style="width: 50%; min-width: 400px; text-align: center; font-size: 20px">
+                                <b>{!commande.livraison.modeRetrait}</b>
+                                <br/>
+                                <b>{!commande.livraison.dateLivraison} {!commande.livraison.heureDebut}-{!commande.livraison.heureFin}</b>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div style="overflow: hidden;margin-right:13px; margin-left:13px;margin-top:13px; background: rgb(230, 230, 230);">
+                    <div style="padding: 7px;font-size: 16px; text-align: center">
+                        <b>Commande : {!commande.nombreProduits} produit(s) pour {!commande.nombreReferences} référence(s)</b>
+                    </div>
+                    <div>
+                        <table class="rayonsTable" style="width: 100%; padding-left: 10px">
+                            <tbody style="">
+                                <tr style="white-space:nowrap">
+                                    <td>Boucherie
+                                        <br/>
+                                        <apex:repeat first="0" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Fruits et légumes
+                                        <br/>
+                                        <apex:repeat first="1" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Pains et viennoiseries
+                                        <br/>
+                                        <apex:repeat first="2" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Charcuterie Traiteur
+                                        <br/>
+                                        <apex:repeat first="3" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Marée
+                                        <br/>
+                                        <apex:repeat first="4" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                </tr>
+                                <tr style="white-space:nowrap">
+                                    <td class="tdRayonsTable">Saurisserie
+                                        <br/>
+                                        <apex:repeat first="5" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Surgelés
+                                        <br/>
+                                        <apex:repeat first="6" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Epicerie Sucrée
+                                        <br/>
+                                        <apex:repeat first="7" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Epicerie Salée
+                                        <br/>
+                                        <apex:repeat first="8" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Crèmerie
+                                        <br/>
+                                        <apex:repeat first="9" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                </tr>
+                                <tr style="white-space:nowrap">
+                                    <td class="tdRayonsTable">Vins - Champagnes
+                                        <br/>
+                                        <apex:repeat first="10" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Alcools
+                                        <br/>
+                                        <apex:repeat first="11" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Brasserie
+                                        <br/>
+                                        <apex:repeat first="12" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Hygiène droguerie parfumerie
+                                        <br/>
+                                        <apex:repeat first="13" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                    <td class="tdRayonsTable">Bazar
+                                        <br/>
+                                        <apex:repeat first="14" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                </tr>
+                                <tr style="white-space:nowrap">
+                                    <td class="tdRayonsTable">Textile
+                                        <br/>
+                                        <apex:repeat first="15" rows="1" value="{!commande.rayonsSelectionnes}" var="ray">
+                                            <apex:outputField style="display: bloc" value="{!orderTrueValue.IsReductionOrder}" rendered="{!IF(ray.selected,true, false)}"
+                                            />
+                                            <apex:outputField style="display: bloc" value="{!orderFalseValue.IsReductionOrder}" rendered="{!IF(ray.selected,false, true)}"
+                                            />
+                                        </apex:repeat>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="overflow: hidden;margin-right:13px; margin-left:13px;margin-top:13px;">
+                    <table style="width: 100%; padding-left: 30px" class="productTable">
+                        <tbody>
+                            <tr>
+                                <th class="productImage" style="display:{!IF(commande.withProductPicture, 'table-cell','none')}">PHOTO</th>
+                                <!--<th class="productImage">PHOTO</th>-->
+                                <th>Article</th>
+                                <th>IFLS</th>
+                                <th>PRIX HT</th>
+                                <th>QUANTITE</th>
+                                <th class="emptyTh"></th>
+                            </tr>
+
+                            <apex:repeat value="{!commande.orderItems}" var="orderItem">
+                                <tr>
+                                    <td>
+                                        <b>{!orderItem.rayon}</b>
+                                    </td>
+                                    <td style="display:{!IF(commande.withProductPicture, 'table-cell','none')}" class="categoryTd"></td>
+                                    <td class="categoryTd"></td>
+                                    <td class="categoryTd"></td>
+                                    <td class="categoryTd"></td>
+                                    <td></td>
+                                </tr>
+                                <apex:repeat value="{!orderItem.products}" var="prd">
+                                    <!--<tr class="{!prd.classCss}">-->
+                                    <tr class="{!prd.cssClass}" style="background: {!orderItem.backgroundColor}">
+                                        <td style="display:{!IF(commande.withProductPicture, 'table-cell','none')}">
+                                            <apex:image height="60px" value="{!prd.image}" />
+                                        </td>
+                                        <!--<td><apex:image height="60px" value="{!prd.image}"/></td>-->
+                                        <td>
+                                            <span>{!prd.name}</span>
+                                            <br/> {!prd.conditionnement}
+                                        </td>
+                                        <td>{!prd.IFLS}</td>
+                                        <td>{!prd.prixHT}</td>
+                                        <td>{!prd.quantity}</td>
+                                        <td></td>
+                                    </tr>
+                                </apex:repeat>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </apex:repeat>
+    </body>
+</apex:page>

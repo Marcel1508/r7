@@ -1,0 +1,203 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-27-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   12-02-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <!-- Cart Summary Header -->
+    <h2 class="summary-header slds-p-left_small">{labels.cartSummaryHeader}</h2>
+
+    <div class="slds-grid slds-grid_vertical ">
+        <!-- ORIGINAL PRICE INFO -->
+        <!--
+        <lightning-formatted-number
+            if:true={showOriginal}
+            class="original-price slds-p-right_medium slds-text-heading_small"
+            aria-label={ariaLabelForOriginalPrice}
+            format-style="currency"
+            currency-code={currencyCode}
+            currency-display-as="symbol"
+            maximum-fraction-digits="2"
+            value={prices.originalPrice}
+        ></lightning-formatted-number>
+        -->
+   
+    <div
+        class="final-price-container slds-m-bottom_small"
+        aria-live="assertive"
+        aria-atomic="true"
+    >
+        <span class="slds-text-heading_small slds-p-left_small">
+          {labels.totalInStock}
+        </span>
+        <lightning-formatted-number
+            class="slds-p-right_small slds-text-heading_medium"
+            format-style="currency"
+            currency-code={currencyCode}
+            currency-display-as="symbol"
+            maximum-fraction-digits="2"
+            value={prices.productAmountInStock}
+        ></lightning-formatted-number>
+    </div>
+
+    <div
+        class="final-price-container slds-m-bottom_small"
+        aria-live="assertive"
+        aria-atomic="true"
+    >
+    <span class="slds-text-heading_small slds-p-left_small">
+        {labels.totalOutOfStock}
+    </span>
+    <lightning-formatted-number
+        class="slds-p-right_small slds-text-heading_medium"
+        format-style="currency"
+        currency-code={currencyCode}
+        currency-display-as="symbol"
+        maximum-fraction-digits="2"
+        value={prices.productAmountOutOfStock}
+    ></lightning-formatted-number>
+    </div>    
+
+    <!-- ***************** Ajout de la remise *****************
+    <div
+        class="final-price-container slds-m-bottom_xx-small"
+        aria-live="assertive"
+        aria-atomic="true"
+    >
+    <span class="slds-text-heading_small slds-p-left_small">Remise</span>
+    <lightning-formatted-number
+        class="slds-p-right_small slds-text-heading_medium"
+        format-style="currency"
+        currency-code={currencyCode}
+        currency-display-as="symbol"
+        maximum-fraction-digits="2"
+        value={prices.productAmountOutOfStock}
+    ></lightning-formatted-number>
+    </div>  -->
+    
+    <div class="horizontalBar slds-m-bottom_small"></div> 
+    
+        <!-- FINAL PRICE INFO -->
+        <div
+            class="final-price-container slds-m-bottom_small"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <span class="slds-text-heading_medium slds-p-left_small total-red">
+                {labels.totalHT}<template if:true={hasVignetteAlcool}>*</template>
+                
+            </span>
+            <lightning-formatted-number
+                class="slds-p-right_small slds-text-heading_medium total-red"
+                format-style="currency"
+                currency-code={currencyCode}
+                currency-display-as="symbol"
+                maximum-fraction-digits="2"
+                value={prices.totalHT}
+            ></lightning-formatted-number>
+        </div>
+
+        <div
+            class="final-price-container slds-m-bottom_small"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <span class="slds-text-heading_medium slds-p-left_small total-red">
+                Montant Vignette Cotisation :<template if:true={hasVignetteAlcool}></template>
+                
+            </span>
+            <lightning-formatted-number
+                class="slds-p-right_small slds-text-heading_medium total-red"
+                format-style="currency"
+                currency-code={currencyCode}
+                currency-display-as="symbol"
+                maximum-fraction-digits="2"
+                value={prices.montantVignetteCotisation}
+            >€</lightning-formatted-number>
+        </div>
+        <!--  <div class = 'slds-align_right'>
+        <template if:true={hasTaxes}>
+            <ul class="slds-m-around_small">
+                <template if:true={hasVignetteAlcool}>
+                <li>
+                    {tvataxwithvignette}
+                </li>
+                <template for:each={taxeswithoutvignette} for:item="tax">
+                    <li key={tax}>
+                        {tax}
+                    </li>
+                </template>
+                </template>
+                <template if:false={hasVignetteAlcool}>
+                <template for:each={taxes} for:item="tax">
+                    <li key={tax}>
+                        {tax}
+                    </li>
+                </template>
+                </template>
+            </ul>
+        </template>   
+        </div>  -->
+
+        <template if:true={hasTaxes}>
+            <ul class="slds-p-left_small slds-text-heading_small slds-m-bottom_small">
+                <template if:true={hasVignetteAlcool}>
+                    <li>  <span class="slds-text-heading_small slds-p-right_small "> {tvataxwithvignette} €</span> 
+                    </li>
+                        <template  for:each={taxeswithoutvignetteToDisplay} for:item="tax">
+                            <li key={tax}>  <span key={tax} class="slds-text-heading_small slds-p-right_small " > {tax} €</span> 
+                            </li>
+                        </template>
+                </template>
+                <template if:false={hasVignetteAlcool}>
+                    <div class=" slds-grid slds-size_2-of-2" >
+                        <div class="slds-col slds-size_1-of-2 slds-text-heading_small" >
+                            <template for:each={taxesToDisplay} for:item="tax">
+                               
+                                    <li key={tax}>
+                                        {tax}
+                                    </li>
+
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </ul>
+        </template>  
+
+        <div
+            class="final-price-container slds-m-bottom_small"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <span class="slds-text-heading_small slds-p-left_small">
+                {labels.total}<template if:true={hasVignetteAlcool}>*</template>
+            </span>
+            <lightning-formatted-number
+                class="slds-p-right_small slds-text-heading_small"
+                format-style="currency"
+                currency-code={currencyCode}
+                currency-display-as="symbol"
+                maximum-fraction-digits="2"
+                value={prices.grandTotal}
+            ></lightning-formatted-number>
+            
+        </div>
+        <template if:true={hasMontantEcotaxe}>
+            <div class="note1">
+                &nbsp;&nbsp;&nbsp;dont {montantEcotaxe} € en Ecotaxe
+            </div>
+        </template>
+         
+    </div>
+    <template if:true={hasVignetteAlcool}>
+            <div class="note">
+               * Ces montants prennent en compte les taxes relatives au montant des vignettes Alcools
+            </div>
+        </template>
+</template>

@@ -1,0 +1,10 @@
+<apex:page standardController="Facture__c" showHeader="false" extensions="Einvoice_ServiceManager"  >
+    <head>
+       <title>Facture PDF</title>
+    </head>
+    <apex:pageMessages />
+    <div style="page-break-after: always;">
+        <iframe height="1000px" width="100%" src="data:application/pdf;base64, {!facturePDF}"></iframe>
+    </div>
+
+</apex:page>

@@ -1,0 +1,174 @@
+.containerPriceBox {
+    height:auto;
+    width:100%;
+    /* max-width:330px; */
+}
+
+.containerYellow {
+    width: 100%;
+    /* min-width: 100px; */
+    height:auto;
+    background-color: yellow;
+    color:#C92439;
+    display:flex;
+    flex-direction: row;
+    padding: 0 0.2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerYellow > div {
+    width: fit-content;
+    max-width: 85px;
+    text-align:center;
+    height:auto;
+    background-color: yellow;
+    color:#C92439;
+    display:flex;
+    padding: 0 0.2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerYellow .textQuantityYellow {
+    
+    max-width: fit-content;
+    text-align:right;
+   
+}
+
+.containerYellow .textQuantityLibelleYellow {
+    text-align:left;
+}
+
+
+
+
+
+/* .triangleYellow {
+    width: 0;
+    height: 0;
+    border-left: 0.7rem solid transparent;
+    border-right: 0.7rem solid transparent;
+    border-top: 1.25rem solid yellow;
+    position: relative;
+    right: -50%;
+    transform: translateX(-50%);
+} */
+
+.textPriceYellow {
+    font-size:2.8rem;
+    font-family: "HelveticaNeueBold02";
+    margin:0.2rem 0.3rem;
+    text-align:center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.textLibelleYellow {
+    font-size:0.9rem;
+    font-family: "HelveticaNeueBold02";
+    margin:0 0.2rem;
+    text-align:left;
+    max-width: 60%;
+}
+
+.textQuantityYellow {
+    font-size:2.9rem;
+    line-height: 100%;
+    font-family: "HelveticaNeueBold02";
+    margin:0 0.2rem;
+    text-align:center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.textQuantityLibelleYellow {
+    font-size:0.9rem;
+    font-family: "HelveticaNeueBold02";
+    margin:0 0.2rem;
+    text-align:left;
+    max-width: 85px;
+}
+
+.containerRed {
+    width: 100%;
+    height:auto;
+    color:white;
+    display:flex;
+    justify-content: center;
+    font-family: "HelveticaNeueBold02";
+}
+
+.bgcolor-red {
+    background-color: #C92439;
+}
+
+.textPriceRed {
+    text-align: center;
+    font-size:0.8rem;
+    font-weight: bold;
+    color:white;
+    text-transform: uppercase;
+    width:100%;
+}
+
+.textLibelleRed {
+    text-align: center;
+    font-size:0.75rem;
+    width:100%;
+    text-transform: uppercase;
+}
+
+.textPhrase{
+    text-align:center;
+    font-size: 0.75rem;
+}
+
+.textPeriode{
+    text-align:center;
+    font-size: 0.6rem;
+    margin-top:6px;
+}
+
+.textPhraseNonBarre{
+    text-align:right;
+    font-size: 0.70rem;
+    color: #656565;
+}
+
+.product-statut, .price-area .textPeriode {
+    color: #aeaeae;
+    font-size: 11px;
+}
+
+
+/* Tablet sized screens or smaller (smaller than the SLDS mqLarge responsive threshold) */
+@media only screen and (max-width: 64em) {
+
+    
+}
+
+/* Small form factor: devices smaller than mobile (i.e. the SLDS mqSmall responsive threshold)*/
+@media only screen and (max-width: 47.9375em) {
+    
+    .containerYellow > div {
+        max-width: 114px;
+        text-align: left;
+    }
+    
+    .textPriceYellow {
+        font-size:2rem;
+        margin:0;
+        text-align:right;
+    }
+
+    .textLibelleYellow {
+        text-align: left;
+        font-size:0.7rem;
+    }
+ 
+}

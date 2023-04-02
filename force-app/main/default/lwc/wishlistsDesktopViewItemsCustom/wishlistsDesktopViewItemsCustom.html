@@ -1,0 +1,356 @@
+<!--
+   @description       : 
+   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+   @group             : 
+   @last modified on  : 02-09-2022
+   @last modified by  : Ajay.Kumar Tiwari
+   Modifications Log 
+   Ver   Date         Author                               Modification
+   1.0   11-14-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+   -->
+   <template>
+      <lightning-spinner
+         if:false={retrievedWishlistItems}
+         class="slds-is-relative slds-align_absolute-center slds-m-around_large"
+         alternative-text="Loading wishlist products ..."
+         size="medium"
+         variant="brand">
+      </lightning-spinner>
+      <template if:true={retrievedWishlistItems}>
+         <lightning-button-group style="padding: 15px;">
+            <lightning-button label="Définir comme favori" onclick={addAsFavorite}></lightning-button>
+            <!--<template if:true={hasShowShare}>-->
+			<template if:false={showShare}>
+               <!--<lightning-button label="Partager la liste" onclick={openShareModal} ></lightning-button>-->
+            </template>
+            <lightning-button label="Renommer" onclick={openNameChangeModal}></lightning-button>
+            <lightning-button label="Supprimer" onclick={openDeleteModal}></lightning-button>
+         </lightning-button-group>
+         <template if:false={hasWishlistItems}>
+               <div  class="slds-text-align_center slds-text-color_weak slds-p-top_xx-large">
+               <h3  class="slds-text-heading_medium">
+                  No items on this list yet
+               </h3>
+               <p  class="slds-text-body_regular slds-p-top_small">
+                  Add the products that you want to remember.
+               </p>
+            </div>
+            <footer  class="slds-m-top_medium"></footer>
+         </template>
+      <template if:true={hasWishlistItems}> 
+         <lightning-input
+            style="margin: 15px;"
+            type="text" 
+            value={searchTerm} 
+            label="Rechercher dans la liste"
+            placeholder="Entrez un mot clé"
+            onchange={handlesearchinputchange}> 
+         </lightning-input>
+
+            <!-- <div class="slds-form-element">
+               <label class="slds-form-element__label" for="text-input-id-1">Rechercher dans la liste</label>
+               <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                  <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+                     <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                  </svg>
+                  <input type="text" id="text-input-id-1" placeholder="Entrez un mot clé" class="slds-input testgreen" value={searchTerm} onchange={handlesearchinputchange}/>
+               </div>
+            </div> -->
+            <!-- <div style="height: 22px; width: 144px; left: 20px;top: 20px;"><h3 style="font-size: 18px;font-weight: 500;line-height: 22px;">Fruits et légumes</h3></div> -->
+            <ul class="list-items">
+               <template if:true={retrievedWishlistItemsFiltered}>
+                  <template if:true={hasWishlistItemsFiltered}>
+                     <template for:each={wishlistItemsFiltered} for:item="wishlistItem">   
+                     <c-wishlists-desktop-view-item-custom 
+                        key={wishlistItem.wishlistItemId}
+                        productid={wishlistItem.productSummary.productId}
+                        thumbnailurl={wishlistItem.productSummary.thumbnailImage}
+                        name={wishlistItem.productSummary.name}
+                        sku={wishlistItem.productSummary.sku}
+                        picklistvalues={pickListvaluesByRecordType}
+                        wishlistitemid={wishlistItem.wishlistItemId}
+                        currencycode={wishlistItem.currencyIsoCode}
+                        effectiveaccountid={effectiveaccountid}
+                        communityid={communityid}
+                        salesprice={wishlistItem.salesPrice}
+                        onmultipleselect={handlemultipleselect}
+                        onremovefromwishlist={handleremovefromwishlist}
+                        wishlistid={wishlistid}
+                        buttondisabledaddtocart={buttonDisabledAddToCart}>
+                     </c-wishlists-desktop-view-item-custom>
+                  </template>
+               </template>
+            </template>
+            <template if:false={retrievedWishlistItemsFiltered}>
+               <div  class="slds-text-align_center slds-text-color_weak slds-p-top_xx-large">
+                  <h3  class="slds-text-heading_medium">
+                     Not Found
+                  </h3>
+                  <p  class="slds-text-body_regular slds-p-top_small">
+                     No Item matches this criteria.
+                  </p>
+               </div>
+               <footer  class="slds-m-top_medium"></footer>
+               </template>
+            <!-- <template for:each={wishlistItems.items} for:item="wishlistItem">    -->
+                     <!-- <template if:false={isFiltered}>
+                           false
+                  </template>  
+                  <template if:true={isFiltered}>
+                        true
+                  </template>   -->
+                     <!-- <c-wishlists-desktop-view-item-custom 
+                        key={wishlistItem.wishlistItemId}
+                        productid={wishlistItem.productSummary.productId}
+                        thumbnailurl={wishlistItem.productSummary.thumbnailImage}
+                        name={wishlistItem.productSummary.name}
+                        sku={wishlistItem.productSummary.sku}
+                        wishlistitemid={wishlistItem.wishlistItemId}
+                        currencycode={wishlistItem.currencyIsoCode}
+                        effectiveaccountid={effectiveaccountid}
+                        communityid={communityid}
+                        salesprice={wishlistItem.salesPrice}
+                        onmultipleselect={handlemultipleselect}
+                        onremovefromwishlist={handleremovefromwishlist}>
+                     </c-wishlists-desktop-view-item-custom>
+               </template> -->
+            </ul>
+         </template>
+      </template>
+      <template if:true={nameChangeModal}>
+         <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+             <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <lightning-button
+                  class="slds-button slds-button_icon slds-button_icon-bare slds-button_icon-inverse slds-modal__close"
+                  variant="base"
+                  icon-name="utility:close"
+                  icon-position="left"
+                  title="Fermer"
+                  onclick={closeModal}>
+               </lightning-button>
+     
+                  <h2 class="slds-text-heading_medium slds-hyphenate">Renommer une liste</h2>
+               </header>
+               <div>
+                  <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-form--horizontal modal-body-content">
+                           <div class="slds-form-element slds-p-around_x-small">
+                              <h3 class="slds-text-heading_small">Nom actuel de la liste : "{name}"</h3>
+                           </div>
+                           <div class="slds-form-element slds-p-around_x-small">
+                             <lightning-input 
+                             type="text" value={newListName} 
+                             label="Nouveau nom de la liste" 
+                             onchange={handlenamechange} 
+                             required> 
+                             </lightning-input>
+                                     </div>
+                        </div>
+                  </div>
+                  <footer class="slds-modal__footer">
+                   <lightning-button-group>
+     
+                     <lightning-button label="Renommer" onclick={sendUpdateEvent}></lightning-button>
+                     <!-- <lightning-button label="Renommer" onclick={wishlistupdate}></lightning-button> -->
+                     <lightning-button label="Annuler" onclick={closeModal}></lightning-button>
+                        </lightning-button-group>     
+                  </footer>
+               </div>
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open">
+            </div>
+         </div>
+         <!-- mm
+         <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+               <div class="slds-modal__container">
+                  <header class="slds-modal__header">
+                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Renommer une liste</h2>
+                  </header>
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                     <p>Nom actuel de la liste : "{name}"</p>
+                     <lightning-input type="text" value={newListName} label="Nom de la liste" onchange={handlenamechange}> 
+                     </lightning-input>
+                     <lightning-button-group>
+                        <lightning-button label="Renommer" onclick={sendUpdateEvent}></lightning-button>
+                        <lightning-button label="Annuler" onclick={closeModal}></lightning-button>
+                     </lightning-button-group>
+                  </div>
+               </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open">
+            </div>
+         </div> -->
+      </template>
+      <template if:true={deleteModal}>
+         <!-- <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open slds-modal_medium">
+               <div class="slds-modal__container">
+                  <header class="slds-modal__header">
+                     <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Supprimer une liste</h2>
+                  </header>
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                     <p>Voulez-vous vraiment supprimer la liste "{name} "?</p>
+                     <lightning-button-group>
+                        <lightning-button label="Supprimer" onclick={sendDeleteEvent} style="text-transform: uppercase;flex: 1 1;align-self: stretch;"></lightning-button>
+                        <lightning-button label="Annuler" onclick={closeDeleteModal}></lightning-button>
+                     </lightning-button-group>
+                  </div>
+               </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open">
+            </div>
+         </div> -->
+         <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open slds-modal_medium">
+             <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <lightning-button
+                  class="slds-button slds-button_icon slds-button_icon-bare slds-button_icon-inverse slds-modal__close"
+                  variant="base"
+                  icon-name="utility:close"
+                  icon-position="left"
+                  title="Fermer"
+                  onclick={closeModal}>
+               </lightning-button>
+     
+                  <h2 class="slds-text-heading_medium slds-hyphenate">Supprimer une liste</h2>
+               </header>
+               <div>
+                  <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-form--horizontal modal-body-content">
+                           <div class="slds-form-element slds-p-around_x-small">
+                              <h3 class="slds-text-heading_small">Voulez-vous vraiment supprimer la liste "{name} "?</h3>
+                           </div>
+                        </div>
+                  </div>
+                  <footer class="slds-modal__footer">
+                     <lightning-button-group>
+                        <lightning-button label="Supprimer" onclick={sendDeleteEvent} style="text-transform: uppercase;flex: 1 1;align-self: stretch;"></lightning-button>
+                        <!-- <lightning-button label="Supprimer" onclick={deletecurrentwishlist}></lightning-button> -->
+                        <lightning-button label="Annuler" onclick={closeDeleteModal}></lightning-button>
+                     </lightning-button-group>
+                  </footer>
+               </div>
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open">
+            </div>
+         </div>
+      </template>
+      <template if:true={shareModal}>
+         <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true" aria-describedby="modal-content-id-3" class="slds-modal slds-fade-in-open slds-modal_medium">
+             <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <lightning-button
+                  class="slds-button slds-button_icon slds-button_icon-bare slds-button_icon-inverse slds-modal__close"
+                  variant="base"
+                  icon-name="utility:close"
+                  icon-position="left"
+                  title="Fermer"
+                  onclick={closeShareModal}>
+               </lightning-button>
+     
+                  <h2 class="slds-text-heading_medium slds-hyphenate">Partager la liste {profilename}</h2>
+               </header>
+               <div>
+                  <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-form--horizontal modal-body-content">
+                           <div class="slds-form-element slds-p-around_x-small">
+                              <lightning-radio-group name="radioGroup"
+                              label="Type de partage:"
+                              options={radioptions}
+                              value={shareTypeSelected}
+                              onchange={handleOnShareTypeChange}
+                              type="radio"></lightning-radio-group>
+                              <br></br>
+                              <template if:true={beforeNext}>
+                                 <template if:true={sharewithcompte}>
+
+                              Veuillez entrer le nom du compte recherché:
+                              <c-custom-lookup
+                               iconname="standard:case" 
+                              objectname="Account"
+                              searchfield="Name"
+                              querylimit="10"
+                              ismagsin="true"
+                              magaisnactifencours={magasinactif}
+                              onselectedrec={handleValueSelectedLookup}>
+                           </c-custom-lookup>
+                           </template>
+                           <template if:true={sharewithmetier}>
+                              <template if:true={hasAccessibleAccountsCount}>
+                                 Veuillez sélectionner une spécialisation métier dans la liste suivante:
+                              <select class="slds-select" 
+                                       onchange={handleSpecialisationChange}>
+                                 <option value="Select">-Sélectionner-</option>
+                                 <template for:each={specialisations} for:item="option">
+                                       <!--<option key={option.label} class="uiInputSelectOption" value={option.value}>{option.label}</option>-->
+                                       <!-- added by ajay -->
+                                       <option key={option.label} class="uiInputSelectOption" value={option.label}>{option.label}</option>
+                                 </template>
+                              </select>      
+                           </template>
+                        </template>
+                     </template>
+                        <template if:true={selectedTarget}>
+                              Vous allez partager cette liste avec le(s) compte(s) suivant(s):
+                              <div class="slds-scrollable" style="max-height:240px;padding:1rem;">
+                              <ul class="slds-m-around_medium">
+                                 <template if:true={hasComptesSpecialisationChoisie}>
+                                    <template for:each={comptesSpecialisationChoisie} for:item="compte">
+                                       <li key={compte.Id}>
+                                         {compte.Name}
+                                     </li>
+                                    </template>
+                                 </template>
+                                
+                                 <!-- added by ajay -start-->
+                                 <template if:true={noData}>
+                                 <div  class="slds-text-align_center slds-text-color_weak">
+                                    <p  class="slds-text-body_regular slds-p-top_small">
+                                       No compte matches this criteria.
+                                    </p>
+                                 </div>
+                              </template>
+                                 <!-- added by ajay -end-->
+                                 
+
+
+                                 <template if:true={hasLookupSelectedRecordId}>
+                                       <li>
+                                         {lookupSelectedRecordId}
+                                     </li>
+                                 </template>
+                              </ul>      
+                           </div>               
+                           </template>
+                           </div>
+                        </div>
+                  </div>
+                  <footer class="slds-modal__footer">
+                     <lightning-button-group>
+                        <template if:true={beforeNext}>
+                           <lightning-button label="Suivant" onclick={handleNextShare}></lightning-button>
+                        </template>
+                        <template if:false={beforeNext}>
+                           <lightning-button label="Précédent" onclick={handlePreviousShare} style="text-transform: uppercase;flex: 1 1;align-self: stretch;"></lightning-button>
+                        </template>
+                        <template if:false={beforeNext}>
+                           <lightning-button label="Partager" onclick={sendShareEvent} disabled={noData} style="text-transform: uppercase;flex: 1 1;align-self: stretch;"></lightning-button>
+                        </template>
+                           <lightning-button label="Annuler" onclick={closeShareModal}></lightning-button>
+                     </lightning-button-group>
+                  </footer>
+               </div>
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open">
+            </div>
+         </div>
+      </template>
+   </template>

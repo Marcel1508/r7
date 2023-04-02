@@ -1,0 +1,7 @@
+<design:component>
+    <design:attribute name="cartId" label="Cart ID"
+        description="Enter or choose the unique variable that represents your cart ID." />
+
+    <design:attribute name="selectedAddressId" label="ContactPointAddressId"
+        description="Store the contact point address id" />
+</design:component>

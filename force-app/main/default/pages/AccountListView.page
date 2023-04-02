@@ -1,0 +1,18 @@
+<!--
+  @description       : 
+  @author            : Ajay.Kumar Tiwari
+  @group             : 
+  @last modified on  : 04-12-2021
+  @last modified by  : Ajay.Kumar Tiwari
+  Modifications Log 
+  Ver   Date         Author              Modification
+  1.0   04-01-2021   Ajay.Kumar Tiwari   Initial Version
+-->
+<apex:page standardController="Account" recordSetVar="Acc" extensions="AccountViewController" lightningStylesheets="True">
+
+  <!--call the Flow with a input paramater. Here LstSelectedAccounts is the input variable of the Flow-->
+  <flow:interview name="Activation_de_compte" finishLocation="{!AccountListView}">
+    <apex:param name="Accounts" value="{!LstSelectedAccounts}" />
+  </flow:interview>
+
+</apex:page>

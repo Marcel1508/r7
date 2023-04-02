@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Promocash Large Custom Footer</masterLabel>
+    <description>Footer settings to display in your storefront</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <!-- <property name="logo" type="Boolean" label="Show Logo" description="If false, then Column Content 1 will be shown" />
+            <property name="logoPosition" type="String" label="Logo Alignment" default="left" datasource="left, center, right"></property>
+            <property name="width" type="Integer" label="Max Footer Width (640px - 1920px)" />
+            <property name="footerBackgroundWidth" type="Boolean" label="Footer Background full width" />
+            <property name="footerThemeBackground" type="String" label="Footer Background Color" default="brandBackgroundPrimary" datasource="brandBackgroundPrimary, brandLight, brandBackgroundDark, brandPrimary"></property>
+            <property name="useFooterCustomBackgroundColor" type="Boolean" label="Use Custom Background Color" description="This will override the footer's theme background color" />
+            <property name="footerBackgroundColor" type="Color" label="Custom Footer background color" />
+            <property name="footerLinkColor" type="Color" label="Footer Links color" default="rgb(0, 0, 0)" />
+            <property name="footerLinkColorDefault" type="Boolean" label="Use default link color" /> --><!-- <property name="subFooterText" type="String" label="Copyright text"></property>
+            <property name="subFooterTextAlign" type="String" label="Copyright text align" default="right" datasource="left, center, right"></property> --><property name="showCurrentYear" type="Boolean" label="Show current year"/>
+            <!-- <property name="contentOneTitle" type="String" label="Column 1 Title"></property>
+            <property name="contentOne" type="String" label="Column Content 1" description="If 'Show Logo' is set to false, this column will be visible. If using as link type use a comma to separate your links. Eg: 'https://www.companylink1.com, www.companylink2.com'"></property>
+            <property name="contentOneType" type="String" label="Column 1 type" default="text" datasource="text, link" />
+            <property name="contentTwoTitle" type="String" label="Column 2 Title"></property>
+            <property name="contentTwo" type="String" label="Column Content 2" description="If using as link type use a comma to separate your links. Eg: 'https://www.companylink1.com, www.companylink2.com'"></property>
+            <property name="contentTwoType" type="String" label="Column 2 type" default="text" datasource="text, link" />
+            <property name="contentThreeTitle" type="String" label="Column 3 Title"></property>
+            <property name="contentThree" type="String" label="Column Content 3" description="If using as link type use a comma to separate your links. Eg: 'https://www.companylink1.com, www.companylink2.com'"></property>
+            <property name="contentThreeType" type="String" label="Column 3 type" default="text" datasource="text, link" />
+            <property name="contentFourTitle" type="String" label="Column 4 Title"></property>
+            <property name="contentFour" type="String" label="Column Content 4" description="If using as link type use a comma to separate your links. Eg: 'https://www.companylink1.com, www.companylink2.com'"></property>
+            <property name="contentFourType" type="String" label="Column 4 type" default="text" datasource="text, link" /> --></targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

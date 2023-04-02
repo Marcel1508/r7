@@ -1,0 +1,51 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 12-10-2020
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   12-04-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <lightning-card class="cardProduct">
+        <template if:true={product.data}>
+            <a tabindex="-1" onclick={handleProductDetailNavigation} >
+                <div class="containerImage">
+                    <template if:false={hasProductDefaultImageUrl}>
+                        <img src={defaultImage} alt ="Image par défaut"/>
+                     </template>
+                     <template if:true={hasProductDefaultImageUrl}>
+                        <img src={productDefaultImageUrl} alt={productDefaultImageAlt} />
+                    </template>
+                </div>
+                <p class="productName">{product.data.fields.Libell_Final_TA__c}</p>
+            </a>
+        </template>
+        <template if:true={productPrice.data}>
+            <p class="productPrice">{productPrice.data.unitPrice} {productPrice.data.currencyIsoCode}</p>
+        </template>
+        <div class="slds-col slds-grow slds-container_center addToListButton">
+            <template if:true={product.data}>
+                <template if:true={statutOut}>
+                    <button
+                        style="border-radius: 0px; min-width: 100%;"
+                        class="slds-button slds-button_brand"
+                        onclick={handleAddToListAndRemoveProduct}>
+                        Choisir
+                    </button>
+                </template>
+                <template if:true={statutIndispo}>
+                    <c-add-to-cart-button-custom 
+                        productid={productid} 
+                        effectiveaccountid={effectiveaccountid}
+                        communityid={communityid}
+                        quantity={quantity}
+                        disabled={disabled}>
+                    </c-add-to-cart-button-custom>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,124 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-11-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   04-02-2021   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <div class="container">
+        <div class="slds-grid header">
+            <h2 aria-level="2" data-aura-rendered-by="105:0"><span class="slds-card__header-link slds-text-heading_small" data-aura-rendered-by="106:0">
+                Self Registration Process
+            </span>
+            </h2>
+        </div>
+        <img src="/promocash/resource/1603561350000/PromocashFlowHeader" style="background-color: transparent;margin-bottom: var(--lwc-spacingXSmall,0.5rem);" data-aura-rendered-by="115:0">
+        
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+
+        <template if:true={step0}>
+            <lightning-record-edit-form object-api-name="ContactPointAddress" density="comfy">
+            <div class="slds-form">
+                <div class="slds-form-element" data-id="registreCommerceElement">
+                    <div class="slds-form-element__control">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="default" data-id="checkbox-dataRegistreCommerce" id="checkbox-registreCommerce" checked={registreCommerceChecked} value={registreCommerceChecked} onchange={handleRegistreCommerceInputChange}/>
+                                <label class="slds-checkbox__label" for="checkbox-registreCommerce">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label">En cours de création au registre du commerce</span>
+                                </label>
+                            </div>
+                    </div>
+                    <template if:true={isRegistreCommerceError}>
+                        <div class="slds-form-element__help" id="form-error-012">{registreCommerceErrorMessage}.</div>
+                    </template>
+                </div>
+                
+                <template if:false={registreCommerceChecked}>
+                    <div class="slds-form-element" data-id="siretElement">
+                        
+                        <div class="slds-form-element__control">
+                            <lightning-input id="input-SIRET" name="siret" label="SIRET" onchange={genericOnChange} value={siret}></lightning-input>
+                        </div>
+                        <template if:true={isSiretError}>
+                            <div class="slds-form-element__help" id="form-error-01">{siretErrorMessage}.</div>
+                        </template>
+                    </div>
+                </template>
+
+                <!--<fieldset class="slds-form-element slds-form-element_compound slds-form-element_address">-->
+                    <div class="slds-grid slds-wrap slds-gutters_xx-small">
+
+                        <div class="slds-col slds-size_5-of-12" data-id="numVoieElement">
+                                <lightning-input type="text" name="numVoie" label="Numéro de voie" onchange={genericOnChange} value={numVoie} required></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_7-of-12" data-id="typeVoieElement">
+                            <label class="slds-form-element__label" for="inputVoieId">
+                                <abbr class="slds-required" title="required">* </abbr>
+                                    Type de voie
+                            </label>
+                            <input id='inputVoieId' data-id="inputVoie" name="input" list="valueList" onchange={handleChange} class="slds-input" type="text" value={selectedLabel}></input>
+                            <datalist id="valueList" class="">
+                                <template for:each={typeVoieValues} for:item='item'>
+                                    <option key={item.key} value={item.key}>{item.label}</option>
+                                </template>
+                            </datalist>
+                        </div>
+
+                        <div class="slds-col slds-size_12-of-12" data-id="nomVoieElement">
+                            <lightning-textarea name="nomVoie" label="Nom de la voie" required onchange={genericOnChange} value={nomVoie}></lightning-textarea>
+                        </div>
+
+                        <div class="slds-col slds-size_12-of-12" data-id="countryElement">
+                            <!--<lightning-input type="text" name="country" label="Pays" onchange={genericOnChange} value={country} required></lightning-input>-->
+                            <lightning-input-field field-name='Pays__c' onchange={handleCountryChange} value={country} style="padding: 0"  required></lightning-input-field>
+                        </div>
+
+                        <div class="slds-col slds-medium-size_4-of-12 slds-size_12-of-12" data-id="postalCodeElement">
+                            <!--<lightning-input type="text" name="postalCode" label="Code postal" onchange={genericOnChange} value={postalCode} required></lightning-input>-->
+                            <lightning-input-field id="codesPostauxId" field-name='Codes_Postaux__c' onchange={handleCodesPostauxCHange} value={selectedPostalCodeId} style="padding-left: 0" required></lightning-input-field>
+                        </div>
+
+                        <div class="slds-col slds-medium-size_8-of-12 slds-size_12-of-12" data-id="cityElement">
+                            <lightning-input type="text" name="city" label="Ville" onchange={genericOnChange} value={city} required disabled></lightning-input>
+                        </div>
+
+                        <template if:true={isAddressError}>
+                            <div class="slds-form-element__row">
+                                <div class="slds-size_1-of-1 addressErrorMessage">
+                                    {addressErrorMessage}
+                                </div>
+                            </div>
+                            <template if:true={isCountryAddressError}>
+                                <div class="slds-form-element__row slds-size_1-of-1">
+                                    <div class="slds-size_1-of-1 addressErrorMessage">
+                                        Pour une adresse Hors France, veuillez contacter votre magasin.
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                <div class="slds-form-element submitButton">
+                    <lightning-button variant="brand" label="Suivant" onclick={handleSubmitClick}></lightning-button>
+                </div>
+
+            </div>
+        </lightning-record-edit-form>
+        </template>
+        <template if:true={stepTestFileUpload}>
+            <c-self-reg-file-upload-component file-title="KBIS" file-type="KBIS"></c-self-reg-file-upload-component>
+        </template>
+        <template if:true={stepSiretExists}>
+            <c-self-reg-siret-exists-component onprevious={handlePrevious} account={loadedAccount} num-voie={numVoie} type-voie={typeVoie} nom-voie={nomVoie} city={city} state={state} selected-postal-code-id={selectedPostalCodeId} country={country} country-label={countryLabel} postal-code={postalCode}></c-self-reg-siret-exists-component>
+        </template>
+        <template if:true={stepSiretDoesntExist}>
+            <c-Selfregsiretdonotexistscomponent onprevious={handlePrevious} street={street} num-voie={numVoie} type-voie={typeVoie} nom-voie={nomVoie} city={city} selected-postal-code-id={selectedPostalCodeId} state={state} country={country} country-label={countryLabel} postal-code={postalCode} siret={siret} registrecommercechecked={registreCommerceChecked}></c-Selfregsiretdonotexistscomponent>
+        </template>
+    </div>
+</template>

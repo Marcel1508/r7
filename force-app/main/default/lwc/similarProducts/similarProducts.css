@@ -1,0 +1,56 @@
+:host {
+    max-width: 600px;
+    margin:0 auto;
+}
+
+.sectionTitre {
+    text-align:center; 
+    font-size: 28px;
+    color: #509A23;
+    line-height: 120%;
+}
+
+.similar-products-container {
+    background-color: #fff;
+    margin: 0 auto;
+    max-height:80rem;
+}
+
+.substitutionproduct-card {
+    border: 1px solid #EBEBEB;
+}
+
+.product-container {
+    margin-left:auto; 
+    margin-right:auto;
+    background: #FFFFFF; 
+  }
+
+.stylingParagraph{
+    font-family: Helvetica Neue;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.stylingSubstitutionContainer{
+    /* width: 90%; */
+    /* max-width: 650px; */
+    /* border: 1px solid #EBEBEB;
+    background: #FFFFFF; */
+    /* box-sizing: border-box;  */
+    /* display: flex; */
+
+}
+
+
+/* Phone screens */
+@media only screen and (max-width: 47.9375em) {
+
+    .similar-products-container {
+        padding:0;
+    }
+
+}

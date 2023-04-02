@@ -1,0 +1,7 @@
+<design:component >
+    <design:attribute name="cartId" label="cartId" description="The current web cart Id" />
+    <design:attribute name="inStockOrderId" label="inStockOrderId" description="The current web cart inStockOrderId" />
+	<design:attribute name="outStockOrderId" label="outStockOrderId" description="The current web cart outStockOrderId" />
+    <design:attribute name="slotID" label="slotID" description="The current web cart slotID" />
+    
+</design:component>

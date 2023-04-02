@@ -1,0 +1,209 @@
+<template>
+    <div class="slds-theme_default">
+        <template if:false={errorPage}>
+            <lightning-progress-indicator type="path" current-step={selectedStep}>
+                <lightning-progress-step label="Magasin" onstepfocus={selectStep1} value="Step1">
+                </lightning-progress-step>
+                <lightning-progress-step label="Compte" onstepfocus={selectStep2} value="Step2">
+                </lightning-progress-step>
+                <lightning-progress-step label="Contact" onstepfocus={selectStep3} value="Step3">
+                </lightning-progress-step>
+            </lightning-progress-indicator>
+        </template>
+        
+        <div class="slds-m-bottom_x-small"></div>
+        
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <template if:false={errorPage}>
+            
+            <!--Content For Step 1-->
+            <template if:true={isSelectStep1}>
+                <div class="slds-m-bottom_x-small">
+                    <div class="slds-form"> 
+                        <template if:true={chooseMagasinFromMyPostalCode}>
+                            <div class="slds-form-element" data-id="magasinMyPostalCodePicklist">
+                                    <label class="slds-form-element__label" for="form-element-id-04"><abbr class="slds-required" title="required">* </abbr>Votre magasin le plus proche est:</label>
+                                <div class="slds-form-element__control">
+                                    <select class="slds-select" 
+                                        onchange={myMagasinSelectionHandler} >
+                                    <!--<option value="Select">Select</option>-->
+                                        <template for:each={myMagasins} for:item="option">
+                                            <option key={option.label} class="uiInputSelectOption" value={option.id}>{option.magasinName}</option>
+                                        </template>
+                                    </select>
+                                </div>
+                            </div>
+                        </template>
+                        
+                        <div class="slds-form-element" data-id="registreCommerceElement">
+                            <div class="slds-form-element__control">
+                                    <div class="slds-checkbox">
+                                        <input type="checkbox" name="default" data-id="checkbox-cannotFindMyMagasin" id="checkbox-registreCommerce" value="checkbox-unique-id-31" onchange={handleCannotFindMyMagasinCheckbox}/>
+                                        <label class="slds-checkbox__label" for="checkbox-registreCommerce">
+                                        <span class="slds-checkbox_faux"></span>
+                                        <span class="slds-form-element__label">Je souhaite changer de magasin</span>
+                                        </label>
+                                    </div>
+                            </div>
+                        </div>
+                
+                        <template if:false={chooseMagasinFromMyPostalCode}>
+                            <div class="slds-form-element" data-id="magasinAllPostalCodePicklist">
+                                    <label class="slds-form-element__label" for="form-element-id-040"><abbr class="slds-required" title="required">* </abbr>Choisir dans la liste de tous les magasins</label>
+                                <div class="slds-form-element__control">
+                                    <select class="slds-select" 
+                                        onchange={allMagasinSelectionChangeHandler} >
+                                        <template for:each={allMagasins} for:item="option">
+                                            <option data-id={option.id} key={option.id} class="uiInputSelectOption" value={option.id}>{option.magasinName}</option>
+                                        </template>
+                                    </select>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <template if:true={isMagasinError}>
+                    <div class="slds-form-element__row">
+                        <div class="slds-size_1-of-1 MagasinErrorMessage">
+                            {magasinSelectErrorMessage}
+                        </div>
+                    </div>
+                </template>
+            </template>
+            <!--Content For Step 2-->
+            <template if:true={isSelectStep2NotKeyAccount}>
+                <div class="slds-m-bottom_x-small"></div>
+                <h4>Veuillez confirmer que vous êtes bien l'établissement <b>{account.Name}</b> ?</h4>
+                <div class="slds-m-bottom_x-small"></div>
+                <div class="slds-m-bottom_x-small"></div>
+            </template>
+            <template if:true={isSelectStep2}>
+                <div class="slds-m-bottom_x-small">
+                </div>
+                <h4>Veuillez confirmer que vous êtes bien l'établissement <b>{account.Name}</b> ?</h4>
+                <div class="slds-form" style="margin-bottom: 1%">
+                    <div class="slds-form-element" data-id="siretElement">
+                        <label class="slds-form-element__label" for="input-SIRET">Veuillez saisir le code externe chaine:</label>
+                        <div class="slds-form-element__control">
+                            <input name="siret" type="text" id="input-SIRET" class="slds-input" onchange={handleCodeChaine} value={codeChaine}/>
+                        </div>
+                        <template if:true={isSiretError}>
+                            <div class="slds-form-element__help" id="form-error-01">{siretErrorMessage}.</div>
+                        </template>
+                    </div>
+                    <template if:true={isCodeChaineError}>
+                        <div class="slds-form-element__row">
+                            <div class="slds-size_1-of-1 MagasinErrorMessage">
+                                {codeChaineErrorMessage}
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="slds-form-element__control">
+                        <div class="slds-checkbox">
+                            <input type="checkbox" name="chaineCodeCheckboxName" data-id="checkbox-chaineCode" id="checkbox-codeChaine" onchange={handleIsCodeChaineKnown}/>
+                            <label class="slds-checkbox__label" for="checkbox-codeChaine">
+                            <span class="slds-checkbox_faux"></span>
+                            <span class="slds-form-element__label">Je ne connais pas le code externe chaine</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <!--Content For Step 3-->
+            <template if:true={isSelectStep3}> <!--SOUS STEP CLIENT 1-->   
+                <template if:true={isSelectSousStepClient1}>
+                    <div class="slds-m-bottom_x-small"></div>
+                    <div class="slds-form" style="margin-bottom: 1%">
+                        <div class="slds-form-element" data-id="codeCarteElement">
+                            <label class="slds-form-element__label" for="input-SIRET">Veuillez entrer votre numéro client Promocash:</label>
+                            <div class="slds-form-element__control">
+                                <input name="codeCarte" type="text" id="input-codeCarte" class="slds-input" onchange={handleCodeCarte} value={codeCarte}/>
+                            </div>
+                            <template if:true={isCodeCarteError}>
+                                <div class="slds-form-element__help MagasinErrorMessage" id="form-erzror-01">Code carte incorrect</div>
+                            </template>
+                        </div>
+
+                        <div class="slds-form-element__control">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="codeCarteCheckboxName" data-id="checkbox-codeCarte" id="checkbox-codeCarte" onchange={handleIsCodeCarteKnown}/>
+                                <label class="slds-checkbox__label" for="checkbox-codeCarte">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label">Je ne connais pas le code carte</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={isSelectSousStepPassword}>
+                    <div>
+                        <lightning-input label="Email de connexion" type="email" data-id="username"  required="required" placeholder="you@example.com" onchange={handleUsernameChange} ></lightning-input>
+                        <template if:true={isUsernameError}>
+                            <div class="slds-form-element__help MagasinErrorMessage" id="form-error-0aa">{usernameErrorMessage}.</div>
+                        </template>
+                        <lightning-input type="password" data-id="password" label="Mot de passe" required="required" onchange={handlePasswordChange}>  </lightning-input>
+                        <p class='warningText'> Le mot de passe doit contenir au moins 12 caractères dont 1 lettre, 1 chiffre et 1 caractère spécial. </p>
+                        <lightning-input type="password" data-id="repeatPassword" label="Répéter le mot de passe" required="required" onchange={handlerepeatPasswordChange}> </lightning-input>
+                    </div>
+                    <template if:true={isCredentialError}>
+                        <div class="slds-form-element__help MagasinErrorMessage" id="form-erzror">{credentialErrorMessage}</div>
+                    </template>
+                    <div class="" style="margin-bottom: 3%;"></div>
+                </template>
+                <template if:true={isSelectSousStepLead1}>
+                    <c-self-reg-siret-exists-lead-creation-component account={account} num-voie={numVoie} type-voie={typeVoie} nom-voie={nomVoie} city={city} state={state} country={country} postal-code={postalCode} 
+                    country-label={countryLabel} selected-my-zone={selectedMyZone} selected-all-zone={selectedAllZone} choose-magasin-from-my-postal-code={chooseMagasinFromMyPostalCode} selected-postal-code-id={selectedPostalCodeId}
+                        onprevious={handlePreviousLeadCreation}>
+                    </c-self-reg-siret-exists-lead-creation-component>
+                </template>
+            </template>
+            <template if:true={isEcommerceEmailStep}>
+                <h3>Vous avez déjà un compte associé à l'email <b>{ecommerceEmail}</b></h3>
+                <div class="slds-m-bottom_x-small"></div>
+                <div class="slds-m-bottom_x-small"></div>
+            </template>
+        </template>
+        <!--Content for Success page-->
+        <template if:true={isSuccessPage}>
+            <h4 ><b>félicitations</b></h4>
+            <p>{successMessage}</p>
+            <div class="slds-m-vertical_medium">
+                <lightning-button variant="brand" label="Terminer" onclick={handleSuccess}></lightning-button>
+            </div>
+        </template>
+        <!--Content for Error page-->
+        <template if:true={errorPage}>
+            <h4 style="color: red">Error de création de compte</h4>
+            <p>{errorPageMessage}</p>
+        </template>
+        <!--Control buttons-->
+        <template if:false={errorPage}>
+            <div class="">
+                <template if:true={notFinalScreen}>
+                    <lightning-button label="Retour" class="" onclick={handlePrev}></lightning-button>
+                </template>
+                <template if:true={notFinalScreen}>
+                    <lightning-button variant="brand" label="Suivant" onclick={handleNext} style="margin-left: 1%"></lightning-button>
+                </template>
+                <!--<template if:true={isSelectStep3}>
+                    <lightning-button variant="brand" label="Terminer" onclick={handleFinish} style="margin-left: 2%"></lightning-button>
+                </template>-->
+                <template if:true={isEcommerceEmailStep}>
+                    <lightning-button variant="brand" label="Terminer" onclick={handleEcommerceFinish} ></lightning-button>
+                </template>
+            </div>
+            <template if:true={isSelectStep2NotKeyAccount}>
+                <lightning-button variant="brand" label="Oui" onclick={handleNext}></lightning-button>
+                <lightning-button label="Non" onclick={showGenericErrorPage} style="margin-left: 1%"></lightning-button>
+            </template>
+        </template>
+        <template if:true={errorPage}>
+            <div class="">
+                <lightning-button variant="brand" label="Terminer" onclick={handleFinishError}></lightning-button>
+            </div>
+        </template>
+    </div>
+</template>

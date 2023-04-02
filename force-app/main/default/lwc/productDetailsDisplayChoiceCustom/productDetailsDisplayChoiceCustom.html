@@ -1,0 +1,105 @@
+<template>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModalChoice}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Quitter</span>
+                    </button>
+                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Plusieurs choix s'offrent à vous</h1>
+                </header>
+                <div class="slds-modal__content text-body slds-p-around_medium" id="modal-content-id-01">
+                    <h2 class="body_text_choice">Nous n'avons pas la quantité demandée dans nos stocks actuellement, mais plusieurs choix s'offrent à vous :</h2>
+                    <lightning-layout class="slds-grow slds-size_1-of-1 slds-wrap">
+                        <div class="slds-size_small divCard">
+                            <lightning-card class="cardChoice">
+                                <h1 slot="title" class="no-wrap">Ajouter vos produits dans une sous-commande</h1>
+                                <a tabindex="-1" onclick={addAllCart}>
+                                    <div class="containerImage">
+                                        <img src={choice1} alt="Choix N°1 Sous-commande" />
+                                    </div>
+                                    <p>En choisissant cette option, la quantité de votre produit non disponible sera ajoutée à une sous-commande.</p>
+                                </a>
+                            </lightning-card>
+                        </div>
+                        <div class="slds-size_small divCard">
+                            <lightning-card class="cardChoice">
+                                <h1 slot="title" class="no-wrap">Substituer la quantité non disponible de votre produit</h1>
+                                <a tabindex="-1" onclick={showModalSubstitution}>
+                                    <div class="containerImage">
+                                        <img src={choice2} alt="Choix N°2 Substitution" />
+                                    </div>
+                                    <p>En choisissant cette option, vous pourrez substituer la quantité non disponible par un autre produit similaire.</p>
+                                </a>
+                            </lightning-card>
+                        </div>
+                        <div class="slds-size_small divCard">
+                            <lightning-card class="cardChoice">
+                                <h1 slot="title" class="no-wrap">Ajouter uniquement la quantité disponible dans le panier</h1>
+                                <a tabindex="-1" onclick={addQuantityAvailableCart}>
+                                    <div class="containerImage">
+                                        <img src={choice3} alt="Choix N°3 Quantité disponible" />
+                                    </div>
+                                    <p>En choisissant cette option, vous n'ajoutez au panier que la quantité disponible de votre produit.</p>
+                                </a>
+                            </lightning-card>
+                        </div>
+                    </lightning-layout>
+                    <template if:true={modalSubstitution}>
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button
+                                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                        title="Close" onclick={closeOnlyModalSubstitution}>
+                                        <lightning-icon icon-name="utility:close" alternative-text="close"
+                                            variant="inverse" size="small"></lightning-icon>
+                                        <span class="slds-assistive-text">Quitter</span>
+                                    </button>
+                                    <h2 id="modal-heading-001" class="slds-text-heading_medium slds-hyphenate">Remplacer votre produit par un autre pour la quantité non disponible</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <template if:true={hasOpmsSPOverZero}>
+                                        <p>La quantité demandée n'est pas disponible, vous pouvez remplacer le nombre de produits non disponible par un autre produit similaire. Sélectionnez un produit :</p>
+                                    </template>
+                                    <lightning-layout
+                                        class="slds-grid_align-center slds-grow slds-size_1-of-1 slds-wrap">
+                                        <template for:each={listOPMs} for:item="listOPM">
+                                            <lightning-layout-item key={listOPM.Id} size="6" padding="around-small">
+                                                <c-product-details-display-choice-similar-product-custom
+                                                    communityid={communityid} productid={listOPM.Produit__r.Id}
+                                                    effectiveaccountid={effectiveaccountid} quantity={quantity}
+                                                    quantityinstock={quantityinstock} productreference={productid}
+                                                    show-modal-substitution={showModalSubstitution}
+                                                    onclose={closeModalSubstitution}>
+                                                </c-product-details-display-choice-similar-product-custom>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+                                    <template if:false={hasOpmsSPOverZero}>
+                                        <p>Nous n'avons pas de produits similaires à vous proposer.</p>
+                                    </template>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <lightning-button variant="brand" label="Quitter" onclick={closeOnlyModalSubstitution}>
+                                    </lightning-button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Quitter" onclick={closeModalChoice}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

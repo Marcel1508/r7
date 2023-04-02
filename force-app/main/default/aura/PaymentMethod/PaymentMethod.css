@@ -1,0 +1,25 @@
+.THIS {
+    background-color: white; 
+}
+.THIS .container{
+    padding: 5%;
+    height: 45px;
+    width: 305px;
+}
+
+.THIS .stylingChoix {
+    font-family: Helvetica Neue;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000000;
+    padding-top: 2px;
+}
+
+.THIS  .slds-form-element__label {
+    color:#3E3E3C;
+    font-size :medium;
+
+}

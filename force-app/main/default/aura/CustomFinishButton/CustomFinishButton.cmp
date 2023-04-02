@@ -1,0 +1,14 @@
+<!--
+  @description       : used in flow "Activer Compte dans Magasin"  to redirect to account list view 
+  @author            : Ajay.Kumar Tiwari
+  @group             : 
+  @last modified on  : 08-11-2021
+  @last modified by  : Ajay.Kumar Tiwari
+-->
+<aura:component implements="lightning:availableForFlowScreens" access="global" >
+    <div class="slds-clearfix">
+<lightning:button aura:id="FINISH" label="Fermer" class="slds-float_right"
+               variant="brand" onclick="{!c.onButtonPressed}" />
+    </div>
+	
+</aura:component>

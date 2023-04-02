@@ -1,0 +1,104 @@
+.THIS .colorBlue a {
+    color: #4682B4;
+    text-decoration-line: underline;
+}
+.THIS .colorBlue .slds-icon_container {
+    display: none;
+}
+.THIS.slds-accordion {
+    background-color: #fff;
+    box-shadow: 0 0 5px #ccc;
+    margin-bottom: 47px;
+    border-radius: 0 0 9px 9px;
+}
+.THIS.current-cat {
+    background-color: #8ecc69;
+    color: #fff;
+    font-size: 20px;
+    width: 100%;
+    display: block;
+    padding: 13px 33px;
+    position: relative;
+    border-radius: 9px 9px 0 0;
+}
+.THIS.current-cat:before {
+    content: '';
+    border-left: 2px dashed #fff;
+    width: 2px;
+    height: 23px;
+    position: absolute;
+    left: 17px;
+    top: 15px;
+    z-index: 10;
+}
+/*.THIS button.slds-accordion__summary-action {
+    background-color: #8ECC69;
+    color: #fff;
+    font-size: 20px;
+    text-transform: lowercase;
+    width: 100%;
+    display: block;
+    padding-left: 25px;
+}*/
+.THIS button.slds-accordion__summary-action lightning-primitive-icon {
+    display: none;
+}
+
+.THIS .slds-accordion__summary-heading {
+    position: relative;    
+    color: #000;
+}
+.THIS .slds-accordion__summary-heading:before {
+    display: none;
+}
+.THIS .slds-accordion__summary-heading .slds-button:hover, .THIS .slds-accordion__summary-heading .slds-button:focus {
+    text-decoration: none;
+    color: #000;
+}
+.THIS button.slds-accordion__summary-action:after {
+   
+    border-style: solid;
+    border-width: .1em .1em 0 0;
+    content: '';
+    display: inline-block;
+    height: .4em;
+    position: absolute;
+    top: 21px;
+    transform: rotate(45deg);
+    vertical-align: top;
+    width: 0.4em;
+    float: right;
+    border-color: #ce394c;
+    right: 24px;
+}
+.THIS button.slds-accordion__summary-action:before {    
+    content: '';
+    float: right;
+    border: 2px solid #ce394c;
+    width: 1.7em;
+    height: 1.7em;
+    border-radius: 30px;
+    position: absolute;
+    right: 11px;
+    top: 11px;
+}
+.THIS .slds-is-open>.slds-accordion__summary button.slds-accordion__summary-action:after {
+    transform: rotate(135deg);
+    top: 20px;
+    right: 22px;
+}
+.THIS .slds-is-open>.slds-accordion__content {
+    padding: 15px;
+}
+.THIS .slds-is-open>.slds-accordion__content * {
+    color: #333;
+    font-size: 12px;
+}
+.THIS .slds-is-open>.slds-accordion__content h3:before {
+    display:none;
+}
+.THIS .slds-accordion__summary-heading span.slds-truncate {
+    white-space: initial;
+    display: block;
+    padding-right: 35px;
+}

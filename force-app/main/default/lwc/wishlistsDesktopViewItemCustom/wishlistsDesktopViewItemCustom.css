@@ -1,0 +1,272 @@
+:host {
+    /* display: flex; */
+    /* border: 3px solid #DDDBDA; */
+    margin: auto;
+    background-color: #C92439;
+}
+
+.list-container {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px -2px 0px 0px #EBEBEB inset;
+    box-shadow: 0px 2px 0px 0px #EBEBEB inset;
+
+}
+
+.priceUnité {
+    text-align: right;
+    font-size: 14px;
+    font-weight: 400;
+    /* line-height: 14px; */
+}
+
+.priceAlignment {
+    text-align: right;
+}
+
+.buttonReplace {
+    background: #72BF44;
+    border: none;
+    font-size: 12px;
+    border-radius: 5px;
+    min-width: fit-content;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: white;
+    font-size: 12px;
+    height: 40px;
+    margin-left: 80%;
+}
+.image-area {
+    position:relative;
+}
+
+.bannerImage{
+    z-index:2;
+    position:absolute;
+    top:0;
+    width:60px;
+}
+
+.containerListeItem{
+    display: flex;
+    align-items: center;
+}
+
+.item-name {
+    font-size: 1.1rem;
+    font-family: 'HelveticaNeueBold02';
+}
+
+.ht-after-price {
+    font-size: 1.1em;
+}
+
+.negotiated-price,.promotional-price  {
+    color: #CE394C;
+    /* font-weight: var(--lwc-fontWeightRegular); */
+    text-align: right;
+    font-size: 1.3rem;
+    font-family: 'HelveticaNeueBold02';
+    
+}
+
+.promopriceContainer {
+    width: fit-content; 
+    height:30px;
+}
+
+.promotional-price  {
+   /* border-bottom: 8px solid rgba(255, 255, 20, 0.5);
+    line-height:0;*/
+    border-bottom: 12px solid rgba(255, 255, 20, 0.5);
+    margin-top: -15px;
+    position: static;
+
+}
+
+ /* .border-yellow {
+    height: 12px;
+    width:100%;
+    background-color: rgba(255, 255, 20, 1);
+    position:relative;
+    bottom: 10px;
+}  */
+
+/* .promopriceContainer {
+    border-bottom: 12px solid rgba(255, 255, 20, 0.5);
+    width: fit-content;
+    height:20px;
+    margin-bottom:5px;
+} */
+
+.image-area figure {
+    align-items: center;
+    display: grid;
+    grid-row: 2 / span 6;
+    justify-content: center;
+    margin-top: 30px;
+    width: 90px;
+    height: 90px;
+}
+
+.image-area img {
+    object-fit: contain;
+}
+
+.price {
+    align-self: end;
+}
+
+.minwidth {
+    min-width: 98%; 
+    min-width: 98%;
+    margin: 1px;
+    /* box-shadow: 0px -1px 0px 0px #ebebeb inset; */
+    border: 1px solid #ebebeb;
+       
+}
+
+.qteInput {
+    display: grid;
+    max-width: 4rem;
+    width:50%;
+    margin-left: auto;
+    margin-right: 5px;
+    border-radius: 4px;
+    border: 1px solid #DDDBDA;
+}
+
+.product-statut {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.pcDeleteIcon {
+    cursor: pointer;
+    padding-left: 90%;
+}
+
+.available-circle {
+    display:inline;
+}
+
+.circleBase {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    margin-right: var(--lwc-spacingXSmall,0.5rem);
+    display: inline-block;
+}
+
+.circleGreen {
+    background: #71BF43;
+}
+
+.circleOrange {
+    background: orange;
+}
+
+.circleRed {
+    background: #C92439;
+}
+
+.pc-picto {
+    height: 25px; 
+    width: 25px; 
+    left: 3.375px; 
+    top: 1.125px;
+}
+
+.au-lie-de {
+    color: #656565;
+}
+
+.au-lie-de-prix {
+    text-decoration: line-through;
+    color: #656565;
+}
+
+
+/* Tablet sized screens or smaller (smaller than the SLDS mqLarge responsive threshold) */
+@media only screen and (max-width: 64em) {
+    .item-name {
+        font-size: 0.875rem;
+    }
+
+    .image-area figure, .image-area img {
+        width: 100px;
+    }
+
+    .icon-col {
+        padding: 0;
+    }
+    
+
+}
+
+/* Small form factor: devices smaller than tablet (i.e. the SLDS mqSmall responsive threshold)*/
+@media only screen and (max-width: 47.9375em) {
+
+    .available-circle {
+        display:none;
+    }
+
+    .item-name {
+        font-size: 0.875rem;
+    }
+
+    .image-area figure, .image-area img {
+        width: 80px;
+    }
+    
+
+    .image-area {
+        margin-top:20px;
+    }
+
+    .bannerPromo {
+        width: 60px; 
+    }
+
+    .bannerImage{
+        width:40px;
+    }
+
+    .priceUnité {
+        text-align: left;
+    }
+
+    .priceAlignment {
+        text-align: left;
+    }
+
+    .remove {
+        width:20px;
+    }
+
+    .qteInput {
+        max-width: 2.8rem;
+    }
+
+    .pcDeleteIcon {
+        padding-left: 70%;
+    }
+
+    .list-container .slds-col {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .list-container .slds-col.icon-col {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .list-container .slds-col.product-details {
+        padding-left: 0px;
+    }
+
+}

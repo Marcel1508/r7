@@ -1,0 +1,7 @@
+<design:component label="Community Footer">
+	<design:attribute name="linkFb" label="Facebook Link" description="Facebook Link" />
+	<design:attribute name="linkPint" label="Pinterest Link" description="Pinterest Link" />
+    <design:attribute name="linkYb" label="Youtube Link" description="Youtube Link" />
+    <design:attribute name="footer" label="Footer Message" description="Text you want to appear in the footer" />
+	<design:attribute name="footerYear" label="Footer Year" description="Year you want to appear in the footer" />
+</design:component>

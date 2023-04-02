@@ -1,0 +1,8 @@
+<design:component label="Promocash E-Commerce Footer">
+    <design:attribute name="linkLogo" label="Logo Link" description="Logo Link" />
+	<design:attribute name="linkFb" label="Facebook Link" description="Facebook Link" />
+	<design:attribute name="linkPint" label="Pinterest Link" description="Pinterest Link" />
+    <design:attribute name="linkYb" label="Youtube Link" description="Youtube Link" />
+    <design:attribute name="linkInst" label="Instagram Link" description="Instagram Link" />
+    <design:attribute name="linkInk" label="Linkedin Link" description="Linkedin Link" />
+</design:component>

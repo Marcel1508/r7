@@ -1,0 +1,25 @@
+.cardProduct{
+    text-align:center;
+}
+
+.productName{
+    font-weight: bold; 
+    font-size: 18px;
+}
+
+.productPrice{
+    font-size: 16px;
+    margin: 7px 0 7px 0;
+}
+
+.containerImage{
+    width: 100%;
+    height: 300px;
+    overflow:hidden;
+    display: flex;
+    align-items: center;
+}
+
+.containerImage img {
+    width:100%;
+}

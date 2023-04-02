@@ -1,0 +1,29 @@
+<aura:component implements="forceCommunity:layout" description="Page Libre Template 4" access="global">
+    <aura:attribute name="header" type="Aura.Component[]" required="false"></aura:attribute>
+    <aura:attribute name="sidebar" type="Aura.Component[]" required="false"></aura:attribute>
+    <aura:attribute name="content" type="Aura.Component[]" required="false"></aura:attribute>
+ 	<aura:attribute name="footer" type="Aura.Component[]" required="false"></aura:attribute>
+    <div class="pageLibre">
+    	<div class="container">
+            <div class="header slds-m-bottom_xx-large">
+                {!v.header}
+            </div>
+            <div class="contentPanel">
+                <div class="slds-grid slds-wrap"> 
+                  <div class="sidebar slds-col slds-size--1-of-1 slds-large-size--1-of-4"> 
+                   	{!v.sidebar}
+                  </div> 
+                  <div class="content slds-col slds-size--1-of-1 slds-large-size--3-of-4"> 
+                  	{!v.content}
+                  </div> 
+                  
+                 </div>
+                
+            </div>
+            <div class="footer">
+                {!v.footer}
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

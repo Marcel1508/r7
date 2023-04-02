@@ -1,0 +1,88 @@
+<!--
+   @description       : 
+   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+   @group             : 
+   @last modified on  : 02-22-2021
+   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+   Modifications Log 
+   Ver   Date         Author                               Modification
+   1.0   12-04-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+   -->
+<template>
+    <!-- si on reçoit une réponse de la fonction checkDisplayingSimilarProduct -->
+    <template if:true={hasRetrievedDeliveryMethods}>
+        <template if:true={hasDeliveryMethods}>
+            <!-- //si la réponse est true **********-->
+            <div class="slds-m-top_medium slds-m-bottom_x-medium slds-grid_align-center">
+<!-- 
+                <h1 class="slds-text-heading_medium slds-m-bottom_medium slds-wrap sectionTitre slds-align_absolute-center">
+                        Modes de livraison :
+                </h1> -->
+                <!-- ******** a remettre en commentaire ********** -->
+                <!-- <p class='slds-align_absolute-center'>
+                Certains modes de livraison ne sont disponibles 
+                que si la valeur du panier atteint un certain montant.
+                </p> 
+                <template for:each={shippingModes.data} for:item="shippingMode">
+                    <c-shipping-mode 
+                    key={shippingMode}
+                    canalname={shippingMode} 
+                    cartid={recordId} 
+                    prices={prices}
+                    currency={currencyCode}
+                    >
+                    </c-shipping-mode>   
+                </template>  -->
+                <!-- ***** -->
+                <template for:each={deliveryMethods} for:item="deliveryMethod">
+                    <c-shipping-mode 
+                    style="margin-top: 2px;"
+                    key={deliveryMethod.methodName}
+                    canalname={deliveryMethod.methodName} 
+                    montantminimum={deliveryMethod.minimum}
+                    prices={prices}
+                    currency={currencyCode}
+                    >
+                    </c-shipping-mode>
+                </template>
+            </div>
+    
+    </template>
+    <template if:false={hasDeliveryMethods}>
+        <!-- //Spinner pendant le chargement, ou quelque chose à afficher en cas d'erreur -->
+        <h1 class="slds-text-heading_medium slds-m-bottom_medium slds-wrap sectionTitre">
+            Aucun mode de livraison n'est disponible. Veuiller contacter votre magasin.
+         </h1>
+     </template>
+
+    </template> 
+    <template if:false={errorFetchingMethods}>
+        <template if:false={hasRetrievedDeliveryMethods}>
+            <!-- //Spinner pendant le chargement, ou quelque chose à afficher en cas d'erreur -->
+        <lightning-spinner class="slds-is-relative slds-align_absolute-center slds-m-around_large"
+           alternative-text="Loading shipping modes ..." size="medium" variant="brand"></lightning-spinner>
+        </template>
+    </template>
+    <template if:true={errorFetchingMethods}>
+        <h1 class="slds-text-heading_medium slds-m-bottom_medium slds-wrap sectionTitre">
+            {errorFetchingMethodsMessage}
+         </h1>
+    </template>
+    <!-- <template if:true={hasRetrievedDeliveryMethods}>
+        <template if:true={hasDeliveryMethods}>
+
+                <!- - <div
+                    key={deliveryMethod.Id}>
+                    <lightning-card title='Minimum Commande Drive'>
+                        <p class='slds-align_absolute-center'> {deliveryMethod.Minimum_Commande_Drive__c} € </p>
+                    </lightning-card>
+                    <lightning-card title='Minimum Commande Livraison'>
+                        <p class='slds-align_absolute-center'> {deliveryMethod.Minimum_Commande_Livraison__c} € </p>
+                    </lightning-card>
+
+                    <!- <p>Minimum Commande Drive:{deliveryMethod.Minimum_Commande_Drive__c} €</p>
+                    <p>Minimum Commande Livraison:{deliveryMethod.Minimum_Commande_Livraison__c} €</p> -
+                </div>  - - >
+</template></template></template> -->
+
+</template>

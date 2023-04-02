@@ -1,0 +1,23 @@
+<template>
+    <div class={progressIndicatorClass}>
+      <div class="slds-grid slds-path__track">
+        <div class="slds-grid slds-path__scroller-container">
+          <div class="slds-path__scroller">
+            <div class="slds-path__scroller_inner">
+              <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                <li for:each={stagesEnriched} for:item="stage" class={stage.class} role="presentation" key={stage.label}>
+                  <a aria-selected="false" class="slds-path__link" href="#" role="option" tabindex="-1">
+                    <span class="slds-path__stage">
+                      <lightning-icon variant="inverse" icon-name="utility:check" size="x-small"></lightning-icon>
+                      <span class="slds-assistive-text" if:true={stage.hasAssistiveText}>{stage.assistiveText}</span>
+                    </span>
+                    <span class="slds-path__title">{stage.label}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>

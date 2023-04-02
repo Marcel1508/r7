@@ -1,0 +1,16 @@
+<template>
+        <!-- si on reçoit une réponse de la fonction checkDisplayingSimilarProduct -->
+        <template if:true={isDisplayed.data}>
+            <!-- //si la réponse est true -->
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+                    Produits similaires
+                </h2>
+            </div>
+        </template>
+    <template if:false={isDisplayedhasData}>
+        <!-- //Spinner pendant le chargement, ou quelque chose à afficher en cas d'erreur -->
+        <lightning-spinner class="slds-is-relative slds-align_absolute-center slds-m-around_large"
+            alternative-text="Loading similar products ..." size="medium" variant="brand"></lightning-spinner>
+    </template>
+</template>

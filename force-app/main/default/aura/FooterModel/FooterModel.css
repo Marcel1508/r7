@@ -1,0 +1,78 @@
+.THIS {
+	background-color: rgb(207, 54, 75);
+	color:#fff;
+    line-height: 16px;
+}
+.THIS a{
+	color:#fff;
+}
+.THIS h3{
+	font-size: 16px;
+    font-weight: bold;
+    line-height: 28px;
+}
+
+.THIS .container{
+	max-width:1504px;
+    margin: auto;
+}
+.THIS #top-footer .slds-grid .slds-col{
+	padding: 11px 71px 11px 0;
+}
+.THIS #top-footer .slds-grid .slds-col:first-of-type{
+	padding-right: 0;
+    padding-left: 71px;
+}
+
+.THIS #top-footer
+{
+    padding: 21px;
+}
+.THIS #top-footer a img{
+        width: 185px;
+}
+.THIS #top-footer span {
+    background-color: #fff;
+    padding: 14px 10px;
+    border-radius: 31px;
+    display: inline-block;
+    float: left;
+    margin: 0 9px 6px 0;
+}
+.THIS #top-footer span img{
+        width: 35px;
+}
+.THIS #bottom-footer
+{
+   background-image: url(/promocash/s/sfsites/c/resource/bg_footer);
+    text-align: center;
+        background-size: cover;
+        padding: 75px;
+}
+.THIS #bottom-footer .container {
+    max-width: 1061px;
+}
+.THIS #bottom-footer h3{
+	margin-bottom: 11px;
+}
+
+.THIS a span img{
+    width: 39px;
+    margin: 31px 9px 0;
+}
+.THIS #bottom-footer .slds-grid .slds-col{
+	padding: 25px 57px 0;
+}
+@media (max-width: 1025px)
+{
+    .THIS #bottom-footer .slds-grid .slds-col {
+    	padding: 25px 34px 0;
+    }
+    .THIS #top-footer .slds-grid .slds-col:first-of-type {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .THIS #top-footer .slds-grid .slds-col {
+        padding: 11px 21px 11px 0;
+    }
+}

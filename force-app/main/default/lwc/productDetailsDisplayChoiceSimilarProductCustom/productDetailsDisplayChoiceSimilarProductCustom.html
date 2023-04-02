@@ -1,0 +1,15 @@
+<template>
+    <lightning-card class="cardProduct">
+        <template if:true={hasProduct}>
+            <a tabindex="-1" onclick={addQuantitySubstitutionCart} >
+                <div class="containerImage">
+                    <img src={productDefaultImageUrl} alt={productDefaultImageAlt} />
+                </div>
+                <p class="productName">{product.data.fields.Libell_Final_TA__c}</p>
+            </a>
+        </template>
+        <template if:true={productPrice.data}>
+            <p class="productPrice">{productPrice.data.unitPrice} {productPrice.data.currencyIsoCode}</p>
+        </template>
+    </lightning-card>   
+</template>

@@ -1,0 +1,17 @@
+.containerBGColor {
+    background-color: rgb(93, 150, 224);
+}
+.boxBGColor {
+    background-color: rgb(255, 255, 255);
+}           
+.validationboxBGColor {
+    background-color: rgb(221, 221, 221);
+}           
+.validationboxFooter {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(235, 235, 235);
+    text-align: center;
+ }

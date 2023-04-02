@@ -1,0 +1,44 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-18-2020
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   11-18-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+        <figure>
+         <template if:false={urlIsNull}>
+           <!-- <a tabindex="-1" href={image.url}> -->
+            <a href="" tabindex="0">
+             <img src={image.url} alt="">
+           </a>
+         </template>
+             <template if:true={urlIsNull}>
+                 <img src="/promocash/img/b2b/default-product-image.svg">
+             </template>
+        </figure>
+        <div class="product-details slds-col slds-p-vertical_medium slds-has-flexi-truncate">
+           <div class="slds-p-bottom_small">
+              <h3 class="slds-text-heading_medium product-name" title={name}>
+                 <a href="" tabindex="0">{name}</a>
+              </h3>
+              <!--think of an option to make it customizable (which field(s) is/are shown) w/ custom settings or smth-->
+           </div>
+           <div class="product-info">
+              <span class="sku-label">SKU#</span>
+              <span title={sku}>{sku}</span>
+           </div>
+        </div>
+        <!-- <div class="slds-col slds-size--3-of-5 slds-grid">
+            <c-wishlist-product-details-display-custom
+            if:true={hasProduct}
+            image={thumbnailurl}
+            name={name}
+            sku={sku}>
+         </c-wishlist-product-details-display-custom>
+         </div> -->
+   
+</template>

@@ -1,0 +1,8 @@
+<design:component >
+    <design:attribute name="cartId" label="cartId" description="The current web cart Id" />
+    <design:attribute name="deliveryMethodValue" label="deliveryMethodId" description="Selected delivery method Id" />
+    <design:attribute name="deliveryMethodFee" label="deliveryMethodFee" description="Selected delivery method shipping fee" />
+    <design:attribute name="shippingInstructions" label="shippingInstructions" description="Shipping instructions" />
+    <design:attribute name="orderId" label="orderId" description="The current orderId" />
+    <design:attribute name="selectedAddressIdValue" description="store the selected contact address" />
+</design:component>

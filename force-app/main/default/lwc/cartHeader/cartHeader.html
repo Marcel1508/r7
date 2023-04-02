@@ -1,0 +1,23 @@
+<template>
+    <!-- <div class="" style="    "> -->
+        <div class="slds-grid slds-wrap slds-grid_vertical-align-center headerContainer">
+            <div class="retourPanierCol slds-col slds-medium-size_3-of-12 slds-small-size_1-of-1" onclick={navigateToCart} >
+                <div class="retourBtn slds-button slds-button_neutral slds-var-p-around_small">
+                    <img src={MonPanier}/> 
+                    <span class="RetourPanierStyle RetourPanierText"> 
+                        &nbsp;Retour au panier&nbsp;
+                    </span>
+                </div>
+            </div>
+            <div class="slds-col slds-medium-size_6-of-12 slds-small-size_1-of-1 slds-text-align_center pcLogoCol" >
+                <img src={PromocashFlowHeader} onclick={navigateToHome}>
+            </div>
+            <div class="slds-col slds-medium-size_3-of-12 slds-small-size_1-of-1 paymentSecureCol">
+                <span class=""> 
+                    <img class="icon-padlock" src={Key}/> 
+                    &nbsp;Paiement sécurisé&nbsp;
+                </span>
+            </div>
+        </div>
+<!-- </div> -->
+</template>

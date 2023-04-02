@@ -1,0 +1,37 @@
+<template>
+    <template if:true={hasOpmStatusAndPFT}>
+        <template if:false={isDisabled}>
+            <button onclick={addToCartPromocashQuantity} 
+                class="slds-button slds-button_brand c-addToCartButton"
+                disabled={disabled}>
+                <!-- <lightning-icon 
+                    icon-name="utility:cart" 
+                    alternative-text="Add to Cart" 
+                    variant="inverse"
+                    title="cart inverse variant"
+                    size="x-small">
+                </lightning-icon> -->
+                <img class="pc-icon" src="/promocash/s/sfsites/c/resource/icone_panier_white" alt="Add to cart icon">
+                <span class="addToCart_text">&nbsp;&nbsp;Ajouter au panier</span>
+            </button>
+        </template>
+        <!-- <template if:true={isDisabled}>
+            <p>Veuillez appeler le Magasin pour commander ce produit.</p>
+        </template>  -->
+    </template>
+   
+    <!-- <span style="color:white">Non Disponible</span> -->
+    <!-- **MODAL DE CHOIX SI QUANTITE DEMANDEE NON DISPONIBLE**    quantityinstock={stockAndEnCours.data}-->
+        <c-add-to-cart-modal-choice
+            show-modal={showModal} 
+            communityid={communityid} 
+            productid={productid}
+            effectiveaccountid={effectiveaccountid}
+            quantity={quantity}
+            quantityinstock={stockAndEnCours.data}
+            onclose={closeModal}
+            parentis={parent}> 
+        </c-add-to-cart-modal-choice> 
+    <!-- **MODAL DE CHOIX SI QUANTITE DEMANDEE NON DISPONIBLE** -->
+        
+</template>

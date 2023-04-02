@@ -1,0 +1,86 @@
+<template>
+    <template if:true={hasPromotionData}>
+        <div class="containerPriceBox">
+            <template if:true={isNotPromotionStandard}>
+                <div class="containerYellow">
+                    <template if:true={isBRI}>
+                        <div class="textPriceYellow">{promotion.data.Remise_en_e__c}€</div>
+                        <div class="textLibelleYellow slds-text-title_caps">{promotion.data.Phrase_offre__c}</div>
+                    </template>
+                    <template if:true={isLVHO}>
+                        <template if:true={isOfferQ}>
+                            <div class="textQuantityYellow">{promotion.data.Quantite_minimum_de_commande__c}</div>
+                            <div class="textQuantityLibelleYellow slds-text-title_caps">{promotion.data.Phrase_offre__c}</div>
+                            <div class="textQuantityYellow">{promotion.data.Quantite_payee__c}</div>
+                        </template>
+                        <template if:true={isOfferP}>
+                            <div class="textQuantityYellow">-{promotion.data.Remise_en_p__c}%</div>
+                            <div class="textQuantityLibelleYellow slds-text-title_caps">{promotion.data.Phrase_offre__c}</div>
+                        </template>
+                        <template if:true={isOfferM}>
+                            <div class="textPriceYellow">{promotion.data.Remise_en_e__c}€</div>
+                            <div class="textLibelleYellow slds-text-title_caps">{promotion.data.Phrase_offre__c}</div>
+                        </template>
+                    </template>
+                </div>
+            </template>
+            <div class="containerRed">
+                <!-- <div class="triangleYellow"></div> -->
+                <!-- <template if:true={isNotPromotionStandard}>
+                    <div class="textPriceRed slds-m-right_xx-small">{promotion.data.Prix_sous_mecanique__c} €</div>
+                </template> -->
+                <template if:false={isNotPromotionStandard}>
+                    <div class="bgcolor-red textPriceRed slds-m-right_xx-small">{promotion.data.Prix_de_vente_promotion__c} €</div>
+                </template>
+                <template if:true={isLVHO}>
+                    <template if:true={isOfferM}>
+                        <div class="bgcolor-red textLibelleRed">le kg</div>
+                    </template>
+                    <template if:false={isOfferM}>
+                        <template if:true={hasProductLibelleCondionnement}>
+                            <div class="bgcolor-red textLibelleRed">{promotion.data.Produit__r.Libelle_du_conditionnement_vente__c}</div>
+                        </template>
+                    </template>
+                </template>
+                <template if:false={isLVHO}>
+                    <template if:true={hasProductLibelleCondionnement}>
+                        <div class="bgcolor-red textLibelleRed">{promotion.data.Produit__r.Libelle_du_conditionnement_vente__c}</div>
+                    </template>
+                </template>
+                <template if:true={isLVHO}>
+                    <template if:false={isOfferM}>
+                        <div class="bgcolor-red textLibelleRed">au lieu de {promotion.data.Prix_de_vente_promotion__c} €</div>
+                    </template>
+                </template>
+            </div>
+            <!-- <template if:true={isBRI}>
+                <div class="textPhrase">au lieu de&nbsp;
+                    <lightning-formatted-number
+                        style="text-decoration:line-through;"
+                        class="textPhrase"
+                        format-style="currency"
+                        currency-code={currencyCode}
+                        currency-display-as="symbol"
+                        maximum-fraction-digits="2"
+                        value={promotion.data.Prix_de_vente_promotion__c}>
+                    </lightning-formatted-number>
+                </div>
+            </template>
+            <template if:true={isLVHO}>
+                <div class="textPhrase">au lieu de&nbsp;
+                    <lightning-formatted-number
+                        style="text-decoration:line-through;"
+                        class="textPhrase"
+                        format-style="currency"
+                        currency-code={currencyCode}
+                        currency-display-as="symbol"
+                        maximum-fraction-digits="2"
+                        value={promotion.data.Prix_de_vente_promotion__c}>
+                    </lightning-formatted-number>
+                </div>
+            </template> -->
+
+            <div class="textPeriode">{promotion.data.Libelle_periode_de_promotion__c}</div>
+        </div>
+    </template>
+</template>

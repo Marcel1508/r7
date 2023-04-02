@@ -1,0 +1,35 @@
+<!--
+* @author       jan.straka@bluewolf
+* @date         2021-04-14
+* @description  Custom OrderSummaryRecordBanner for Community page
+-->
+<template>
+    <div align="right">
+        <lightning-button 
+            class="slds-m-horizontal_xx-small"
+            name="cancelOrder"
+            title={cancelOrderButton.title}
+            label={cancelOrderButton.label}
+            variant="brand" 
+            onclick={onCancelOrderClick} 
+            disabled={cancelOrderButton.disabled}></lightning-button>
+
+        <lightning-button
+            class="slds-m-horizontal_xx-small"
+            name="adjustOrder" 
+            title={adjustOrderButton.title}
+            label={adjustOrderButton.label} 
+            variant="brand"
+            onclick={onAdjustOrderClick}
+            disabled={adjustOrderButton.disabled}></lightning-button>
+        
+        <lightning-button 
+            class="slds-m-horizontal_xx-small"
+            name="againOrder" 
+            title={againOrderButton.title}
+            label={againOrderButton.label} 
+            variant="brand"
+            onclick={onAgainOrderClick} 
+            disabled={againOrderButton.disabled}></lightning-button>
+    </div> 
+</template>

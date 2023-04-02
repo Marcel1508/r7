@@ -1,0 +1,37 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 03-23-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   03-22-2021   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <div class="slds-is-relative containerCarousel" style={maxWidth} >
+        <template for:each={slidesData} for:item="slide">
+            <div class={slide.cardClasses} key={slide.slideIndex}>
+                <div class="slideNumbers">{slide.slideIndex}/{slidesData.length} </div>
+                <figure class="slds-p-around_xx-small slds-border_top slds-border_right slds-border_bottom slds-border_left" style="width: auto;height:auto;">
+                <img src={slide.image}/>
+                </figure>
+                <!-- <div class="text-section slds-p-around_medium">
+                    <h3 class="slds-text-heading_large">{slide.heading}</h3>
+                    <div class="slds-text-heading_small">{slide.description}</div>
+                </div> -->
+            </div>
+        </template>
+        <template if:true={hasMoreOneImage}>
+            <a class="prev" onclick={backSlide}>&#10094;</a>
+            <a class="next" onclick={forwardSlide}>&#10095;</a>
+        </template>
+    </div>
+    <div class="slds-text-align_center slds-p-around_medium c-img-container slds-grid slds-grid_align-center" >
+        <template for:each={slidesData} for:item="slide">
+            <img src={slide.image}  class="slds-col c-carousel-img slds-size_1-of-3" data-id={slide.slideIndex} key={slide.slideIndex} onclick={currentSlide}/>
+            <img src={slide.image}  class="slds-col c-carousel-img slds-size_1-of-3"  data-id={slide.slideIndex} key={slide.slideIndex} onclick={currentSlide}/>
+            <img src={slide.image}  class="slds-col c-carousel-img slds-size_1-of-3"  data-id={slide.slideIndex} key={slide.slideIndex} onclick={currentSlide}/>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,41 @@
+<apex:page standardController="Facture__c" showHeader="false" extensions="Einvoice_ServiceManager">     
+	<head>
+       <title>Télécharger Facture PDF</title>
+    </head>
+    
+    <script>
+        
+    var base64String = "{!facturePDF}";
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }   
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], {type: 'application/pdf'});
+    const blobUrl = URL.createObjectURL(blob);
+    
+     window.onload = function funLoad() { 
+         //const url = window.URL.createObjectURL(new Blob([blob]));
+         const url = blobUrl;
+         const link = document.createElement('a');
+       	 link.href = url;
+         const factureDateForm = "{!factureDateFormatted}";
+         if(factureDateForm == '' || factureDateForm == undefined || factureDateForm == null) { 
+         	 link.setAttribute('download', '{!factureName}_{!numFacture}.pdf');
+         } else {
+             link.setAttribute('download', '{!factureName}_{!numFacture}_{!factureDateFormatted}.pdf');
+         }
+         document.body.appendChild(link);
+         link.click();
+         document.body.removeChild(link);
+         window.setTimeout(closeMethod, 500); 
+     } 
+     
+    function closeMethod() {
+        window.close();
+    }     
+ 
+  </script>
+  
+</apex:page>

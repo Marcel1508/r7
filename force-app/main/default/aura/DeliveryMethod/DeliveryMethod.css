@@ -1,0 +1,147 @@
+.THIS {
+     background-color: white; 
+}
+.THIS .slds-card__body{
+     margin-top: var(--lwc-varSpacingVerticalSmall,0.75rem);
+     margin-bottom: var(--lwc-varSpacingVerticalSmall,0.75rem);
+     margin-block-end: 200px;
+     
+ }
+.THIS .container{
+     height: 50px;
+     border-radius: nullpx;
+     padding: 12px;
+}
+
+.THIS .c-container {
+    max-width: 800px;
+}
+
+
+.THIS .slds-select{
+     height: fit-content;
+
+}
+
+.THIS .stylingMode {
+     font-family: Helvetica Neue;
+     font-size: 18px;
+     font-weight: 100;
+     line-height: 22px;
+     text-align: left;
+     color:red;
+}
+
+.THIS .adresseLivraison {
+    font-family: Helvetica Neue;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+    text-align: left;
+    color: #000000;
+}
+
+.THIS .stylingMode .slds-form-element__label {
+    font-family: Helvetica Neue;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 110%;
+    text-align: left;
+    color: #000000;
+}
+
+.THIS .ModeC{
+     font-family: Helvetica Neue;
+     font-size: 14px;
+     font-weight: 400;
+     line-height: 17px;
+     letter-spacing: 0em;
+     text-align: left;
+     color: #000000;
+}
+
+.THIS .styleMaLivraison{
+     font-family: Helvetica Neue;
+     font-size: 28px;
+     font-weight: 500;
+     line-height: 34px;
+     text-align: left;
+     color:#000000;
+}
+.THIS .modeRetraitTitle {
+     font-family: Helvetica Neue;
+     font-size: 24px;
+     font-weight: 500;
+     line-height: 29px;
+     text-align: left;
+}
+
+.THIS .modeRetraitSubtitle {
+    font-size: 1rem;
+    text-align: left;
+}
+
+.THIS.c-container {
+     border: 1px solid #d8dde6;
+ }
+
+ .THIS .custom-box {
+     text-align: center;
+     padding: 1rem;
+     border: 1px solid #d8dde6;
+     border-radius: 4px;
+ }
+
+.THIS .styleInstruction {
+      width: 70%;
+ }
+
+ .THIS .styleInstruction .slds-form-element__label {
+    color: #3E3E3C;
+    font-size: medium;
+}
+
+ .THIS .frais-container {
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     justify-content: space-between;
+ }
+
+ /*.THIS .cShippingAddressCustom .slds-radio .slds-form-element__label, 
+ .THIS .cPaymentMethod .slds-radio .slds-form-element__label {
+    color:red;
+   
+  
+ }*/
+
+ /*.THIS .cPaymentMethod .slds-radio .slds-form-element__label {
+     font-size:14px;
+ }*/
+
+ .THIS .slds-form-element__label {
+     font-size:14px;
+     color: #3E3E3C;
+ }
+
+ .THIS .icon-container {
+     padding: 0 0 0.4rem;
+ }
+
+ 
+
+
+ /* Tablet screens */
+@media only screen and (max-width: 64em) {
+    .THIS .frais-container {
+        justify-content: space-between;
+    }
+
+}
+
+/* Phone screens */
+@media only screen and (max-width: 47.9375em) {
+    .THIS .styleInstruction {
+        width: 100%;
+   }
+}

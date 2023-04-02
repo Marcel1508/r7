@@ -1,0 +1,60 @@
+<!--
+   @description       : 
+   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+   @group             : 
+   @last modified on  : 01-17-2021
+   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+   Modifications Log 
+   Ver   Date         Author                               Modification
+   1.0   12-04-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+   -->
+
+   <template>
+      <template if:true={canSelect}>
+        
+         <div  class="slds-grid stylingLivraison">
+            <div class="slds-col slds-size--1-of-2 slds-grid  styleLivraisonModePart1 stylingMode ">
+               <!-- <img class="LivraisonModeIcon" src={ModeLivraison1}/> -->
+               <img class="LivraisonModeIcon" src={iconMode}/>
+               <span class=" styleLivraisonModePart1 stylingMode" >{canalName}</span>
+            </div>
+            <div class="slds-col slds-grid slds-size--1-of-2 " style="text-align: right;">
+               <div class=" slds-col slds-size--6-of-7">
+                  <lightning-card 
+                     style="color : #509A23; margin-top: auto; margin-bottom: auto;"
+                     title={disponibiliteStatut} >   
+                  </lightning-card> 
+               </div>
+               <div class="slds-col slds-size--1-of-7" style=" margin-top: auto; margin-bottom: auto; height: 30px; width: 30px;">
+                  <img src={checkOK}/> 
+               </div>
+            </div>
+            
+         </div>
+      
+      </template>
+
+      <!-- <div> -->
+        <!-- <template if:true={canSelect}>
+            <template if:false={noMontant}>
+               <p class='slds-align_absolute-center' style='color:green'>
+                  Panier minimum de {montantminimum} {currency} atteint.
+               </p>
+            </template>
+         </template> -->
+      <template if:false={canSelect}>
+
+         <div  class="slds-grid stylingLivraison2">
+            <div class="slds-col slds-size--1-of-2 slds-grid ">
+               <img class="LivraisonModeIcon" src={iconMode}/>
+               <span class="stylingMode2" >{canalName}</span>
+            </div>
+            <div class="slds-col slds-size--1-of-2 "> 
+               <div style=" color :#414141;font-family: Helvetica Neue;font-size: 14px; font-weight: 500; text-align: right; padding:12px " >   
+                  Il vous manque {decompte} {currency}
+               </div> 
+            </div>
+         </div> 
+
+      </template> 
+   </template>

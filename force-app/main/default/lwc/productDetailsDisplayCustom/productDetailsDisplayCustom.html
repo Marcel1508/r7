@@ -1,0 +1,528 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-06-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   11-13-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <lightning-breadcrumbs 
+    class="slds-p-bottom_medium slds-container_x-large c-product-page-breadcrumbs"
+    style="margin: 0 auto;
+    width: 100%;
+    padding: 1rem;">
+        <template for:each={_resolvedCategoryPath} for:item="level">
+            <lightning-breadcrumb
+                key={level.name}
+                label={level.name}
+                href={level.url}>
+            </lightning-breadcrumb>
+        </template>
+    </lightning-breadcrumbs>
+    <div class="slds-grid slds-grid_vertical product-container slds-container_x-large">
+        <div class="demo-only demo-only--sizing slds-grid slds-wrap slds-p-vertical_small slds-p-horizontal_xx-large product-container_top">
+            <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-2" style= "max-height:50%">
+                <!-- Image -->
+                <div class="containerImage slds-p-around_large">     
+                    <!-- <template if:true={hasPromotions}>
+                        <div class="bannerImage">
+                            <img src={bannerPromo} alt ="Banner promo"/>
+                        </div>
+                    </template> -->
+                    <template if:true={hasMedias}>
+                        <template if:false={hasDefaultImage}>
+                            <c-custom-carousel 
+                                slides-data={slides} 
+                                custom-width='400' 
+                                show-full=true>
+                            </c-custom-carousel>
+                        </template>
+                    </template>   
+                    <template if:true={hasDefaultImage}>
+                        <img 
+                            src={defaultImage} 
+                            alt ="Image par défaut"/>
+                    </template>    
+                </div>
+            </div> 
+            <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-2" style="max-height:fit-content; background: #FFFFFF;">   
+                <template if:true={hasOpms}>
+                    <div class="product-statut">
+                        <template if:true={hasStatusLabel}>
+                           <template if:true={ifProductStatutGreen}>
+                              <div class="circleBase circleGreen"></div>
+                           </template>
+                           <template if:true={ifProductStatutOrange}>
+                              <div class="circleBase circleOrange"></div>
+                           </template>
+                           <template if:true={ifProductStatutRed}>
+                            <div class="circleBase circleRed"></div>
+                         </template>
+                           {statutLabel}
+                        </template>
+                     </div>
+                </template>
+
+                <template if:true={hasSku}>		
+                <div class="slds-p-top_x-small slds-p-bottom_medium">SKU : {sku}</div>		
+                </template>
+
+                <template if:false={hasOpms}>
+                    <div class="product-statut">
+                        <template if:true={hasStatusLabel}>
+                           <template if:true={ifProductStatutRed}>
+                              <div class="circleBase circleRed"></div>
+                           </template>
+                           Indisponible
+                        </template>
+                     </div>
+                </template>
+
+                <template if:true={hasCodeIFLS}>
+                    <div class="slds-p-top_x-small" style="color:#929292;">Code IFLS : {getCodeIFLS}</div>
+                </template>
+                <h2 class="slds-text-heading_medium">
+                    <lightning-formatted-rich-text
+                    value={DisplayedProductName.data}
+                    class="product-name"
+                ></lightning-formatted-rich-text></h2>
+
+                <template if:true={hasOrigines}>
+                    <div class="slds-p-top_x-small">Origines : {getOrigines}</div>    
+                </template> 
+                
+               <template if:true={hasConditionnement}>
+                    <div class="slds-p-top_x-small">Conditionnements : {conditionnement}</div>
+                </template>
+
+                <section >
+                    <template if:true={hasIndicateurBio}> 
+                        <img class="pc-picto" style="" src="/promocash/s/sfsites/c/resource/icone_bio">
+                    </template> &nbsp; &nbsp;
+                     <template if:true={hasLabelRouge}> 
+                        <img class="pc-picto" style="" src="/promocash/s/sfsites/c/resource/icone_rouge_cart"> 
+                     </template>  
+               </section>
+                            
+                <!-- PICTOOOOOOOOOOOOOO --> 
+
+                <template if:true={hasPic}>
+                    <div class="product-info">
+                            <lightning-formatted-rich-text value='{picto}'></lightning-formatted-rich-text>
+                    </div>
+                </template>
+                
+                <template if:false={hasPic}>
+                    <template if:true={hasPicto}>
+                        <div class="product-info"><lightning-formatted-rich-text value='{getPicto}'></lightning-formatted-rich-text></div>
+                    </template>    
+                </template>
+                
+            
+
+            <div class="slds-grid slds-col slds-align-bottom slds-wrap" >
+                    <div class="price slds-col slds-size_12-of-12 slds-medium-size_12-of-12">
+                        <template if:false={hasPromotions}>
+                            <span if:false={hasPrice}>
+                                <template if:true={isGuestUser}>
+                                    <span if:true={hasGuestUserPromotions}>
+                                        <div class="container-promo">
+                                            <c-promotions-price-box
+                                            product-id={recordId}
+                                            effective-account-id={effectiveAccountId}
+                                            promotion={guestUserPromo}>
+                                            </c-promotions-price-box>   
+                                        </div>
+                                    </span>    
+                                    <span if:false={hasGuestUserPromotions}>{priceNotFoundMessage}</span>
+                                </template>
+                                <template if:false={isGuestUser}>
+                                    {priceNotFoundMessage}
+                                </template>
+                            </span>
+                            <template if:true={hasPrice}>
+                                <span if:true ={hasTaxeEmballageUnitaire} class="slds-text-heading_large" style="color: brown;">*</span>
+                                <lightning-formatted-number
+                                    if:true={hasPrice}
+                                    currency-code={price.currency}
+                                    format-style="currency"
+                                    value={price.negotiated} class={getPriceCssClass}
+                                > 
+                                </lightning-formatted-number> 
+                            </template>
+                            <!--<div if:true ={hasTaxeEmballageUnitaire} class="note">*Prix n’incluant pas le prix de la consigne de {taxeemballageunitaire.data}€</div>-->   
+                        </template>
+                    </br>
+                        <template if:true={hasOpms}>
+                            <template if:true={hasLibelleConditionnement}>
+                                <div class="slds-p-top_x-small slds-p-bottom_medium">{libelleConditionnement}</div>
+                            </template>
+                        </template> 
+                            <template if:true={hasVignetteAlcool}>
+                                <!--Montant unitaire Vignette Hors Taxe : &nbsp;-->
+                                *Prix hors cotisation sécurité sociale : &nbsp;
+                                <lightning-formatted-number
+                                    currency-code={price.currency}
+                                    format-style="currency"
+                                    value={getVignetteAlcool} class="slds-text-heading_small"
+                                    > €
+                                </lightning-formatted-number>
+                            </template>    
+                    </div>
+                    <template if:true={hasPromotions}>
+                        <div class="container-promo">
+                            <c-promotions-price-box
+                            product-id={recordId}
+                            effective-account-id={effectiveAccountId}
+                            promotion={promotion}>
+                            </c-promotions-price-box>   
+                        <div if:true ={hasTaxeEmballageUnitaire}>*</div> 
+                           <!--  price before promotion  -->
+                           <p if:true={hasPrice} class="au-lie-de slds-p-top_xx-small margin-right margin-left-auto">
+                            au lieu de&nbsp; 
+                            <!-- <span class="au-lie-de-prix">{price.negotiated}</span>€ -->
+                            <lightning-formatted-number
+                            style="text-decoration:line-through;"
+                            format-style="currency"
+                            currency-code={currencyCode}
+                            currency-display-as="symbol"
+                            maximum-fraction-digits="2"
+                            value={promotion.data.Prix_de_vente_promotion__c}>
+                        </lightning-formatted-number> 
+                        </p>
+                        <p class="slds-p-top_xx-small slds-p-bottom_xx-small price-avec-promotion margin-right margin-left-auto">
+                            <lightning-formatted-number
+                                if:true={hasPrice}
+                                currency-code={price.currency}
+                                format-style="currency"
+                                value={prixPromo} 
+                                class="slds-text-heading_large product-price">
+                            </lightning-formatted-number>
+                        </p> 
+                    </div>
+                    </template>
+   
+                    <div class="price slds-grid slds-size_2-of-2 " style="max-width:70%;">
+                        <!-- Test if Client has a specifique prix -->
+                        <div class="slds-col slds-size_1-of-2">
+                            <!-- <template if:false={hasPromotions}> -->
+                                <template if:false={isPFT}>
+                                    <template if:true={hasPrixSpecifique}>
+                                        <template if:true={hasPrixUnitePS}> Prix à l'unité : &nbsp;
+                                            <lightning-formatted-number
+                                                currency-code={price.currency}
+                                                format-style="currency"
+                                                value={prixUnitePS} 
+                                                class="prixAUnite slds-text-heading_small"
+                                                > €
+                                            </lightning-formatted-number>
+                                        </template>
+                                        <br>
+                                        <template if:true={hasPrixKiloPS}>
+                                            <lightning-formatted-number
+                                                currency-code={price.currency}
+                                                format-style="currency"
+                                                value={prixKiloPS} 
+                                                class={getKGPriceCssClass}
+                                                >
+                                            </lightning-formatted-number>
+                                            <span class={getKGPriceCssClass}>/Kg</span>
+                                        </template>
+                                        <br>
+                                        <template if:true={hasPrixLitrePS}> Prix au litre : &nbsp;
+                                            <lightning-formatted-number
+                                                currency-code={price.currency}
+                                                format-style="currency"
+                                                value={prixLitrePS} 
+                                                class="prixAuLitre slds-text-heading_small"
+                                                > €
+                                            </lightning-formatted-number>
+                                        </template>
+                                    </template>
+
+                                    <template if:false={hasPrixSpecifique}> 
+                                        <template if:true={hasOpms}>
+                                            <template if:true={hasPrixUnite}>
+                                                Prix à l'unité : &nbsp;
+                                                <lightning-formatted-number
+                                                    class="prixAUnite slds-text-heading_small"
+                                                    currency-code={price.currency}
+                                                    format-style="currency"
+                                                    value={prixUnite}
+                                                    >
+                                                </lightning-formatted-number> 
+                                            </template>
+                                        </template>                                       
+                                        <template if:true={hasPrixKilo}>
+                                            <lightning-formatted-number 
+                                                class={getKGPriceCssClass}
+                                                currency-code={price.currency}
+                                                format-style="currency"
+                                                value={getPrixKilo}
+                                                >
+                                            </lightning-formatted-number>
+                                            <span class={getKGPriceCssClass}>/Kg</span>
+                                        </template>
+                                        <template if:true={hasPrixLitre} >
+                                                Prix au litre : &nbsp;
+                                            <lightning-formatted-number
+                                                    class="prixLitre slds-text-heading_small"
+                                                    currency-code={price.currency}
+                                                    format-style="currency"
+                                                    value={getPrixLitre}
+                                                > €
+                                            </lightning-formatted-number>
+                                        </template>
+                                       <!--   <template if:true={hasMontantTVA}>  -->
+                                              <!--   <div style="height: 17px; max-width:100%; border-radius: 0px;"> TVA : 0 &nbsp;€</div>  -->
+                                        <!--  </template>  -->
+                                        
+                                    </template>
+                                </template>
+                            <!-- </template> -->
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <template if:true={hasEcotaxe}>
+                                <div  style="max-width: 100%;border-radius:0 px;"> 
+                                    <p style="font-style: normal;font-weight: 400;line-height: 17px; text-align: right;">
+                                        Dont &nbsp;
+                                        <lightning-formatted-number
+                                        currency-code={price.currency}
+                                        format-style="currency"
+                                        value={getEcotaxe} 
+                                    > 
+                                    </lightning-formatted-number>
+                                    &nbsp;en Ecotaxe
+                                    </p> 
+                                </div>
+                            </template>
+                            <template if:true={hasMontantConsigne}>
+                                <div style=" max-width:100%; border-radius: nullpx;"> 
+                                    <p style=" font-style: normal;font-weight: 400;line-height: 17px;text-align: right;">Montant consigne :&nbsp;&nbsp;{getMontantConsigne} €</p> </div>
+                            </template>
+                            <!-- <template if:false={hasMontantConsigne}>
+                                <div style=" max-width:100%; border-radius: nullpx;"> 
+                                    <p style=" font-style: normal;font-weight: 400;line-height: 17px;text-align: right;"> Montant consigne : 0&nbsp;€ </p> </div>
+                            </template> -->
+                        </div>
+                    </div>       
+                    <div if:true ={hasTaxeEmballageUnitaire} class="note">*Prix n’incluant pas le prix de la consigne de {taxeemballageunitaire.data} &nbsp;€</div>     
+                    <div class="slds-grid slds-wrap slds-size_12-of-12" style="margin-left:0">
+                        <template if:true={hasOpmStatusAndPFT}>
+                            <template if:false={isDisabled}>
+                                <input
+                                    class="slds-col qteInput slds-medium-size_2-of-12 selector-input slds-m-top_small slds-p-horizontal_medium slds-p-vertical_x-small"
+                                    max="100000"
+                                    min="1"
+                                    data-my-id="in1"
+                                    required
+                                    type="number"
+                                    value={quantity}
+                                    onchange={handleQuanitytChange}
+                                />
+                            </template>
+                        </template>
+
+                        <template if:true={isGuestUser}>
+                            <input
+                                class="slds-col qteInput slds-medium-size_2-of-12 selector-input slds-m-top_small slds-p-horizontal_medium slds-p-vertical_x-small"
+                                max="100000"
+                                min="1"
+                                data-my-id="in2"
+                                required
+                                type="number"
+                                value={quantity}
+                            />
+                            <button
+                                    onclick={redirectToLogin}
+                                    class="c-seConnecter slds-button slds-button_brand slds-m-top_small"> 
+                                    SE CONNECTER 
+                            </button>
+                        </template>
+                      <!--  <template if:true={hasOpmStatusAndPFT}> -->
+
+                            <template if:false={isDisabled}>
+                                <div class="slds-col slds-align-bottom slds-m-top_small c-buttons-container">
+                                    <c-add-to-cart-with-modal-choice 
+                                        class="slds-button c-addToCartButton stylingAddCard "
+                                        productid={recordId}
+                                        effectiveaccountid={effectiveAccountId}
+                                        communityid={cmtyId}
+                                        opm={opm}
+                                        is-p-f-t={isPFT}
+	                                    stock-and-en-cours={stockAndEnCours}
+                                        quantity={quantity}
+                                        disabled={buttonDisabledAddToCart}
+                                        if-product-statut-orange={ifProductStatutOrange}
+                                        modallaunchedby="pdp"
+                                        >
+                                    </c-add-to-cart-with-modal-choice> 
+                                    <span class="c-space-btw-inputs">&nbsp;</span>
+                                    <button
+                                        onclick={notifyAddToList}
+                                        class="slds-button slds-button_outline-brand stylingAddList"> 
+                                        <!-- <lightning-icon 
+                                            icon-name="utility:record_create" 
+                                            alternative-text="create record" 
+                                            title="add to list"
+                                            size="xx-small">
+                                        </lightning-icon>  -->
+                                        <img class="pc-icon" src="/promocash/s/sfsites/c/resource/icone_add_colored" alt="Add to list icon"/>
+                                        &nbsp; Ajouter à une liste
+                                    </button>  
+                                    <c-list-add-itemsor-create-custom
+                                        product-id={recordId}
+                                        account-id={effectiveAccountId}
+                                        quantity={quantity}>
+                                    </c-list-add-itemsor-create-custom>                    
+                                </div>
+                            </template>
+                      <!--  </template> -->
+                    </div>
+
+                </div> 
+            </div> 
+        </div>
+        <div style="width: 95%; margin:0 auto 3rem;" >   
+            <div class="slds-tabs_medium " style= " --slds-c-tabs-item-text-color-active: #CE394C;
+                                                                --slds-c-tabs-item-color-border-hover:#CE394C;
+                                                                --slds-c-tabs-item-spacing-inline-start:9%;
+                                                                --slds-c-tabs-item-spacing-inline-end:9%;">
+
+                   <lightning-accordion  allow-multiple-sections-open onsectiontoggle={handleSectionToggle} active-section-name={activeSections}>
+                      <lightning-accordion-section name="A" label=' + Cliquez pour voir plus de détails' >
+
+                        <lightning-tabset style="max-width: 90%;" class="slds-tabs_scoped slds-tabs_medium">
+                            <lightning-tab  label="Description " style="max-width: 90%; left: 5%;;border-radius: nullpx;">
+                                <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle} active-section-name={activeSections}>
+                                <lightning-accordion-section 
+                                    name="Conseil d'utilisation" 
+                                    label="Conseil d'utilisation">
+                                    <div class="styleDescription"> 
+                                        <p>{conseilUtilisation}</p>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section 
+                                    name="Informations et avertissements" 
+                                    label="Informations et avertissements">
+                                    <div class="styleDescription"> 
+                                        <p>{infosAvertissement}</p>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section 
+                                    name="mentionsLegales" 
+                                    label="Mentions Légales">
+                                    <div class="styleDescription"> 
+                                        <p>{mentionsLegales}</p>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section 
+                                    name="degreAlcools" 
+                                    label="Degré D'alcoolémie">
+                                    <div class="degreAlcool"> 
+                                        <p>{infosAvertissement}</p>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section 
+                                    name="couleur" 
+                                    label="Couleur">
+                                    <div class="styleDescription"> 
+                                        <p>{couleur}</p>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section 
+                                    name="cuvee" 
+                                    label="Cuvée">
+                                    <div class="styleDescription"> 
+                                        <p>{cuvee}</p>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section 
+                                    name="cepages" 
+                                    label="Cépage">
+                                    <div class="styleDescription"> 
+                                        <p>{cepagesuvee}</p>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section 
+                                    name="accordMetsVins" 
+                                    label="Accord mets vins">
+                                    <div class="styleDescription"> 
+                                        <p>{accordMetsVins}</p>
+                                    </div>
+                                </lightning-accordion-section>
+                            </lightning-accordion>
+                          
+                   </lightning-tab> 
+                  <!--  </lightning-accordion-section>
+                    <lightning-accordion-section   name="B" label=" + Ingrédients & nutritions"> -->
+                   <lightning-tab  class=" slds-tabs_scoped__item styleDescription"  label="Ingrédients et Nutrition"> 
+                        <div>
+                            <div style="max-height:fit-content ;max-width: 100%; left: 6%; border-radius: nullpx;"><h5>Liste des ingrédients</h5> </div>
+                                 <div class="styleDescription"><p class="styleDescription">{ingredients}</p> </div>
+                            </br>
+                            <table class="customers">
+                                <tr> 
+                                    <td style="width:80%; padding: 1%;"> Informations Nutritionnelles </td>
+                                    <td style="padding: 1%; text-align: center;">Pour 100g</td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <th>KJ</th> 
+                                    <th style="text-align: right;">{energieKJ}</th>
+                                </tr> 
+                                <tr class="bg-white"> 
+                                    <th>Kcal</th> 
+                                    <th style="text-align: right;">{energieKcal}</th>
+                                </tr>
+                                <tr class="bg-white"> 
+                                    <th>Matieres grasse</th> 
+                                    <th style="text-align: right;">{matieresGrasse}</th>
+                                </tr>                        
+                                <tr class="bg-white">
+                                    <th>Acides gras satures</th>
+                                    <th style="text-align: right;">{dontAcidesGras}</th>
+                                </tr>
+                                <tr class="bg-white">
+                                    <th>Glucides</th><th style="text-align: right;">{glucides}</th> 
+                                </tr>                       
+                                <tr class="bg-white">
+                                    <th>Sucres</th><th style="text-align: right;">{dontSucres}</th>
+                                </tr>
+                                <tr class="bg-white">
+                                    <th>Proteines</th><th style="text-align: right;">{Proteines}</th>
+                                </tr>                                             
+                                <tr class="bg-white">
+                                    <th>Sel</th>
+                                    <th style="text-align: right;">{sel}</th>
+                                </tr>
+                            </table>
+                        </div>
+                    <!--  </lightning-accordion-section > -->
+                  </lightning-tab> 
+                 <!-- <lightning-accordion-section name="C" label="+ Caractéristiques"> -->
+                    <lightning-tab class=" slds-tabs_scoped__item styleDescription" style="margin-top: 30px;" label="Caractéristiques">
+                            </br> 
+                        <table class="customers">
+                            <tr style="background: #FFFFFF;"><td style="padding: 1%;">Poids brut</td><th style=" text-align: right;" >Pour 100g</th></tr>
+                            <tr style="background: #FFFFFF;"><td style="padding: 1%;"> Conditions de conservation</td><th style="padding: 1%;text-align: right;">{getConservation}</th></tr>
+                            <tr style="background: #FFFFFF;"><td style="padding: 1%;">Allergènes</td><th style="padding: 1%;text-align: right;">{allergenes}</th></tr>
+                            <tr style="background: #FFFFFF;"><td style="padding: 1%;">Label rouge</td><th style="padding: 1%;text-align: right;">{labelRouge}</th></tr>
+                            <tr style="background: #FFFFFF;"><td style="padding: 1%;">AOC</td><th style="padding: 1%;text-align: right;">{getAoc}</th></tr> 
+                        </table>
+                   </lightning-tab> 
+                  <!--  </lightning-accordion-section> -->
+               </lightning-tabset>   
+            </lightning-accordion-section>
+        </lightning-accordion>
+          <!--  </lightning-accordion> -->
+            </div>
+        </div>
+        <br/>
+        <div class="slds-grid slds-wrap slds-p-vertical_small slds-p-horizontal_xx-large">
+            <c-similar-products></c-similar-products>
+        </div>
+    </div>
+</template>

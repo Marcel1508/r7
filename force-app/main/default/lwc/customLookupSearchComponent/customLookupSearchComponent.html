@@ -1,0 +1,32 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 02-18-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   12-26-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_4-of-4">
+            <div>
+                <!-- Create an Input Field where user can enter text to find the
+                Records-->
+                <template if:true={charlimitZero}>
+                    <lightning-input variant="label-hidden" 
+                        label="Search Record" value={searchKey} type="search" 
+                        onchange={handleChange} placeholder="Entrez le nom du compte">
+                    </lightning-input>
+                </template>
+                <template if:false={charlimitZero}>
+                    <lightning-input variant="label-hidden" 
+                        label="Search Record" value={searchKey} type="search" maxlength={charlimit}
+                        onchange={handleChange} placeholder="Entrez le nom du compte">
+                    </lightning-input>
+                </template>                
+            </div>
+        </div>
+    </div>
+</template>

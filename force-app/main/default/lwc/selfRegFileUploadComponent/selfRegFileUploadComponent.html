@@ -1,0 +1,13 @@
+<template>   
+    <div>
+        <lightning-input label={fileTitle} name="file uploader" onchange={handleFilesChange} type="file" multiple required={isrequired}></lightning-input>
+    </div>
+    <div class="slds-text-body_small slds-text-color_error">{fileName}</div>
+    <!--<template if:true={showLoadingSpinner}>
+            <lightning-spinner alternative-text="Uploading......" size="medium"></lightning-spinner>
+        </template>
+    </div><br/>
+    <div>
+        <lightning-button class="slds-m-top--medium" label={UploadFile} onclick={handleSave} variant="brand" disabled={isTrue}></lightning-button>
+    </div>-->
+</template>

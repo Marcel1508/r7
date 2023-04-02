@@ -1,0 +1,20 @@
+.b2BSection {
+    font-family: Helvetica Neue;
+    color: #72BF44;  
+    font-size: 21px;
+    font-weight: 1200px;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.b2BField {
+    color:grey; 
+    font-size: 16px;
+    font-family : Helvetica Neue;
+}
+
+.b2BValue {
+    font-size: 15px;
+    font-family : Helvetica Neue;
+}

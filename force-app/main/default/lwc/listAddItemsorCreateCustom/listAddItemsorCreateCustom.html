@@ -1,0 +1,75 @@
+<template>
+          <template if:true={showModal}>
+              <div>
+                  <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                      aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                      <div class="slds-modal__container">
+                          <header class="slds-modal__header">
+                              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                  title="Close" onclick={onclickClose}>
+                                  <lightning-icon icon-name="utility:close" alternative-text="close" variant="warning"></lightning-icon>
+                                  <span class="slds-assistive-text">Close</span>
+                              </button>
+                              <slot name="header">
+                                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Ajouter les articles à la liste</h2>
+                              </slot>
+                          </header>
+                          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="overflow: visible">
+                              <slot name="body">
+                                <fieldset class="slds-form-element">
+                                  <legend class="slds-form-element__legend slds-form-element__label"></legend>
+                                  <div class="slds-form-element__control">
+                                    <span class="slds-radio">
+                                      <input data-id="radioInputNew" checked={newListChecked}  type="radio" id="radio-43" value="new" name="default" onchange={selectRadio} class="newListClass" />
+                                      <label class="slds-radio__label" for="radio-43">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">Créer une liste</span>
+                                      </label>
+                                    </span>
+                                    <div class="slds-p-vertical_medium slds-p-horizontal_large">
+                                      <lightning-input required label="Nom de la liste" data-id="listName" onchange={handleNomNewList} value={namenewlist} class="slds-var-m-bottom_x-small"></lightning-input>
+                                    </div>                                 
+                                    <span class="slds-radio">
+                                      <input type="radio" id="radio-44" checked={existingListChecked} value="existing" name="default" onchange={selectRadio}/>
+                                      <label class="slds-radio__label" for="radio-44">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">Ajouter à une liste existante</span>
+                                      </label>
+                                    </span>
+                                    <div class="slds-p-vertical_medium slds-p-horizontal_large">
+                                      <lightning-combobox
+                                      dropdown-alignment="auto"
+                                      name="WishList"
+                                      label="Mes listes"
+                                      value={value}
+                                      placeholder="Selectionner votre Liste"
+                                      options={optionsWishlist}
+                                      onchange={handleWishListChange}
+                                    >
+                                    </lightning-combobox>
+                                    </div>                                        
+                                  </div>
+                                </fieldset>                             
+                              </slot>
+                          </div>
+
+                          <footer class="slds-modal__footer">
+                                  <button class="slds-button slds-button_neutral" onclick={onclickClose}>Annuler</button>
+                                 <!-- <lightning-button 
+                                  variant="brand"
+                                  label="Continuer"
+                                  title="Continuer"
+                                  onclick={handlePositive}
+                                  class="slds-m-left_small"
+                                  disabled={disableContinueButton}
+                              ></lightning-button>    -->     
+                              <button class="slds-button slds-button_neutral" onclick={handlePositive} disabled={disableContinueButton}>Continuer</button>                    
+                                                   
+                          </footer>
+                      </div>
+                  </section>
+                  <div class="slds-backdrop slds-backdrop_open"></div>
+              </div>
+          </template>
+
+  </template>

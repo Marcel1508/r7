@@ -1,0 +1,22 @@
+.stylingMode{
+    font-family: Helvetica Neue;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    
+}
+.styleLivraisonModePart1{
+    color: #9D9D9C;
+}
+.styleLivraisonMode{
+    color: #414141;
+}
+.styleDisponiblilite{
+    color: #509A23;
+    text-align: right;
+}
+.RestantPourLivraison{
+    text-align:right;
+    color: #414141;
+}

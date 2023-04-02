@@ -1,0 +1,442 @@
+<template >
+
+    <article class="slds-card slds-card_boundary headerBottomBorder forceRelatedListCardDesktop ">
+    
+        <div class="slds-card__header slds-grid slds-page-header">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure ">
+                    <lightning-icon icon-name="standard:macros"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <a  class="slds-card__header-link slds-truncate"
+                            title="Selection Promotion">
+                            <span>Cliquer sur le bouton Sélection Promotion pour démarrer le processus </span>
+                        </a>
+                        <p></p>
+                    </h2>
+                </div>
+                <div class="slds-no-flex">
+                    <button class="slds-button slds-button_neutral" onclick={startSelectionPromoProcess}>Sélection Promotion</button>
+                </div>
+                <div></div>
+                <br /><br /> <br />
+            </header>
+        </div>
+
+    <template if:true={isSelectionPromoForm}>
+
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large" aria-labelledby="modal-heading-01" aria-modal="true">
+        <div class="slds-modal__container">
+          
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                    title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                        size="small"></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Sélection Promotion
+                </h2>
+            </header>
+
+          <div class="slds-modal__content slds-p-around_large" id="modal-content-id-1">
+
+            <template if:true={displayModalError}>
+                    <div class="errorModalTypeCampaign" style="height:4rem">
+                        <div class="slds-notify_container slds-is-relative">
+                        <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+                            <span class="slds-assistive-text">error</span>
+                            <span class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#error"></use>
+                            </svg>
+                            </span>
+                            <div class="slds-notify__content slds-align_absolute-center">
+                            <h2 class="slds-text-heading_small "> {wrongTemplate} &nbsp;&nbsp;
+                                <a href={campaignUrl}> {GoBackToCampaign}</a></h2>
+                            </div>
+                            <div class="slds-notify__close">
+                            <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close">
+                                
+                            </button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+            </template>
+            <template if:true={displayCmp}>
+
+                <template if:true={showSpinner}>
+                    <lightning-spinner class="" alternative-text="Loading" size="medium" variant="brand"></lightning-spinner><br/>
+                </template>
+               
+                <div class="slds-box containerBGColor">
+                    <div class="slds-page-header slds-page-header_record-home">
+                    <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-campaign">
+                                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                                <use xlink:href="/_slds/icons/standard-sprite/svg/symbols.svg#campaign"></use>
+                                </svg>
+                            </span>
+                            </div>
+                            <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span>Campaign</span>
+                                    <span class="slds-page-header__title slds-truncate" title="">{data.Name}</span>
+                                </h1>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                            <div class="slds-page-header__control">
+            
+                            </div>
+                            <div class="slds-page-header__control">
+                            
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="slds-page-header__row slds-page-header__row_gutters">
+                        <div class="slds-page-header__col-details">
+                        <ul class="slds-page-header__detail-row">
+                            <li class="slds-page-header__detail-block">
+                            <div class="slds-text-title slds-truncate" title="Field 1">Type</div>
+                            <div class="slds-truncate" title="Description that demonstrates truncation with a long text field.">{data.Type}</div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Field 1">Template</div>
+                                <div class="slds-truncate" title="Description that demonstrates truncation with a long text field.">{data.Template__c}</div>
+                            </li>
+                 
+                            <template if:true={isPromoRayons}>
+                                <li class="slds-page-header__detail-block">
+                                    <div class="slds-text-title slds-truncate" title="Field 4">Nombre max de Promotions</div>
+                                    <div class="slds-truncate" title="Description (2-line truncation—must use JS to truncate).">{tempPromoSetting.Number_of_Promotions__c}</div>
+                                </li>
+                                <li class="slds-page-header__detail-block">
+                                    <div class="slds-text-title slds-truncate" title="Field 4">Nombre de Promotions par rayon</div>
+                                    <div class="slds-truncate" title="Description (2-line truncation—must use JS to truncate).">{tempPromoSetting.Nb_Max_Promo_Shelf__c}</div>
+                                </li>
+                            </template>
+        
+                            <template if:true={isPromoMulti}>
+                                <li class="slds-page-header__detail-block">
+                                    <div class="slds-text-title slds-truncate" title="Field 4">Promotions Multiple de </div>
+                                    <div class="slds-truncate" title="Description (2-line truncation—must use JS to truncate).">{tempPromoSetting.Multiple_de__c}</div>
+                                </li>
+        
+                            </template>
+                        
+                        </ul>
+                        </div>
+                    </div>
+                    </div>
+                    <br/>
+                    <div class="slds-box boxBGColor pathPromo">
+                        <div class="slds-path">
+                        <div class="slds-grid slds-path__track">
+                            <div class="slds-grid slds-path__scroller-container">
+                            <div class="slds-path__scroller">
+                                <div class="slds-path__scroller_inner">
+                                <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                                    <li class="slds-path__item slds-is-current" role="initialisation">
+                                    <a aria-selected="false" class="slds-path__link"  onclick={navigateToCampaign} role="option" tabindex="-1">
+                                        <span class="slds-path__stage">
+                                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Current Stage:</span>
+                                        </span>
+                                        <span class="slds-path__title" >{initializationCampaign}</span>
+                                    </a>
+                                    </li>
+                                    <li class="slds-path__item slds-is-active" role="selectionPromo" onclick={handleSelecPromoClick}>
+                                    <a aria-selected="true" class="slds-path__link" href="#" role="option" tabindex="-1">
+                                        <span class="slds-path__stage">
+                                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                        </svg>
+                                        </span>
+                                        <span class="slds-path__title">{selectionPromo}</span>
+                                    </a>
+                                    </li>
+                                     <li class="slds-path__item slds-is-incomplete" role="priorisationPromo" onclick={handlePriorPromoClick}>
+                                    <a aria-selected="false" class="slds-path__link" href="#" role="option" tabindex="-1">
+                                        <span class="slds-path__stage">
+                                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                        </svg>
+                                        </span>
+                                        <span class="slds-path__title">{priorisationPromo}</span>
+                                    </a>
+                                    </li>
+                                    <li class="slds-path__item slds-is-incomplete" role="validationPromo">
+                                    <a aria-selected="false" class="slds-path__link" role="option" tabindex="0">
+                                        <span class="slds-path__stage">
+                                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                        </svg>
+                                        </span>
+                                        <span class="slds-path__title">{validationCampaign}</span>
+                                    </a>
+                                    </li>
+                                   
+                                    
+                                </ul>
+                                </div>
+                            </div>
+                            
+                            </div>
+                            <!--
+                            <div class="slds-grid slds-path__action">
+                            <span class="slds-path__stage-name">Stage: Unqualified</span>
+                            <button class="slds-button slds-button_brand slds-path__mark-complete">Mark as Current Stage</button>
+                            </div>
+                        -->
+                        </div>
+                        </div>
+                    </div>
+            
+                    <br/>
+                    <div class="slds-box boxBGColor selectionPromo">
+                        <div class="slds-grid slds-grid_vertical slds-form-element">
+                            <!--<label class="slds-form-element__label" for="text-input-id-47">Input Label</label>-->
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                            <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+                                <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#search"></use>
+                            </svg>
+                            <input type="text" id="text-input-id-47" onkeyup={searchProduct} placeholder="Rechercher un produit.... " class="slds-input" />
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="searchResultBox">
+                            <template for:each={shelfPrd} for:item="shelf">
+                                <div class="slds-grid slds-grid_vertical" key={shelf.categorie}>
+                                    <div class="slds-col">
+                                        <div class="slds-box slds-box_xx-small" style="background-color: black">
+                                        <p style="color: white">{shelf.categorie}</p>
+                                        </div>
+                                    </div>
+                                    <template for:each={shelf.products} for:item="value">
+                                        <div class="slds-col" key={value.id}>
+                                            <div class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                <lightning-input type="checkbox"  
+                                                checked ={value.checked}
+                                                    data-key={value.id}  data-id={shelf.categorie} label={value.details} onchange={clickProductCheckBox}>
+                                                </lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <br/>
+                                </div>
+                            </template>
+                        </div>
+                        <br/>
+                       <!--   <div class="slds-box selectionBoxFooter">
+                            <button class="slds-button slds-button_outline-brand" onclick={navigateToCampaign}>{cancel}</button>
+                            <button class="slds-button slds-button_outline-brand" onclick={savePromoState}>{saveState}</button>
+                            <button class="slds-button slds-button_brand" onclick={validateSelectionPromo}>{validateSelection} ({checkedItemSize})</button>
+                        </div> -->
+                    </div>
+                    <div class="slds-box boxBGColor priorisationPromo slds-hide">
+                        <div class="">
+                            <template for:each={checkedpromoLines} for:item="shelf">
+                                <div class="slds-grid slds-grid_vertical Items" key={shelf.categorie}>
+                                    <div class="slds-col">
+                                        <div class="slds-box slds-box_xx-small" style="background-color: black">
+                                        <p style="color: white">{shelf.categorie}</p>
+                                        </div>
+                                    </div>
+                                    <template for:each={shelf.products} for:item="val">
+                                        <div class="slds-col" key={val.id}>
+                                            <div class="slds-grid slds-wrap" style="vertical-align: middle;">
+                                                <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12">
+                                                    <lightning-input type="checkbox"  
+                                                    style="display: table-cell;
+                                                    height: 70px;
+                                                    /* padding: 10px; */
+                                                    border: 3px dashed #1c87c9;
+                                                    vertical-align: middle"
+                                                        checked ={val.checked} disabled
+                                                        data-key={val.id}  data-id={shelf.categorie} label={val.details} onchange={clickProductCheckBox}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+                                                    <lightning-combobox
+                                                    name="priority"
+                                                    data-key={val.id}
+                                                    data-id={shelf.categorie}
+                                                    value={val.priority}
+                                                    placeholder="Valeur par défaut"
+                                                    options={options}
+                                                    onchange={handlePriorChange}
+                                                    
+                                                    ></lightning-combobox>
+                                                </div>
+        
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <br/>
+                                </div>
+                            </template>
+                        </div>
+                        <br/>
+                        <!-- 
+                        <div class="slds-box selectionBoxFooter">
+                            <button class="slds-button slds-button_outline-brand"  onclick={navigateToCampaign}>{cancel}</button>
+                            <button class="slds-button slds-button_brand" onclick={goToValidation}>{validateSelection} ({checkedItemSize})</button>
+                        </div> --> 
+                    </div>
+                    <br/>
+                    <div class="slds-box boxBGColor validationPromo slds-hide">
+                        <div class="slds-grid slds-grid_vertical slds-box">
+                                    <div class="slds-col slds-p-around_medium">
+                                    <b style="font-size : 20px" >{summaryCampaign} :</b>
+                                    </div>
+                                    <div class="slds-col slds-p-around_medium">
+        
+                                        <ul class="slds-list_dotted">
+                                        <li><b>{nbrContacts}</b> {selectedContactPromo}</li>
+                                        <br/>
+                                        <li>Canal : <b>{data.Type}</b></li>
+                                        <br/>
+                                        <li>Template : <b>{data.Template__c}</b></li>
+                                        <br/>
+        
+        
+                                        <template if:true={isEmailPromo}>
+                                            <li>Objet de l'email : <b><lightning-input class="slds-col slds-size_1-of-1 slds-large-size_5-of-12" type="Text" data-name="EmailSubject" required >{data.EmailSubject__c}</lightning-input></b></li>
+                                            <br/>
+                                        </template>
+                                        
+                                    </ul>
+                                    <b>
+                                            <lightning-input type="checkbox"  
+                                            onchange={clickCheckBoxAccept}
+                                            label={acceptCheckboxValidCampaign}  
+                                            
+                                            >
+                                        </lightning-input>
+                                    </b>
+                                    </div>
+                                <br/>
+                        </div>
+                      <!--  <div class="slds-box selectionBoxFooter">
+                            <button class="slds-button slds-button_outline-brand"  onclick={navigateToCampaign}>{cancel}</button>
+                            <button class="slds-button slds-button_outline-brand"   onclick ={sendTestEmail} >{emailBAT}</button>
+                            <button class="slds-button slds-button_outline-brand"   onclick ={handlePreviewEmail} >{previewEmail}</button>
+                            <button class="slds-button slds-button_outline-brand" style="background-color :black; color : white" onclick={scheduleSendModal} >{scheduleSendCampaign}</button>
+                            <button class="slds-button slds-button_brand" onclick={sendNowModal}>{sendNow}</button>
+                        </div> -->
+                    </div>
+             </div>
+        
+            </template>
+        
+            <!--Modal Schedule send -->
+            <template if:true={isConfirmModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeConfirmModal}>
+                                <lightning-icon icon-name="utility:close"
+                                    alternative-text="close"
+                                    variant="inverse"
+                                    size="small" ></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Date d'envoi prévu</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium confirmModalbody">
+                            <lightning-input type="datetime" data-name="scheduledDate"     class="" value={dateTimeToday} ></lightning-input>
+                        </div>
+                        <!-- Modal footer -->
+                        <footer class="slds-modal__footer">
+                            <b>{confirmationValidationCmp} </b><br/><br/>
+        
+                            <button class="slds-button slds-button_neutral" onclick={closeConfirmModal} title="Cancel">{cancel}</button>
+                            <button class="slds-button slds-button_brand" onclick={submitCampaign} title="OK">{validateModal}</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+            <!--Modal Send now -->
+            <template if:true={isSendNowModal}>
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeConfirmModal}>
+                                    <lightning-icon icon-name="utility:close"
+                                        alternative-text="close"
+                                        variant="inverse"
+                                        size="small" ></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 class="slds-text-heading_medium slds-hyphenate">Confirmation</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium">
+                                <b>{confirmationValidationCmp} </b><br/><br/>
+                            </div>
+                            <!-- Modal footer -->
+                            <footer class="slds-modal__footer">
+            
+                                <button class="slds-button slds-button_neutral" onclick={closeConfirmModal} title="Cancel">{cancel}</button>
+                                <button class="slds-button slds-button_brand" onclick={submitCampaign} title="OK">{validateModal}</button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        
+          </div>
+
+          <div class="slds-modal__footer" style="text-align: center">
+
+            <template if:true={goToSelectionPromScreenFooter}>
+                <button class="slds-button slds-button_outline-brand" onclick={navigateToCampaign}>{cancel}</button>
+                <button class="slds-button slds-button_outline-brand" onclick={savePromoState}>{saveState}</button>
+                <button class="slds-button slds-button_brand" onclick={validateSelectionPromo}>{validateSelection} ({checkedItemSize})</button>
+            </template >
+
+            <template if:true={goToPriorisationScreenFooter}>
+                <button class="slds-button slds-button_outline-brand"  onclick={navigateToCampaign}>{cancel}</button>
+                <button class="slds-button slds-button_brand" onclick={goToValidation}>{validateSelection} ({checkedItemSize})</button>
+            </template >
+
+            <template if:true={goToValidationScreenFooter}>
+                <button class="slds-button slds-button_outline-brand"  onclick={navigateToCampaign}>{cancel}</button>
+                <button class="slds-button slds-button_outline-brand"   onclick ={sendTestEmail} >{emailBAT}</button>
+                <button class="slds-button slds-button_outline-brand"   onclick ={handlePreviewEmail} >{previewEmail}</button>
+                <button class="slds-button slds-button_outline-brand" style="background-color :black; color : white" onclick={scheduleSendModal} >{scheduleSendCampaign}</button>
+                <button class="slds-button slds-button_brand" onclick={sendNowModal}>{sendNow}</button>
+            </template >
+          
+          </div> 
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+  
+    </article>
+
+
+
+
+
+
+
+</template>

@@ -1,0 +1,6 @@
+<!--
+- Created by ffeix on 07/23/2021.
+-->
+<aura:component description="gbJsScript" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+</aura:component>

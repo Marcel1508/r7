@@ -1,0 +1,394 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-25-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   02-22-2021   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+
+    <!-- <lightning-card icon-name="" class="slds-card__body-promo"> -->
+       <!-- <h3 class="StatuStyle" slot="title">
+            <lightning-icon icon-name={headerIconName} variant={headerIconVariant} size="small"></lightning-icon>
+            {sectionTitle}
+        </h3> -->
+
+      
+
+    <h3 class="StatuStyle" slot="title">
+        <template if:true={isIconSuccess}>
+            <div class="circleBase circleGreen"></div>
+        </template>
+        <template if:true={isIconWarning}>
+            <div class="circleBase circleOrange"></div>
+        </template>
+        {sectionTitle}
+    </h3> 
+        <template for:each={displayItems} for:item="lineItem">
+
+            <!-- start code uxui  -->
+    
+
+ <div key={lineItem.cartItemResult.cartItem.cartItemId}
+            > 
+           <!-- <div class="rayonStyle"> 
+                {lineItem.cartItemResult.cartItem.productDetails.fields.Libelle_rayon__c}
+            </div> -->
+                <!-- <div class="details slds-has-flexi-truncate">                -->
+                    
+                    <div class="line-item-properties slds-grid slds-grid_pull-padded-small slds-wrap slds-m-vertical_x-small slds-p-around_x-small">
+                        <!-- Image du produit -->
+                        <section class="slds-col slds-size_1-of-3 slds-medium-size_1-of-6 slds-large-size_1-of-6 slds-small-size_1-of-3 image-area slds-p-horizontal_small">
+                            <template if:true={lineItem.promo}>
+                                <div class="bannerImage">
+                                    <img 
+                                        src={bannerPromo} 
+                                        alt ="Banner promo"
+                                        class="bannerPromo"/>
+                                </div>
+                             </template>
+                            <figure>
+                                <a
+                                    tabindex="-1"
+                                    href={lineItem.productUrl}
+                                    data-productid={lineItem.cartItemResult.cartItem.productId}
+                                    onclick={handleProductDetailNavigation}
+                                >
+                                    <img
+                                        src={lineItem.productImageUrl}
+                                        alt={lineItem.productImageAlternativeText}
+                                        data-productid={lineItem.cartItemResult.cartItem.productId}
+                                    />
+                                </a>
+                            </figure>
+                        </section>                        
+                        
+                        <div class="slds-grid slds-col slds-size_2-of-3 slds-medium-size_5-of-6 slds-large-size_5-of-6 slds-small-size_2-of-3 slds-wrap">
+                            <div class="slds-col slds-size_3-of-4 slds-medium-size_3-of-8 slds-large-size_3-of-8 slds-p-horizontal_small product-fields">
+                                
+                                <template if:false={lineItem.cartItemResult.cartItem.messagesSummary.hasErrors}>
+                                    <dt>
+                                    <!-- <div class="product-statut">
+                                         <template if:true={articleDispo}>
+                                             <div class="circleBase circleGreen"></div>
+                                             Disponible
+                                         </template>
+                                         <template if:true={articleIndispo}>
+                                             <div class="circleBase circleOrange"></div>
+                                             Disponible sur commande
+                                         </template>
+                                     </div> -->
+                                     <template if:true={lineItem.statutIsGreen}>
+                                         <div class="circleBase circleGreen"></div>
+                                     </template>
+                                     <template if:true={lineItem.statutIsOrange}>
+                                         <div class="circleBase circleOrange"></div>
+                                     </template>
+                                     <template if:true={lineItem.statutIsRed}>
+                                         <div class="circleBase circleRed"></div>
+                                     </template>
+                                     {lineItem.statutOPM}
+                                     </dt>
+                                 </template>
+                                 
+                                <!-- EDEC - add ifls-->
+                                <dt class="IflsStyle">{labels.ifls} : 
+                                    {lineItem.cartItemResult.cartItem.productDetails.fields.Code_IFLS__c}
+                                </dt>
+                                <h3
+                                class="item-name slds-text-heading_medium slds-p-bottom_small "
+                                title={lineItem.cartItemResult.cartItem.name}
+                                >
+                                <a
+                                    href={lineItem.productUrl}
+                                    data-productid={lineItem.cartItemResult.cartItem.productDetails.productId}
+                                    onclick={handleProductDetailNavigation}
+                                    tabindex="0"
+                                    ><lightning-formatted-rich-text
+                                        value={lineItem.displayedName}
+                                    ></lightning-formatted-rich-text>
+                                </a>
+                                </h3>
+                                
+                                <div class='containerPictoSubstitution'>
+                                    <div class='containerPicto'>
+                                        <lightning-formatted-rich-text value={lineItem.pictos}>
+                                        </lightning-formatted-rich-text>
+                                    </div>
+                                    <div class='containerSubstitution'>
+                                    <!-- Start - Modal de Substitution Produits // TODO : Mettre dans un composant à part -->
+                                        <template if:true={lineItem.substitution}>
+                                            <lightning-button-icon
+                                                icon-name="action:change_record_type"
+                                                size="large"
+                                                title="Remplacez votre produit"
+                                                variant="brand"
+                                                onclick={openModalSubstitution}
+                                                class="slds-button"
+                                                disabled={isCartDisabled}
+                                                data-cartitemid={lineItem.cartItemResult.cartItem.cartItemId}
+                                                data-productid={lineItem.cartItemResult.cartItem.productId}
+                                                data-subquantity={lineItem.splitQuantity}>
+                                            </lightning-button-icon>
+                                        </template> 
+                                        </div>
+                                        <!-- End - Modal de Substitution Produits // TODO : Mettre dans un composant à part -->
+                                    </div>  
+
+                                <!-- <template if:false={lineItem.promo}>        
+                                    <dt>Origine : {origine} 
+                                    </dt>
+                                 </template>  -->
+                                
+                                <!-- <template if:false={lineItem.promo}>    
+                                    <dt>Conditionnement&nbsp;:&nbsp;{conditionnement}
+                                    </dt>
+                                 </template>  -->
+                               
+                            </div>
+                            
+                            <!-- Bloc 04
+                            <div class="slds-col slds-size_1-of-4 slds-large-size_1-of-8 slds-p-horizontal_xx-small">
+                                <img class="label labelBio" src="/promocash/s/sfsites/c/resource/icone_bio">  &nbsp;  
+                                <img class="label labelRouge" src="/promocash/s/sfsites/c/resource/icone_rouge_cart">    
+                            </div> -->
+
+                            <!-- Bloc 05 -->
+                            <div class=" slds-col slds-3-of-8 slds-grid slds-p-horizontal_small container-quantity-price-promo">
+                                <div class=" slds-col slds-size--2-of-3 price">
+                                   <div if:false={lineItem.promo}> 
+                                        <lightning-formatted-number
+                                            if:true={lineItem.inStock}
+                                            format-style="currency"
+                                            currency-code={currencyCode}
+                                            class="negotiated-price slds-truncate slds-text-heading_large"
+                                            currency-display-as="symbol"
+                                            maximum-fraction-digits="2"
+                                            value={lineItem.totalPrice}>
+                                        </lightning-formatted-number>
+                                        <lightning-formatted-number
+                                            if:false={lineItem.inStock}
+                                            format-style="currency"
+                                            currency-code={currencyCode}
+                                            class="negotiated-price slds-truncate slds-text-heading_large"
+                                            currency-display-as="symbol"
+                                            maximum-fraction-digits="2"
+                                            value={lineItem.totalListPrice}>
+                                        </lightning-formatted-number>&nbsp;  HT 
+                                      </div> 
+                                    
+                                    <template if:true={lineItem.promo}>
+                                        <div class="promo-price-container" if:true={lineItem.promo}>
+                                            <lightning-formatted-number
+                                            if:true={lineItem.inStock}
+                                            format-style="currency"
+                                            currency-code={currencyCode}
+                                            class="negotiated-price slds-truncate slds-text-heading_large"
+                                            currency-display-as="symbol"
+                                            maximum-fraction-digits="2"
+                                            value={lineItem.totalPrice}>
+                                        </lightning-formatted-number>
+                                        <lightning-formatted-number
+                                            if:false={lineItem.inStock}
+                                            format-style="currency"
+                                            currency-code={currencyCode}
+                                            class="negotiated-price slds-truncate slds-text-heading_large"
+                                            currency-display-as="symbol"
+                                            maximum-fraction-digits="2"
+                                            value={lineItem.totalListPrice}>
+                                        </lightning-formatted-number>&nbsp;  HT 
+
+                                        </div> 
+
+                                        
+                                        <div class="au-lie-de slds-p-top_xx-small margin-right margin-left-auto">
+                                            au lieu de&nbsp; 
+                                            <!-- <span class="au-lie-de-prix">{price.negotiated}</span>€ -->
+                                            <lightning-formatted-number
+                                                style="text-decoration:line-through;"
+                                                format-style="currency"
+                                                currency-code={currencyCode}
+                                                currency-display-as="symbol"
+                                                maximum-fraction-digits="2"
+                                                value={lineItem.promo.Prix_de_vente_promotion__c}>
+                                            </lightning-formatted-number> 
+                                                <c-promotion-box-wrapper
+                                                    product-id={lineItem.cartItemResult.cartItem.productId}
+                                                    effective-account-id={effectiveaccountid}
+                                                    promo={lineItem.promo}>
+                                                </c-promotion-box-wrapper>
+                                     
+                                        </div>
+                                    </template>
+
+                                    <!--<template if:true={lineItem.hasVignetteAlcool}>
+                                        Montant Vignette Alcool : &nbsp;
+                                        <lightning-formatted-number
+                                            currency-code={price.currency}
+                                            format-style="currency"
+                                            value={lineItem.montantVignetteAlcool} class="slds-text-heading_small"
+                                            > €
+                                        </lightning-formatted-number>
+                                    </template>-->
+                        
+                                    <template if:false={lineItem.promo}>
+                                        <dt class="slds-truncate ecoTax" > {labels.pricePerUnit}&nbsp;:&nbsp;  
+                                            <lightning-formatted-number
+                                                format-style="currency"
+                                                currency-code={currencyCode}
+                                                currency-display-as="symbol"
+                                                maximum-fraction-digits="2"    
+                                                value={lineItem.cartItemResult.cartItem.unitAdjustedPrice} 
+                                            ></lightning-formatted-number>
+                                        </dt>
+                                    </template>
+   
+                                <template if:true={lineItem.tva}>
+                                    <dt class="slds-truncate tva">TVA &nbsp;:&nbsp;
+                                        <lightning-formatted-number
+                                            maximum-fraction-digits="2"
+                                            value={lineItem.tva.TaxRate}
+                                        ></lightning-formatted-number> %
+                                    </dt>
+                                </template>
+                                <template if:true={lineItem.tva} >
+                                    <dt class="slds-truncate tva">Montant des taxes &nbsp;:&nbsp;
+                               
+                                        <lightning-formatted-number
+                                            maximum-fraction-digits="2"
+                                            value={lineItem.montantTaxes} 
+                                        ></lightning-formatted-number> €
+                                    </dt>
+                                </template>
+                                    <!-- Ecotaxe 
+                                   
+                                        <dt class="slds-truncate ecoTax" > Ecotaxe&nbsp;:&nbsp;  
+                                            <lightning-formatted-number
+                                                format-style="currency"
+                                                currency-code={currencyCode}
+                                                currency-display-as="symbol"
+                                                maximum-fraction-digits="2"    
+                                                value={lineItem.cartItemResult.cartItem.unitAdjustedPrice} 
+                                            ></lightning-formatted-number>
+                                        </dt> -->
+                                 
+                                </div>
+                                <!-- Bloc 5 -->
+                                <div class=" slds-col slds-size--1-of-3" style="padding-top:5% ;">
+                                    <div class="">
+                                        <!-- <button> -->
+                                            <img 
+                                                class="slds-m-right_small deleteCartItem"
+                                                alt="Delete"
+                                                src="/promocash/s/sfsites/c/resource/icon_trash_white"
+                                                onclick={handleDeleteCartItem}
+                                                data-cartitemid={lineItem.cartItemResult.cartItem.cartItemId}
+                                                disabled={isCartDisabled}
+                                                data-split={lineItem.split}                                        
+                                                data-total-quantity={lineItem.quantity}
+                                                data-original-quantity={lineItem.splitQuantity}
+                                                data-in-stock={lineItem.inStock}
+                                                />
+                                        <!-- </a> -->
+                                        <!-- <lightning-button-icon
+                                            icon-name="utility:delete"
+                                            class="slds-m-right_small"
+                                            variant="bare"
+                                            alternative-text="Delete" 
+                                            onclick={handleDeleteCartItem}
+                                            data-cartitemid={lineItem.cartItemResult.cartItem.cartItemId}
+                                            disabled={isCartDisabled}
+                                            data-split={lineItem.split}                                        
+                                            data-total-quantity={lineItem.quantity}
+                                            data-original-quantity={lineItem.splitQuantity}
+                                            data-in-stock={lineItem.inStock}>
+                                        </lightning-button-icon> -->
+                                    </div>
+                                    </br>
+                                    <div class="quantity-selector slds-grid slds-grid_vertical-align-right slds-text-title_caps">
+                                        <label
+                                            for={lineItem.cartItemResult.cartItem.cartItemId}
+                                            class="selector-label slds-m-right_medium"
+                                            >
+                                        </label>
+                                        <input
+                                            class="selector-input slds-p-horizontal_medium slds-p-vertical_medium"
+                                            disabled={isCartDisabled}
+                                            id={lineItem.cartItemResult.cartItem.cartItemId}
+                                            data-item-id={lineItem.cartItemResult.cartItem.cartItemId}
+                                            max={lineItem.maxQuantity}
+                                            min="1"
+                                            required
+                                            type="number"
+                                            value={lineItem.splitQuantity}
+                                            onblur={handleQuantitySelectorBlur}
+                                            onclick={handleQuantitySelectorClick}
+                                            data-split={lineItem.split}                                        
+                                            data-total-quantity={lineItem.quantity}
+                                            data-original-quantity={lineItem.splitQuantity}                       
+                                        /> &nbsp;&nbsp;
+                                        <template if:true={lineItem.split}>
+                                            <lightning-helptext
+                                            class="styleHelp"
+                                            content={lineItem.warningText}
+                                            icon-name="utility:warning"
+                                            icon-variant="warning"
+                                            ></lightning-helptext>
+                                        </template>
+                                    </div>                                
+                                </div>
+                                <template if:true={lineItem.promo}>
+                                    <!-- <div class="container-promo">
+                                        <c-promotion-box-wrapper
+                                        product-id={lineItem.cartItemResult.cartItem.productId}
+                                        effective-account-id={effectiveaccountid}
+                                        promo={lineItem.promo}>
+                                        </c-promotion-box-wrapper>
+                                    </div> -->
+                                </template>              
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={lineItem.cartItemResult.cartItem.messagesSummary.hasErrors}>
+                        <div class="errorContainer">
+                            <div class="item-error slds-p-around_medium">
+                                <p class="slds-text-color_error">Ce produit n'est pas disponible. Cliquez sur x pour retirer l'article.</p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            <!-- </div> -->
+            
+        </template>
+   <!-- </lightning-card> -->
+    <c-cart-items-custom-modal
+        show-modal={showModalSubstitution}
+        communityid={communityid}
+        productid={substitutionProductId}
+        cartitemid={substitutionCartItemId}
+        effectiveaccountid={effectiveaccountid}
+        disabled={isCartDisabled}
+        onclose={closeModalSubstitution}
+        subquantity={subqty}
+        cartid={cartid}>
+    </c-cart-items-custom-modal>
+
+    <!-- **MODAL DE CHOIX SI QUANTITE DEMANDEE NON DISPONIBLE** -->
+       <c-add-to-cart-modal-choice
+            show-modal={popupConfig.showModal} 
+            communityid={communityid} 
+            productid={popupConfig.productId}
+            effectiveaccountid={effectiveaccountid}
+            quantity={popupConfig.quantity}
+            quantityinstock={popupConfig.stockQuantity}
+			state={popupConfig.state}
+            onclose={handleCloseModal}
+			oncartchanged={handleUpdateOnModal}
+			parentis="cart"
+            > 
+        </c-add-to-cart-modal-choice>
+    <!-- **MODAL DE CHOIX SI QUANTITE DEMANDEE NON DISPONIBLE** -->
+</template>

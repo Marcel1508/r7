@@ -1,0 +1,21 @@
+<!--
+* @author       jan.straka@bluewolf
+* @date         2020-02-03
+* @description  MarketPay component
+-->
+<aura:component implements="lightning:availableForFlowScreens" controller="MarketPayController">
+    <aura:attribute name="marketPayUrl" type="String" />
+    <aura:attribute name="errorCode" type="String" />
+    <aura:attribute name="errorMessage" type="String" />
+    <aura:attribute name="orderId" type="String" />
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    
+    <br/><br/>
+    <aura:if isTrue="{!v.errorCode || v.errorMessage}">
+        <div class="slds-text-heading_large slds-text-color_error" >Message d'erreur : {!v.errorCode + ': ' + v.errorMessage}</div>
+        <div>Veuillez cliquer sur le bouton Continuer</div>
+    </aura:if>
+    <br/><br/>
+    <iframe src="{!v.marketPayUrl}" width="100%" height="600px" frameborder="0" />
+
+</aura:component>

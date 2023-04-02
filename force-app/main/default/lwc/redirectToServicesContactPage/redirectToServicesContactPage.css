@@ -1,0 +1,11 @@
+.myButton {
+    padding: 1%;
+    background-color: #71BF43;
+    border-color: rgba(0, 0, 0, 0);
+    color: white;
+    box-shadow: rgb(0 0 0 / 0%) 0px 0px 1px 0px inset, rgb(0 0 0 / 0%) 0px 0px 1px 0px;
+}
+
+.myButton:hover {
+    background-color: rgb(105, 151, 68);
+}

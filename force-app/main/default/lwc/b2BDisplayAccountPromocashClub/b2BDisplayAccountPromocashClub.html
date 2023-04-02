@@ -1,0 +1,57 @@
+<template>
+    <br/>
+    <div>
+        <img style="margin-left:8%; height: 43px; width: 274px;" class="iconClubImg" src={clubImg}/> 
+    </div> 
+    <br/> <br/>
+    
+
+    <div class="slds-box " style="margin-left: 8%; margin-right:8%; border-radius: 5px;" >
+        <br/>
+        <div  class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="b2BMargin b2bFideliteImgContainer">
+                <img src={statutFideliteImg}/> 
+            </div>
+            <div class="b2BMargin">  
+                <p class="b2BSection"><b>Mon solde </b> </p> 
+                <div style="border: 2px solid #72BF44; width: 46px; top: 30px;"></div> <br>
+              
+                <p class="b2BField"> <b>{pointsAcquis}</b> points dont <b>{pointsArrivantsEcheance}</b> points arrivant à échéance le <b>{pointsArrivantsEcheanceAu}</b> </p><br/>
+                <p class="b2BField">Tenant compte de vos achats du <b>{pointsAcquisAu}</b></p>
+            </div>
+        </div>
+        <br/>
+    </div>
+    <br/>  <br/>
+    <div class="slds-box" style="margin-left: 8%; margin-right:8%; border-radius: 5px;">
+
+        <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="b2BVotreEspace slds-col slds-small-size_1-of-1 slds-medium-size_2-of-3">
+                <br class="b2BSpace"/>
+                <br class="b2BSpace"/>
+                <p class="b2BSection" ><b>Votre espace Club en ligne</b> </p> 
+                <div style="border: 2px solid #72BF44; width: 46px; top: 30px;"></div> <br>
+                
+                <p class="b2BField">Faîtes-vous plaisir ! Cadeaux, voyages, loisirs ou bon d'achat fidelité, c'est vous qui décidez.</p>
+                <p class="b2BField">N'oubliez pas d'activer votre compote pour pouvoir utiliser vos points !</p>
+                <br/><br/> 
+                <div style= "text-align:left;"
+                    onclick={jenProfite}>
+                    <div  class="b2BButton">
+                        J'en profite !
+                    </div>             
+              </div>
+                <br/><br/> 
+                <p class="b2BField b2BContactezNous">Vous avez une question sur le Club ? Contactez le Service Assistance au 0 821 200 078 (du lundi au vendredi de 9h à 18h)</p>
+            </div>
+            <div class="b2BPromoImgContainer slds-col slds-small-size_1-of-1 slds-medium-size_1-of-3">
+                <img class="b2BPromoImg"
+                 src={cadeauxImage}/> 
+            </div>
+        </div> 
+        <br class="b2BSpace"/>
+        <br class="b2BSpace"/>
+    </div>
+    <br/> <br/> <br/> 
+
+</template>

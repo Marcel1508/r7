@@ -1,0 +1,43 @@
+<template>
+        <lightning-quick-action-panel header="Changer l'email de connexion">
+            <template if:true={showSpinner}>
+                <div class="slds-is-relative">      
+                    <lightning-spinner altsernative-text="Loading" size="medium" style="background: none"></lightning-spinner>
+                </div>
+            </template>
+            <template if:true={errorScreen}>
+                    <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                        <span class="slds-assistive-text">error</span>
+                        <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                            <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                            </svg>
+                        </span>
+                        <h2>{errorMessage}
+                        </h2>
+                    </div>
+            </template>
+            <template if:true={successScreen}>
+                <div class="slds-notify slds-notify_alert" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                        </svg>
+                    </span>
+                    <h2>{successMessage}
+                    </h2>
+                </div>
+            </template>
+            <template if:true={editScreen}>
+                <div>
+                    <lightning-input type="Email" label="Email" value={email} onchange={handleEmailChange} required></lightning-input>
+                </div>
+            </template>
+    
+            <div slot="footer">
+              <lightning-button variant="neutral" label="Annuler" onclick={handleClick}></lightning-button>
+              <lightning-button type="submit" variant="brand" label={saveLabel} onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </lightning-quick-action-panel>
+    </template>

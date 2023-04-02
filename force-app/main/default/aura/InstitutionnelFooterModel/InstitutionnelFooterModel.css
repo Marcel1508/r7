@@ -1,0 +1,108 @@
+.THIS {
+	background-color: rgb(207, 54, 75);
+	color:#fff;
+    line-height: 16px;
+}
+.THIS a{
+	color:#fff;
+}
+.THIS h3{
+	font-size: 16px;
+    font-weight: bold;
+    line-height: 28px;
+}
+
+.THIS .container{
+	max-width:1504px;
+    margin: auto;
+}
+
+.THIS #bottom-footer
+{
+   background-image: url(/siteinstit/s/sfsites/c/resource/bg_footer);
+    text-align: center;
+        background-size: cover;
+        padding: 75px;
+}
+.THIS #bottom-footer .container {
+    max-width: 1300px;
+}
+.THIS #bottom-footer h3{
+	margin: 15px 0;
+}
+
+.THIS a span img{
+    width: 39px;
+    margin: 0 9px 0;
+}
+.THIS #bottom-footer .slds-grid .slds-col{
+	/*padding: 25px 57px 0; */
+    text-align: right;
+}
+.THIS #bottom-footer .slds-grid .slds-grid .slds-col p {
+    width: 51%;
+    float: right;
+}
+.THIS #bottom-footer .container > .slds-grid > .slds-col:first-of-type {
+    border-right: 2px #d5d3d3 dashed;
+    padding-right: 75px;
+}
+.THIS #bottom-footer .container > .slds-grid > .slds-col:first-of-type p{
+    margin-bottom: 21px;
+}
+.THIS #bottom-footer .slds-grid.slds-wrap {
+    margin-bottom: 25px;
+}
+.THIS #bottom-footer .links p {
+    margin-bottom: 15px;
+    margin-right: 5px;
+}
+@media (max-width: 1025px)
+{
+    .THIS #bottom-footer .slds-grid .slds-col {
+    	padding: 25px 0 0;
+    }
+    .THIS #top-footer .slds-grid .slds-col:first-of-type {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .THIS #top-footer .slds-grid .slds-col {
+        padding: 11px 21px 11px 0;
+    }
+    .THIS #bottom-footer {
+        padding: 41px 45px;
+    }
+    .cInstitutionnelFooterModel #bottom-footer .container>.slds-grid>.slds-col:first-of-type {
+        padding-right: 71px;
+    }
+    .cInstitutionnelFooterModel #bottom-footer .slds-grid .slds-grid .slds-col p {
+        width: 61%;
+    }
+}
+@media (max-width: 765px)
+{
+	.THIS #bottom-footer .container>.slds-grid>.slds-col:first-of-type {
+        padding-right: 0;
+        border: none;
+        text-align: center;
+    }
+    .THIS #bottom-footer .container>.slds-grid>.slds-col:first-of-type:after {
+        border-bottom: 2px #d5d3d3 dashed;
+        height: 2px;
+        display: block;
+        width: 50%;
+        content: "";
+        margin: auto;
+    }
+    .THIS #bottom-footer {
+        padding: 41px 25px;
+    }
+    .THIS #bottom-footer .slds-grid .slds-col {
+        text-align: center;
+    }
+    .THIS #bottom-footer .slds-grid .slds-grid .slds-col p {
+        width: 50%;
+        float: none;
+        margin: auto;
+    }
+}

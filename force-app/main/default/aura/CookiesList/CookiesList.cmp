@@ -1,0 +1,5 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <div id="cookie-policy-outer">
+        <div id="ot-sdk-cookie-policy"></div>
+    </div>
+</aura:component>

@@ -1,0 +1,8 @@
+:host() {
+    display: block;
+    z-index: 0;
+    position: relative;
+    pointer-events: none;
+    --lwc-colorBackgroundPathComplete: #CE394C;
+    --lwc-colorBorderPathCurrent: #f3dddd;
+  }

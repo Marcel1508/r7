@@ -1,0 +1,124 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 01-16-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   11-13-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+
+    <div class="slds-grid slds-wrap">
+        <c-wishlists-header-custom class="wishlistHeaderCustom"
+        oncreatenewlistclick={showListCreationModal}>
+        </c-wishlists-header-custom>
+        <lightning-spinner
+        if:true={showSpinner}
+        class="slds-is-relative slds-align_absolute-center slds-m-around_large"
+        alternative-text="Loading wishlists information ..."
+        size="medium"
+        variant="brand">
+     </lightning-spinner>
+     <!-- <lightning-button variant="base" label="refresh" title="title" onclick={refreshChild}>
+   </lightning-button> -->
+   <template if:true={hasFavWireData}>
+      {favWishlist}
+   </template>
+     <template if:false={showSpinner}>
+         <template if:true={resolvedEffectiveAccountId}>
+            <template if:true={resolvedEffectiveAccountId}>
+               <c-wishlists-desktop-view-contents-custom class="slds-col slds-size--1-of-1"
+                  realuser={realname}
+                  realuserid={realuserid}
+                  effectiveaccountid={resolvedEffectiveAccountId}
+                  communityid={community}
+                  refreshtab={refreshTab}
+                  onselectedwishlist={handleselectedwishlist}
+                  onupdatelistname={handlelistnamechange}
+                  onmultipleselect={handlemultipleselect}
+                  onmultipleadd={handlemultipleadd}
+                  ontabchange={handletabselect}
+                  onremovefromwishlist={handleremovefromwishlist}
+                  ondeletelist={handledeletelist}
+                  >
+               </c-wishlists-desktop-view-contents-custom>
+         </template>
+      </template>
+     </template> 
+    </div>
+<template if:true={listCreationModal}>
+    <div>
+       <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+        <div class="slds-modal__container">
+          <header class="slds-modal__header">
+             <lightning-button
+             class="slds-button slds-button_icon slds-button_icon-bare slds-button_icon-inverse slds-modal__close"
+             variant="base"
+             icon-name="utility:close"
+             icon-position="left"
+             title="Fermer"
+             onclick={closeModal}>
+          </lightning-button>
+
+             <h2 class="slds-text-heading_medium slds-hyphenate">Créer une liste</h2>
+          </header>
+          <div>
+             <div class="slds-modal__content slds-p-around_medium">
+                   <div class="slds-form--horizontal modal-body-content">
+                      <div class="slds-form-element slds-p-around_x-small">
+                         <h3 class="slds-text-heading_small">Nommer votre liste</h3>
+                      </div>
+                      <div class="slds-form-element slds-p-around_x-small">
+                        <lightning-input type="text" value={newListName} label="Nom de la liste" onchange={handlenewnamechange} required="true"> 
+                        </lightning-input>
+                                </div>
+                   </div>
+             </div>
+             <footer class="slds-modal__footer">
+              <lightning-button-group>
+
+                      <lightning-button label="Créer" onclick={createWishlist}></lightning-button>
+                      <lightning-button label="Annuler" onclick={closeModal}></lightning-button>      
+                      </lightning-button-group>     
+             </footer>
+          </div>
+       </div>
+       </section>
+       <div class="slds-backdrop slds-backdrop_open">
+       </div>
+    </div>
+</template>
+    <!-- Closed/Deleted Cart -->
+    <template if:true={isCartClosed}>
+      <div
+          class="slds-text-align_center slds-text-color_weak slds-p-top_xx-large"
+      >
+          <h3 class="slds-text-heading_medium">{labels.closedCartLabel}</h3>
+      </div>
+  </template>
+
+</template>
+
+
+<!-- <div>
+   <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+      <div class="slds-modal__container">
+         <header class="slds-modal__header">
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Créer une liste</h2>
+         </header>
+         <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <p>Nommer votre liste</p>
+              <lightning-input type="text" value={newListName} label="Nom de la liste" onchange={handlenewnamechange}> 
+              </lightning-input>
+         <lightning-button-group>
+           <lightning-button label="Save" onclick={createWishlist}></lightning-button>
+           <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+       </lightning-button-group>   
+         </div>
+      </div>
+   </section>
+   <div class="slds-backdrop slds-backdrop_open">
+   </div>
+</div> -->

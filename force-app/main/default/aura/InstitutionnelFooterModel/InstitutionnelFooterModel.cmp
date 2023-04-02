@@ -1,0 +1,92 @@
+<aura:component description="footer" implements="forceCommunity:availableForAllPageTypes" access="global">
+	<aura:attribute name="linkFb" type="String" access="global" />
+	<aura:attribute name="linkPint" type="String" access="global" />
+    <aura:attribute name="linkYb" type="String" access="global" />
+   <aura:attribute name="linkLogo" type="String"  access="global" />
+    <aura:attribute name="linkInst" type="String" access="global" />
+   <aura:attribute name="linkInk" type="String" access="global" />
+    
+	<footer class="footer">
+        
+    <div id="bottom-footer">
+        <div class="container">
+            
+            
+            
+            <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size--1-of-1 slds-large-size--4-of-12">
+                       <p>
+                            <a href="{!v.linkLogo}"><img src="/siteinstit/s/sfsites/c/resource/logo_footer"/></a>
+                        </p>
+                         <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                        </p>
+                        <p>
+								Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet lorem ipsum.
+                        </p>
+                    </div>
+                    <div class="slds-col slds-size--1-of-1 slds-large-size--8-of-12">
+                        <div class="links">
+                			<p>Pour nous suivre :	</p>
+                            <a href="{!v.linkFb}" target="_blank"><span><img src="/siteinstit/s/sfsites/c/resource/icone_facebook"/></span></a>
+                            <a href="{!v.linkPint}" target="_blank"><span><img src="/siteinstit/s/sfsites/c/resource/icone_pinterest"/></span></a>
+                            <a href="{!v.linkYb}" target="_blank"><span><img src="/siteinstit/s/sfsites/c/resource/icone_youtube"/></span></a>
+                             <a href="{!v.linkInst}" target="_blank"><span><img src="/siteinstit/s/sfsites/c/resource/icone_instagram"/></span></a>
+                			<a href="{!v.linkInk}" target="_blank"><span><img src="/siteinstit/s/sfsites/c/resource/icone_linkedin"/></span></a>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size--1-of-1 slds-large-size--1-of-3">
+                                <h3>Promocash</h3>
+                                <ul>
+                                    <li><a href="/siteinstit/s/fournisseur-alimentaire-professionnels/enseigne">L'enseigne</a></li>
+                                    <li><a href="/siteinstit/s/fournisseur-alimentaire-professionnels/engagements">Les engagements</a></li>
+                                    <li><a href="/siteinstit/s/fournisseur-alimentaire-professionnels/marques">Les marques</a></li>
+                                    <li><a href="/siteinstit/s/fournisseur-alimentaire-professionnels/partenaires">Les partenaires</a></li>
+                                    <li><a href="/siteinstit/s/fournisseur-alimentaire-professionnels/approvisionnement">L'approvisionnement</a></li>
+                                    <li><a href="/siteinstit/s/fournisseur-alimentaire-professionnels/rse">RSE</a></li>
+                                    <li><a href="/siteinstit/s/fournisseur-alimentaire-professionnels/espace-presse">Espace presse</a></li>
+                                    <li><a href="/siteinstit/s/fournisseur-alimentaire-professionnels/le-club-promocash">Votre métier</a></li>
+                                </ul>
+                            </div>
+                            <div class="slds-col slds-size--1-of-1 slds-large-size--1-of-3">
+                                <h3><br/></h3>
+                                <ul>
+                                    <li><a href="/siteinstit/s/produits">Produits</a></li>
+                                    <li><a href="">Promotions</a></li>
+                                    <li><a href="/siteinstit/s/actualites-et-conseils/conseils">Conseils</a></li>
+                                    <li><a href="/siteinstit/s/actualites-et-conseils/recettes">Recettes</a></li>
+                                    <li><a href="/siteinstit/s/services-restaurateur">Services</a></li>
+                                    <li><a href="/siteinstit/s/actualites-et-conseils/tous-pros">Tous pros</a></li>
+                                    <li><a href="/siteinstit/s/devenir-franchise/la-franchise">La franchise</a></li>
+                                    <li><a href="/siteinstit/s/devenir-franchise/le-franchise">Le franchisé</a></li>
+                                    <li><a href="/siteinstit/s/devenir-franchise/faq">FAQ franchise</a></li>
+                                    <li><a href="/siteinstit/s/devenir-franchise/candidature">Postuler pour la franchise</a></li>
+                                </ul>
+                            </div>
+                             <div class="slds-col slds-size--1-of-1 slds-large-size--1-of-3">
+                                <h3>En savoir plus</h3>
+                                <ul>
+                                    <li><a href="/siteinstit/s/politique-de-confidentialite">Politique de confidentialité</a></li>
+                                    <li><a href="/siteinstit/s/conditions-generales-de-vente">CGV</a></li>
+                                    <li><a href="/siteinstit/s/informations-legales">Informations légales</a></li>
+                                    <li><a href="/siteinstit/s/faq">FAQ</a></li>
+                                    <li><a href="/siteinstit/s/liste-des-cookies">Liste des cookies</a></li>
+                                    <!-- OneTrust Cookies Settings button start -->
+                                    <li><button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button></li>
+                                    <li><a onclick="OneTrust.ToggleInfoDisplay();">Paramétrer les cookies</a></li>
+                                    <!-- OneTrust Cookies Settings button end -->
+                                    <!-- OneTrust Cookies List start -->
+                                    <!-- <li><div id="ot-sdk-cookie-policy"></div></li> -->
+                                    <!-- OneTrust Cookies List end -->
+									
+                                </ul>
+                            </div>
+                    </div>
+                    </div>
+                  
+            </div>
+            
+        </div>
+    </div>
+        </footer>
+</aura:component>

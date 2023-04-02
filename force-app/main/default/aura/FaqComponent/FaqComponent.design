@@ -1,0 +1,3 @@
+<design:component label="Faq Component">
+    <design:attribute name="category" label="Catégorie" description="Catégorie Faq" />
+</design:component>

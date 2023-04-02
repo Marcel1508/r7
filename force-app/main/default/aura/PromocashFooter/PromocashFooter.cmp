@@ -1,0 +1,14 @@
+<aura:component description="footer" implements="forceCommunity:availableForAllPageTypes" access="global">
+	<aura:attribute name="linkFb" type="String" default="facebook.com" access="global" />
+	<aura:attribute name="linkPint" type="String" default="https://www.pinterest.com" access="global" />
+    <aura:attribute name="linkYb" type="String" default="https://www.youtube.com/" access="global" />
+    <aura:attribute name="footer" type="String" default="Just Another Dang Community" access="global" />
+	<aura:attribute name="footerYear" type="String" default="2017" access="global" />
+	
+	<div class="grid">
+		<span>{!v.linkFb}</span> <br />
+		<span>{!v.linkPint}</span> <br />
+        <span>{!v.linkYb}</span> <br />
+	</div>
+    
+</aura:component>

@@ -1,0 +1,64 @@
+<!--
+   @description       : 
+   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+   @group             : 
+   @last modified on  : 12-11-2020
+   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+   Modifications Log 
+   Ver   Date         Author                               Modification
+   1.0   12-04-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+   -->
+<template>    
+    <!-- si on reçoit une réponse de la fonction checkDisplayingSimilarProduct -->
+    <template if:true={hasDisplayedData}>
+        <template if:true={isDisplayed.data}>
+            <div class="similar-products-container slds-container_x-large slds-m-bottom_x-medium slds-p-vertical_large slds-p-horizontal_xx-large slds-grid_align-center">
+            <template if:true={hasOpms}>
+                <template if:true={hasOpmsOverZero}>
+                    <!-- //si la réponse est true -->
+                    <h1 class="slds-m-bottom_medium  slds-text-heading_medium slds-m-bottom_medium slds-wrap sectionTitre">
+                        Produits de substitution
+                    </h1>
+                    <div style="max-width: 450px; text-align: left; margin:0 auto;">
+                        <span >La quantité demandée n’est pas disponible, si vous souhaitez poursuivre votre achat vous devrez choisi parmi ces prodiuts de substitution ou attendre un réaprovisionnement</span>
+                    </div>
+                    <br>
+                    <div class="slds-grid_align-center slds-grow slds-size_1-of-1 slds-wrap">
+                        <!-- <lightning-layout>
+                                <template for:each={listOPMs.data} for:item="listOPM">
+                                    <lightning-layout-item key={listOPM.Id} size="4" padding="around-small">
+                                        <c-similar-products-item 
+                                            communityid={community} 
+                                            productid={listOPM.Produit__r.Id}
+                                            effectiveaccountid={resolvedEffectiveAccountId}
+                                            disabled={buttonDisabledAddToCart}>
+                                        </c-similar-products-item>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout> -->
+                        
+                            <div class="stylingSubstitutionContainer">  
+                            <template for:each={listOPMs.data} for:item="listOPM">
+                            <div key={listOPM.Id} size="4" padding="around-small" class="substitution-product-card">
+                                <c-similar-products-item 
+                                    communityid={community} 
+                                    productid={listOPM.Produit__r.Id}
+                                    effectiveaccountid={resolvedEffectiveAccountId}
+                                    disabled={buttonDisabledAddToCart}>
+                                </c-similar-products-item>
+                            </div>
+                            </template>
+                        </div>        
+                    </div>
+                </template>
+            </template>
+            <template if:false={hasOpms}>
+                <!-- //Spinner pendant le chargement, ou quelque chose à afficher en cas d'erreur -->
+                <lightning-spinner class="slds-is-relative slds-align_absolute-center slds-m-around_large"
+                    alternative-text="Loading similar products ..." size="medium" variant="brand">
+                </lightning-spinner>
+            </template>
+            </div>
+        </template>
+    </template>
+</template>

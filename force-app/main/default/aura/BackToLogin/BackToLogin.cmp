@@ -1,0 +1,3 @@
+<aura:component access="global" implements="lightning:availableForFlowScreens">
+    <lightning:button variant="success" label="Back to Login" title="Back to Login" onclick="{! c.handleClick }"/>
+</aura:component>

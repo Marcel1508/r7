@@ -1,0 +1,76 @@
+<template>
+    <lightning-card>
+        <h3 slot="title">
+            <lightning-icon icon-name="standard:file" size="small" style="margin-right: var(--lwc-spacingSmall,0.75rem);" ></lightning-icon>
+            <span class="">Pièces juridiques obligatoires</span>
+        </h3>
+      <lightning-button slot="actions" label="Nouveau ficher" onclick={newFileUpload} variant="brand"></lightning-button>
+      <c-custom-datatable
+        columns={columns}
+        key-field="id"
+        data={files}
+        onrowaction={handleRowAction}
+        data-tablename="filestable"
+        resize-column-disabled
+      ></c-custom-datatable>
+    </lightning-card>
+    <template if:true={showModal}>
+      <section class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <header class="slds-modal__header">
+            <div class="slds-modal__close">
+              <lightning-button-icon icon-name="utility:close" alternative-text="Close" variant="brand" onclick={closeModal}></lightning-button-icon>
+            </div>
+          </header>
+          <div class="slds-modal__content" style="overflow: visible;">
+            <template if:true={showUploadFileContent}>
+                  <template if:true={showSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                  </template>
+                  <template if:false={fileUpload}>
+                    <c-custom-datatable key-field="id" data={versionDetails} columns={versionColumns} data-tablename="versiontable"></c-custom-datatable>
+                  </template>
+                  <template if:true={fileUpload}>
+                    <lightning-layout multiple-rows="true" horizontal-align="end">
+                      <lightning-layout-item size="12" padding="around-small">
+                      <!--<input type="file" name="file" class="file" onchange={handleFileChange} />-->
+                        <lightning-layout-item size="12" padding="around-small">
+                          <lightning-combobox
+                            name="progress"
+                            label="Type de fichier"
+                            value={selectedFileType}
+                            onchange={handleChange}
+                            options={typeFilesOptions}
+                            >
+                          </lightning-combobox>
+                        </lightning-layout-item>
+                        <lightning-file-upload
+                          label="Choisir un fichier"
+                          name="fileUploader"
+                          accept={acceptedFormats}
+                          record-id={recordId}
+                          onuploadfinished={handleUploadFinished}
+                          file-field-name="file_type_fileupload__c"
+                          file-field-value={selectedFileType}
+                          multiple>
+                        </lightning-file-upload>
+                      </lightning-layout-item>
+                      <lightning-layout-item size="12" padding="around-small">
+                        <!--<lightning-button onclick={handleUpload} label="Valider" variant="brand" class="slds-float_right"></lightning-button>-->
+                        <lightning-button onclick={closeModal} label="Annuler" variant="brand" class="slds-float_right"></lightning-button>
+                      </lightning-layout-item>
+                    </lightning-layout>
+                  </template>
+            </template>
+            <template if:false={showUploadFileContent}>
+              <div style="color: red; margin: 30px; font-size: 15px;" role="alert">
+                  <h3>vous avez atteint le nombre maximum de fichiers a telecharger.
+                  </h3>
+                </div>
+          </template>
+        </div>
+      </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+  </template>

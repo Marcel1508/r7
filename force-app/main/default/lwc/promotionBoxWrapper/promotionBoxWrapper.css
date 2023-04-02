@@ -1,0 +1,90 @@
+.containerPriceBox{
+    height:auto;
+}
+
+.containerYellow{
+    width: 100%;
+    height:auto;
+    background-color: yellow;
+    color:#C92439;
+    display:flex;
+    padding: 0.2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.triangleYellow {
+    width: 0;
+    height: 0;
+    border-left: 0.7rem solid transparent;
+    border-right: 0.7rem solid transparent;
+    border-top: 1.25rem solid yellow;
+    position: relative;
+    right: -50%;
+    transform: translateX(-50%);
+}
+
+.textPriceYellow{
+    font-size:1.5rem;
+    font-weight: bold;
+    margin:0.2rem 0.3rem;
+    text-align:center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.textLibelleYellow{
+    font-size:0.75rem;
+    margin:0.2rem;
+    text-align:center;
+    font-weight: bold;
+    max-width: 60%;
+}
+
+.textQuantityYellow{
+    font-size:1.5rem;
+    font-weight: bold;
+    margin:0.2rem;
+    text-align:center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.textQuantityLibelleYellow{
+    font-size:0.75rem;
+    margin:0.2rem;
+    text-align:center;
+    font-weight: bold;
+}
+
+.containerRed{
+    width: 100%;
+    height:auto;
+    background-color: #C92439;
+    padding: 0 0.3rem 0.3rem 0.3rem;
+    color:white;
+}
+.textPriceRed{
+    text-align: center;
+    font-size:1.25rem;
+    font-weight: bold;
+}
+
+.textLibelleRed{
+    text-align: center;
+    font-size:0.75rem;
+}
+
+.textPhrase{
+    text-align:center;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.textPeriode{
+    text-align:center;
+    font-size: 0.6rem;
+}

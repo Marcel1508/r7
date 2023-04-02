@@ -1,0 +1,65 @@
+<aura:component implements="lightning:availableForFlowScreens" controller="DeliveryMethodController">
+    <aura:attribute name="cartId" type="String" default="" />
+    <aura:attribute name="orderId" type="String" default="" /> 
+    <aura:attribute name="toBeCalledBack" type="Boolean" default="" /> 
+    <aura:attribute name="deliveryMethodOptions" type="List" />
+    <aura:attribute name="deliveryMethodValue" type="String" />
+    <aura:attribute name="deliveryMethodFee" type="Decimal" />
+    <aura:attribute name="deliveryMethodLabel" type="String" />
+    <aura:attribute name="shippingInstructions" type="String" />
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:attribute name="selectedAddressIdValue" type="String" description="store the selected contact address" />
+    <aura:handler name="sampleComponentEvent" event="c:compEvent" action="{!c.handleComponentEvent}"/>
+    <aura:attribute name="displayAdresseLivraison" type="Boolean" />
+    
+
+    <!-- <div class="container">-->
+        <!-- <h2 class="styleMaLivraison">Ma livraison</h2> -->
+        <!-- <aura:component>
+	        <img src="{!$Resource.progressIndicator1}"/>
+        </aura:component> -->
+        <!-- <img src="/promocash/s/sfsites/c/resource/logo_footer"/> -->
+    <!-- </div> --> 
+    <div>
+        <div class="modeRetraitTitle slds-p-bottom_x-small slds-p-top_small">
+            Choix du mode de retrait
+        </div>
+        <p class="modeRetraitSubtitle slds-p-bottom_x-small">Par défaut, le mode de retrait est le drive</p>
+
+        <div class="c-container slds-grid slds-wrap">
+            <!-- <label class="slds-form-element__label" for="select-01">Select Label</label> -->
+            <!-- <lightning:layout verticalAlign="center"  class="slds-form-element__control"> -->
+                <aura:iteration items="{!v.deliveryMethodOptions}" var="item" indexVar="itemIndex" >
+                    <div class="slds-p-around_small slds-col slds-medium-size_1-of-3 slds-small-size_1-of-1">
+                        <div class="custom-box slds-select frais-container"> 
+                            <div class="text-container">
+                                <lightning:input class="stylingMode" type="radio" label="{!item.methodName}" value="{!itemIndex}" checked="{!item.selected}" onchange="{!c.handleRadioClick}" />
+                                <p class="ModeC">
+                                    Frais associés : {!item.shippingFeeWithoutFEF} € &nbsp;
+                                </p>
+                            </div>
+                            <div class="icon-container">
+                                <aura:if isTrue="{!item.methodName == 'Drive'}"> <img src="{!$Resource.ModeLivraison1}"/></aura:if>
+                                    <aura:if isTrue="{!item.methodName == 'Drive déporté'}"><img src="{!$Resource.ModeLivraison2}"/></aura:if>
+                                    <aura:if isTrue="{!item.methodName == 'Livraison'}"> <img src="{!$Resource.ModeLivraison3}"/></aura:if>
+                            </div>
+                        </div>
+                    </div>
+                </aura:iteration>
+            <!-- </lightning:layout>     -->
+        </div>
+      
+            <aura:if isTrue="{!v.displayAdresseLivraison}">
+                <c:ShippingAddressCustom cartId="{!v.cartId}"/>
+                <div style=" border: 0.25px solid #D8D8D7; "></div>
+            </aura:if>
+        
+
+        <div class="slds-m-around--small styleInstruction" >
+            <lightning:input type="checkbox" checked="{!v.toBeCalledBack}" label="Je souhaite être contacté par mon magasin pour des questions sur ma commande" onchange="{!c.handleCheckboxClick}" />
+        </div>
+
+        <lightning:input class="styleInstruction" type="text" label="Instruction de livraison" placeholder="Intersection, code de sécurité, etc..." value="{!v.shippingInstructions}" />
+        <br/>
+    </div>
+</aura:component>

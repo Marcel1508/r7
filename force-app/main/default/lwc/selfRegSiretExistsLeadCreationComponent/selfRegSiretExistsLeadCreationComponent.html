@@ -1,0 +1,320 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-18-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   04-18-2021   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+
+<template if:true={isMainPage}>
+    <!--Content For Step 2-->
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+
+    <template if:true={isSelectStep3}>
+        <lightning-record-edit-form object-api-name="Contact" onsuccess={handleContactFormSuccess}>
+            <lightning-messages></lightning-messages>
+                <div class="slds-form">
+                    <lightning-input-field field-name='Salutation' onchange={handleContactFieldChange} value={contactRecord.Salutation} required></lightning-input-field>
+                    <lightning-input-field field-name='FirstName' onchange={handleContactFieldChange} value={contactRecord.FirstName} required></lightning-input-field>
+                    <lightning-input-field field-name='LastName' onchange={handleContactFieldChange} value={contactRecord.LastName} required></lightning-input-field>
+                    <lightning-input-field field-name='Roles__c' onchange={handleContactFieldChange} required value={contactRecord.Roles__c}></lightning-input-field>
+
+
+                    <div class="slds-form-element slds-form-element_horizontal" data-id="phoneEled">
+                            <label class="slds-form-element__label" for="phoneEle" style="float: left; padding-right: 0px">
+                                  <abbr class="slds-required" title="required">** </abbr>
+                            </label>
+                            <lightning-input-field id="phoneEle" field-name='Phone' onchange={handleContactFieldChange} value={contactRecord.Phone}></lightning-input-field>
+                      </div>
+ 
+                      <div class="slds-form-element slds-form-element_horizontal" data-id="phoneTeEled">
+                            <label class="slds-form-element__label" for="phoneTeEle" style="float: left; padding-right: 0px">
+                                  <abbr class="slds-required" title="required">** </abbr>
+                            </label>
+                            <lightning-input-field id="phoneTeEle" field-name='Telephone_portable__c' value={contactRecord.Telephone_portable__c} onchange={handleContactFieldChange}></lightning-input-field>
+                      </div>
+                    <p class='warningText'> Au moins un téléphone est obligatoire</p>
+
+                    <div>
+                        <p>Informations de connexion:</p>
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-input label="Email de connexion" type="email" data-id="username"  required="required" placeholder="you@example.com" onchange={handleUsernameChange} value={username}></lightning-input>
+                            <template if:true={isUsernameError}>
+                                <div class="slds-form-element__help MagasinErrorMessage" id="form-error-0aa">{usernameErrorMessage}.</div>
+                            </template>
+                        </div>
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-input type="password" data-id="password" label="Mot de passe" required="required" onchange={handlePasswordChange} value={password}>  </lightning-input>
+                            <p class='warningText'> Le mot de passe doit contenir au moins 12 caractères dont 1 lettre, 1 chiffre et 1 caractère spécial. </p>
+                        </div>
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-input type="password" data-id="repeatPassword" label="Répéter le mot de passe" required="required" onchange={handlerepeatPasswordChange} value={repeatPassword} > </lightning-input>
+                        </div>
+                    </div>
+                    <template if:true={isCredentialError}>
+                        <div class="slds-form-element__help MagasinErrorMessage" id="form-erzror">{credentialErrorMessage}</div>
+                    </template>
+                    <!--<lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres promotionnelles" name="checkbox" onchange={showModaloffers}></lightning-input>-->
+
+                    <div class="slds-form-element" data-id="acceptPromoElement">
+                        <div class="slds-form-element__control">
+                                <div class="slds-checkbox">
+                                    <input type="checkbox" name="default" data-id="dataID-lirePromoCGU" id="checkbox-lirePromoCGU" checked={agreedPromoCGU} value={agreedPromoCGU} onchange={handleLirePromoCGU}/>
+                                    <label class="slds-checkbox__label" for="checkbox-lirePromoCGU">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">J'autorise Promocash à m'envoyer des offres promotionnelles,  <a style="text-decoration: underline;" onclick={redirectToPromoCGU}>lire les CGU</a></span>
+                                    </label>
+                                </div>
+                        </div>
+                    </div>
+                    <!-- <div class="slds-m-top_medium">
+                        <lightning-button variant="brand" name="save" label="Create Contact" onclick={handleContactSubmit} >
+                        </lightning-button>
+                    </div> -->
+            </div>
+        </lightning-record-edit-form>
+
+
+
+        <template if:true={openModalpromotionaloffers}>
+                <div class="slds-modal slds-fade-in-open slds-backdrop">
+                    <div class="slds-modal__container">
+                        <!------HEADER Section-->  
+                        <div class="slds-modal__header">
+                            <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"  
+                                variant="bare-inverse" onclick={closeModaloffers} class="slds-modal__close">  
+                            </lightning-button-icon>
+                        </div>
+                        <!------Body Section-->  
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <P>Check promotional offers </P>
+                            <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam bibendum, mauris a ullamcorper egestas, nunc massa scelerisque augue, quis ultrices ipsum velit vitae tellus. Maecenas fringilla mi mi, sed consequat diam ornare vitae. Fusce facilisis eleifend sapien sit amet dignissim. Etiam ut convallis enim. Etiam hendrerit, nibh vel hendrerit consequat, lacus leo ultricies ante, a curriculum dui felis vitae leo. Suspendisse id risus vitae nibh tristique eleifend interdum eget nisl. Proin eget faucibus elit, eget aliquet mauris. Aenean lobortis faucibus metus vel pellentesque. Pellentesque id lacus nec mi blandit porttitor. Curabitur non auctor leo. Pellentesque tincidunt, eros ut pharetra condimentum, sapien urna cursus ante, ut vestibulum mi justo a leo. Nunc nec mi turpis. Integer ac lorem eu metus congue sollicitudin ut in nisl. Sed luctus convallis dapibus. Vestibulum placerat in nisi sit amet ullamcorper. Proin ac feugiat lectus, vel pretium nibh.
+                            </P>
+                            <b>Donec porta arcu vulputate varius ullamcorper. Quisque eleifend eu felis a sodales. Sed eu neque a urna convallis ullamcorper nec non justo. Morbi molestie ex sed varius curriculum. Ut vitae augue sit amet velit pharetra elementum at vitae arcu. Nulla id metus justo. Ut luctus sollicitudin libero, id venenatis tortor feugiat ut. Aenean sit amet purus interdum, ultrices neque id, molestie orci. Nulla vitae pharetra nisi, non mattis elit. Ut quam dui, condimentum id nulla ac, facilisis mollis lorem. Vestibulum condimentum ullamcorper quam a viverra. Suspendisse dapibus eros enim, eu lobortis risus consequat nec. Nullam dapibus condimentum nulla vitae ultrices.</b>
+                            <p>Curabitur mollis ultrices dapibus. Praesent iaculis eros tellus, nec congue mauris vulputate eget. Nam eu orci nunc. Aenean efficitur felis nec odio aliquam iaculis. Duis quam elit, pellentesque id ligula quis, ultrices varius justo. Curabitur elementum enim ac orci sodales, a rhoncus dolor imperdiet. Duis non congue augue. Vivamus ultrices ornare aliquam. Aliquam non faucibus sapien, id hendrerit neque.
+                            </p>
+                            <b>Donec has laoreet elects. Nullam magna nibh, volutpat efficitur risus sit amet, condimentum vulputate mauris. Nam aroused turpis ut cursus dignissim. Mauris enim risus, maximus non nisi sit amet, tincidunt hendrerit turpis. Aenean auctor orci sed urna vehicula malesuada.</b>
+                            <p>Ut sollicitudin, justo and varius facilisis, ligula purus sollicitudin nulla, sed venenatis ante erat vitae justo. Praesent in malesuada eros. Sed vitae lorem placerat, condimentum diam sed, gravida nibh. Fusce a nisi eget dui ornare laoreet. Maecenas sealisque velit vitae hendrerit eleifend. Sed auctor augue nec turpis mattis, at tincidunt sem consectetur. Curabitur eu bibendum ligula, eget bibendum arcu. Vivamus nec sagittis erat.</p>
+                            <p>Praesent finibus diam sit amet commodo malesuada. Praesent id leo curriculum, vulputate erat non, tempor nisi. Sed fermentum non sapien ac pretium.Aenean has lorem elit. Vivamus non aliquet nulla, ut feugiat neque. Pellentesque nibh ante, dictum ac interdum eget, placerat eget mi. Nam fringilla eget tortor id tincidunt. Etiam at pellentesque quam. Curabitur non porta erat. Morbi faucibus aliquam dolor id tempor. Morbi hendrerit erat a sapien accumsan vestibulum vitae ut magna. Praesent viverra, dolor nonsealisque eleifend, erat nisl consequat metus, at sodales purus dolor lobortis ipsum.
+                                Ut turpis magna, malesuada a augue and, sagittis venenatis arcu. Phasellus varius pretium felis. Phasellus ante enim, sagittis in est in, gravida porta quam. Donec faucibus consequat tempus.Fusce a ornare lacus. Sed id malesuada augue. Nunc gravida libero erat, nec vestibulum sem sodales egestas. Ut scelerisque iaculis porttitor. Nulla aliquet eu turpis nec tristique. Proin sollicitudin consectetur ipsum. Nam dictum cursus dui, vel varius nibh ultrices ut.
+                            </p>
+                            <!-- <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par Voie Postale" name="checkbox" onchange={handleOkCourrierChange}></lightning-input>
+                            <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par Téléphone" name="checkbox" onchange={handleOkTelChange}></lightning-input>
+                            <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par SMS" name="checkbox" onchange={handleOkSMSChange}></lightning-input>
+                            <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par Email" name="checkbox" onchange={handleOkMailChange}></lightning-input>
+                            <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par Fax" name="checkbox" onchange={handleOkFaxChange}></lightning-input>                    -->
+                        </div>
+                        <!------Footer Section-->  
+                        <div class="slds-modal__footer">
+                            <lightning-button icon-name="utility:check" label="I Agree" variant="brand" onclick={closeModaloffers}>  
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            <!--<div class="slds-modal slds-fade-in-open slds-backdrop">
+                <div class="slds-modal__container">
+                    <!HEADER Section
+                    <div class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"  
+                        variant="bare-inverse" onclick={closeModaloffers} class="slds-modal__close">  
+                    </lightning-button-icon>
+                    </div>
+                    <!Body Section
+                    <div class="slds-modal__content slds-p-around_medium">
+                    <P>Check promotional offers </P>
+                    <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par Voie Postale" name="checkbox" onchange={handleOkCourrierChange}></lightning-input>
+                    <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par Téléphone" name="checkbox" onchange={handleOkTelChange}></lightning-input>
+                    <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par SMS" name="checkbox" onchange={handleOkSMSChange}></lightning-input>
+                    <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par Email" name="checkbox" onchange={handleOkMailChange}></lightning-input>
+                    <lightning-input type="checkbox" label="J'autorise Promocash à m'envoyer des offres par Fax" name="checkbox" onchange={handleOkFaxChange}></lightning-input>                   
+                    </div>
+                    <!-Footer Section 
+                    <div class="slds-modal__footer">
+                    <lightning-button icon-name="utility:check" label="I Agree" variant="brand" onclick={closeModaloffers}>  
+                    </lightning-button>
+                    </div>
+                </div>
+            </div>-->
+        </template>
+    </template>
+    <!--Content For Step 3-->
+    <template if:true={isSelectStep2}>
+        <div>
+        <lightning-record-edit-form object-api-name="Account" onsuccess={handleAccountFormSuccess}>
+            <lightning-messages></lightning-messages>
+            <!-- <div class="slds-m-around_medium"> -->
+            <div class="slds-form">
+                <lightning-input-field label='Dénomination commerciale' field-name='Name' onchange={handleAccountFieldChange} value={accountRecord.Name} required></lightning-input-field>
+                <lightning-input-field field-name='Enseigne_commerciale__c' onchange={handleAccountFieldChange} value={accountRecord.Enseigne_commerciale__c} required></lightning-input-field>
+                <lightning-input-field field-name='Date_creation_etablissement__c' onchange={handleAccountFieldChange} value={accountRecord.Date_creation_etablissement__c} required></lightning-input-field>
+                <!-- <lightning-input-field field-name='Code_APE__c' onchange={handleAccountFieldChange} required></lightning-input-field> -->
+                                    <!-- <lightning-input-field field-name='Magasin_de_rattachement__c' value={selectedMagasinId} required disabled></lightning-input-field> -->
+                <!-- <template if:true={showAssociation}> -->
+
+                <div class="slds-form-element slds-form-element_horizontal" data-id="codeAPEElement">
+                    <lightning-combobox
+                        id="comboCodeAPE"
+                        name="code APE"
+                        label="Code APE"
+                        required
+                        onchange={handleAPEChangeBis}
+                        value={selectedCodeAPEBis}
+                        placeholder="Selectionner un code APE"
+                        options={optionsAPEBis}
+                    ></lightning-combobox>
+                </div>
+
+                <template if:true={showSpecialisationCombobox}>
+                    <div class="slds-form-element slds-form-element_horizontal" data-id="specialisationElement">
+                        <lightning-combobox
+                            id="comboSpecialisation"
+                            name="specialisation"
+                            label="Specialisation"
+                            required
+                            onchange={handleChangeSpecBis}
+                            value={selectedSpecialisationBis}
+                            placeholder="Selectionner une specialisation"
+                            options={specialisationOptions}
+                        ></lightning-combobox>
+                    </div>
+                </template>
+                
+                <!--<div class="slds-form-element slds-form-element_horizontal" data-id="codeAPEElement">
+                    <label class="slds-form-element__label" for="selectAPE">
+                        <abbr class="slds-required" title="required">* </abbr>
+                            Code APE
+                    </label>
+                    <div class="slds-form-element__control">
+                            <select id="selectAPE" class="slds-select"  onchange={handleAPEChange} required>
+                                <option value="Select">Select</option>
+                                <template for:each={optionsAPE} for:item="option">
+                                    <option key={option.Id} class="uiInputSelectOption" value={option.Id}>{option.Name}</option>
+                                </template>
+                            </select>
+                    </div>
+                    <template if:true={isCodeAPEError}>
+                        <div class="slds-form-element__row">
+                            <div class="slds-size_1-of-1 MagasinErrorMessage">
+                                {codeAPEErrorMessage}
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                
+                <div class="slds-form-element slds-form-element_horizontal" data-id="specElement">
+                    <label class="slds-form-element__label" for="inputSpecialisationId">
+                        <abbr class="slds-required" title="required">* </abbr>
+                            Specialisation
+                    </label>
+                    <div class="slds-form-element__control">
+                        <input id='inputSpecialisationId' data-id="inputVoie" name="inputSpec" list="valueList" onchange={handleSpecChange} class="slds-input" type="text" value={selectedSpecialisation}></input>
+                        <datalist id="valueList" class="">
+                            <template for:each={specialisationValues} for:item='item'>
+                                <option key={item.key} value={item.key}>{item.label}</option>
+                            </template>
+                        </datalist>
+                    </div>
+                    <template if:true={isSpecError}>
+                        <div class="slds-form-element__row">
+                            <div class="slds-size_1-of-1 MagasinErrorMessage">
+                                {specErrorMessage}
+                            </div>
+                        </div>
+                    </template>
+                </div>-->
+                
+                <lightning-input-field field-name='Theme__c' onchange={handleAccountFieldChange} value={accountRecord.Theme__c}></lightning-input-field>
+                <lightning-input-field field-name='Forme_juridique__c' onchange={handleAccountFieldChange} value={accountRecord.Forme_juridique__c}  required></lightning-input-field>
+                <lightning-input-field field-name='N_association__c' onchange={handleAccountFieldChange} value={accountRecord.N_association__c} disabled={disableAssociation}></lightning-input-field> 
+                <!--FILE UPLOAD-->
+                <!--<c-self-reg-file-upload-component file-title="Registre du commerce" file-type="Registre du commerce" parent-record-id={account.Id} data-id="registreFileUpload"></c-self-reg-file-upload-component>-->
+                <c-self-reg-file-upload-component file-title="KBIS" file-type="KBIS" parent-record-id={account.Id} data-id="KBISFileUpload" isrequired></c-self-reg-file-upload-component>
+
+                <c-self-reg-file-upload-component file-title="RIB" file-type="RIB" parent-record-id={account.Id} data-id="RIBFileUpload"></c-self-reg-file-upload-component>
+                <c-self-reg-file-upload-component file-title="Pièce d'identité" file-type="Piece_identite" parent-record-id={account.Id} data-id="PieceIdentiteFileUpload"></c-self-reg-file-upload-component>
+
+                <template if:true={isKbisError}>
+                    <div class="slds-form-element__help MagasinErrorMessage" id="form-kbisError">{kbisErrorMessage}</div>
+                </template>
+                <!--<lightning-input type="checkbox" label="Afficher les CGU & CGV" name="checkbox" onchange={showModalCGUCGV}></lightning-input>-->
+
+                <div class="slds-form-element" data-id="agreedCGVElement">
+                    <div class="slds-form-element__control">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="default" data-id="dataID-lireCGV" id="checkbox-lireCGV" checked={agreedCGV} value={agreedCGV} onchange={handleLireCGV}/>
+                                <label class="slds-checkbox__label" for="checkbox-lireCGV">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label">J'ai lu et j'accepte les conditions générales de vente,  <a style="text-decoration: underline;" onclick={redirectToCGV}>lire les CGV</a></span>
+                                </label>
+                            </div>
+                    </div>
+                    <template if:true={isAgreedCGVError}>
+                        <div class="slds-form-element__row">
+                              <div class="slds-size_1-of-1 MagasinErrorMessage">
+                                 {agreedCGVErrorMessage}
+                              </div>
+                        </div>
+                     </template>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+        </div>
+        <template if:true={openModalCGUCGV}>
+        <div class="slds-modal slds-fade-in-open slds-backdrop">
+            <div class="slds-modal__container">
+                <!------HEADER Section-->  
+                <div class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"  
+                    variant="bare-inverse" onclick={closeModalCGUCGV} class="slds-modal__close">  
+                    </lightning-button-icon>
+                </div>
+                <!------Body Section-->  
+                <div class="slds-modal__content slds-p-around_medium">
+                    <b>CGU & CGV License Agreement</b>
+                    <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam bibendum, mauris a ullamcorper egestas, nunc massa scelerisque augue, quis ultrices ipsum velit vitae tellus. Maecenas fringilla mi mi, sed consequat diam ornare vitae. Fusce facilisis eleifend sapien sit amet dignissim. Etiam ut convallis enim. Etiam hendrerit, nibh vel hendrerit consequat, lacus leo ultricies ante, a curriculum dui felis vitae leo. Suspendisse id risus vitae nibh tristique eleifend interdum eget nisl. Proin eget faucibus elit, eget aliquet mauris. Aenean lobortis faucibus metus vel pellentesque. Pellentesque id lacus nec mi blandit porttitor. Curabitur non auctor leo. Pellentesque tincidunt, eros ut pharetra condimentum, sapien urna cursus ante, ut vestibulum mi justo a leo. Nunc nec mi turpis. Integer ac lorem eu metus congue sollicitudin ut in nisl. Sed luctus convallis dapibus. Vestibulum placerat in nisi sit amet ullamcorper. Proin ac feugiat lectus, vel pretium nibh.
+                    </P>
+                    <b>Donec porta arcu vulputate varius ullamcorper. Quisque eleifend eu felis a sodales. Sed eu neque a urna convallis ullamcorper nec non justo. Morbi molestie ex sed varius curriculum. Ut vitae augue sit amet velit pharetra elementum at vitae arcu. Nulla id metus justo. Ut luctus sollicitudin libero, id venenatis tortor feugiat ut. Aenean sit amet purus interdum, ultrices neque id, molestie orci. Nulla vitae pharetra nisi, non mattis elit. Ut quam dui, condimentum id nulla ac, facilisis mollis lorem. Vestibulum condimentum ullamcorper quam a viverra. Suspendisse dapibus eros enim, eu lobortis risus consequat nec. Nullam dapibus condimentum nulla vitae ultrices.</b>
+                    <p>Curabitur mollis ultrices dapibus. Praesent iaculis eros tellus, nec congue mauris vulputate eget. Nam eu orci nunc. Aenean efficitur felis nec odio aliquam iaculis. Duis quam elit, pellentesque id ligula quis, ultrices varius justo. Curabitur elementum enim ac orci sodales, a rhoncus dolor imperdiet. Duis non congue augue. Vivamus ultrices ornare aliquam. Aliquam non faucibus sapien, id hendrerit neque.
+                    </p>
+                    <b>Donec has laoreet elects. Nullam magna nibh, volutpat efficitur risus sit amet, condimentum vulputate mauris. Nam aroused turpis ut cursus dignissim. Mauris enim risus, maximus non nisi sit amet, tincidunt hendrerit turpis. Aenean auctor orci sed urna vehicula malesuada.</b>
+                    <p>Ut sollicitudin, justo and varius facilisis, ligula purus sollicitudin nulla, sed venenatis ante erat vitae justo. Praesent in malesuada eros. Sed vitae lorem placerat, condimentum diam sed, gravida nibh. Fusce a nisi eget dui ornare laoreet. Maecenas sealisque velit vitae hendrerit eleifend. Sed auctor augue nec turpis mattis, at tincidunt sem consectetur. Curabitur eu bibendum ligula, eget bibendum arcu. Vivamus nec sagittis erat.</p>
+                    <p>Praesent finibus diam sit amet commodo malesuada. Praesent id leo curriculum, vulputate erat non, tempor nisi. Sed fermentum non sapien ac pretium.Aenean has lorem elit. Vivamus non aliquet nulla, ut feugiat neque. Pellentesque nibh ante, dictum ac interdum eget, placerat eget mi. Nam fringilla eget tortor id tincidunt. Etiam at pellentesque quam. Curabitur non porta erat. Morbi faucibus aliquam dolor id tempor. Morbi hendrerit erat a sapien accumsan vestibulum vitae ut magna. Praesent viverra, dolor nonsealisque eleifend, erat nisl consequat metus, at sodales purus dolor lobortis ipsum.
+                    Ut turpis magna, malesuada a augue and, sagittis venenatis arcu. Phasellus varius pretium felis. Phasellus ante enim, sagittis in est in, gravida porta quam. Donec faucibus consequat tempus.Fusce a ornare lacus. Sed id malesuada augue. Nunc gravida libero erat, nec vestibulum sem sodales egestas. Ut scelerisque iaculis porttitor. Nulla aliquet eu turpis nec tristique. Proin sollicitudin consectetur ipsum. Nam dictum cursus dui, vel varius nibh ultrices ut.
+                    </p>
+                </div>
+                <!------Footer Section-->  
+                <div class="slds-modal__footer">
+                    <lightning-button icon-name="utility:check" label="I Agree" variant="brand" onclick={closeModalCGUCGV}>  
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+        </template>
+    </template>
+    <div style="margin-top: 2%">
+        <lightning-button label="Retour" class="" onclick={handlePrev}></lightning-button>
+        <lightning-button variant="brand" label="Suivant" onclick={handleNext} style="margin-left: 1%"></lightning-button>
+    </div>
+</template>
+<template if:true={isSuccessPage}>
+    <!--Content for Success page-->
+        <h4 ><b>félicitations</b></h4>
+        <p>{successMessage}</p>
+        <div class="slds-m-vertical_medium">
+            <lightning-button variant="brand" label="Accueil" onclick={handleSuccess}></lightning-button>
+        </div>
+</template>
+<template if:true={isErrorPage}>
+    <!--Content for Error page-->
+    <h4 style="color: red">Error de création de compte</h4>
+    <p>{errorPageMessage}</p>
+    <lightning-button variant="brand" label="Terminer" onclick={handleSuccess}></lightning-button>
+</template>
+
+</template>

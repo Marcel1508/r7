@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>B2BL Checkout Progress Indicator</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="checkoutStages" type="String" label="Stages" role="inputOnly" />
+            <property name="currentStage" type="String" label="Current Stage" role="inputOnly" />
+            <property
+        name="marginBottomSize"
+        label="Bottom Margin"
+        type="String"
+        description="Allowed values: [none, xx-small, x-small, small, medium, large, x-large, xx-large]"
+        default="none"
+        role="inputOnly"
+      />
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="checkoutStages" type="String" label="Stages" />
+            <property name="currentStage" type="String" label="Current Stage" />
+            <property
+        name="marginBottomSize"
+        label="Bottom Margin"
+        type="String"
+        datasource="none,xx-small,x-small,small,medium,large,x-large,xx-large"
+        default="none"
+      />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

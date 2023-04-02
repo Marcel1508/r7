@@ -1,0 +1,73 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-01-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   04-01-2021   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <template if:true={hasPromotionData}>
+        <div class="containerPriceBox">
+            <template if:true={isNotPromotionStandard}>
+                <div class="containerYellow">
+                    <template if:true={isBRI}>
+                        <div class="textPriceYellow">{promo.Remise_en_e__c}€</div>
+                        <div class="textLibelleYellow">{promo.Phrase_offre__c}</div>
+                    </template>
+                    <template if:true={isLVHO}>
+                        <template if:true={isOfferQ}>
+                            <div class="textQuantityYellow">{promo.Quantite_minimum_de_commande__c}</div>
+                            <div class="textQuantityLibelleYellow">{promo.Phrase_offre__c}</div>
+                            <div class="textQuantityYellow">{promo.Quantite_payee__c}</div>
+                        </template>
+                        <template if:true={isOfferP}>
+                            <div class="textQuantityYellow">-{promo.Remise_en_p__c}%</div>
+                            <div class="textQuantityLibelleYellow">{promo.Phrase_offre__c}</div>
+                        </template>
+                        <template if:true={isOfferM}>
+                            <div class="textPriceYellow">{promo.Remise_en_e__c}€</div>
+                            <div class="textLibelleYellow">{promo.Phrase_offre__c}</div>
+                        </template>
+                    </template>
+                </div>
+            </template>
+            <div class="containerRed">
+                <div class="triangleYellow"></div>
+                <template if:true={isNotPromotionStandard}>
+                    <div class="textPriceRed">{promo.Prix_sous_mecanique__c} €</div>
+                </template>
+                <template if:false={isNotPromotionStandard}>
+                    <div class="textPriceRed">{promo.Prix_de_vente_promotion__c} €</div>
+                </template>
+                <template if:true={isLVHO}>
+                    <template if:true={isOfferM}>
+                        <div class="textLibelleRed">le kg</div>
+                    </template>
+                    <template if:false={isOfferM}>
+                        <div class="textLibelleRed">{promo.Produit__r.Libelle_du_conditionnement_vente__c}</div>
+                    </template>
+                </template>
+                <template if:false={isLVHO}>
+                    <div class="textLibelleRed">{promo.Produit__r.Libelle_du_conditionnement_vente__c}</div>
+                </template>
+            </div>
+            <!-- <template if:true={isLVHO}>
+                <template if:false={isOfferM}>
+                    <div class="textPhrase">au lieu de {promo.Prix_de_vente_promotion__c} €</div>
+                </template>
+            </template> -->
+
+            
+            <!-- <template if:true={isBRI}>
+                <div class="textPhrase">au lieu de <span style="text-decoration:line-through;">{promo.Prix_de_vente_promotion__c} €</span></div>
+            </template>
+            <template if:true={isLVHO}>
+                <div class="textPhrase">au lieu de <span style="text-decoration:line-through;">{promo.Prix_de_vente_promotion__c} €</span></div>
+            </template> -->
+            <div class="textPeriode">{promo.Libelle_periode_de_promotion__c}</div>
+        </div>
+    </template>
+</template>

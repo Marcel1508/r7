@@ -1,0 +1,9 @@
+:host {
+    display: grid;
+}
+
+.subcategorie-text {
+   /** text-transform: capitalize;**/
+    text-decoration: underline;
+    color: #CE394C;
+}

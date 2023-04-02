@@ -1,0 +1,88 @@
+<!--
+   @description       : 
+   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+   @group             : 
+   @last modified on  : 11-26-2020
+   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+   Modifications Log 
+   Ver   Date         Author                               Modification
+   1.0   11-14-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+   -->
+   <template>
+    <lightning-spinner
+       if:false={retrievedWishlistSummaries}
+       class="slds-is-relative slds-align_absolute-center slds-m-around_large"
+       alternative-text="Loading wishlists information ..."
+       size="medium"
+       variant="brand">
+    </lightning-spinner>
+    <template if:true={retrievedWishlistSummaries}>
+       <!--       <template if:true={hasWishlistSummaries}>
+          <ul role="tablist" class="slds-tabs_default__nav">
+              <template for:each={wishlistSummariesUns.summaries} for:item="summary">
+                  <c-wishlists-tab-bar-item key={summary.id} id={summary.id} name={summary.name} productcount={summary.wishlistProductCount}>
+                  </c-wishlists-tab-bar-item> 
+              </template>
+          </ul>
+          </template>             -->
+       <lightning-tabset class="list-name">
+          <div class="slds-col slds-size--1-of-1 slds-show_small">
+             <lightning-spinner
+                if:false={retrievedWishlistSummaries}
+                class="slds-is-relative slds-align_absolute-center slds-m-around_large"
+                alternative-text="Loading wishlists information ..."
+                size="medium"
+                variant="brand">
+             </lightning-spinner>
+             <template if:true={retrievedWishlistSummaries}>
+                <template if:true={hasWishlistSummaries}>
+                   <template for:each={wishlistSummariesUns.data.summaries} for:item="summary">
+                     <!-- <template if:false={removed}> -->
+                        <lightning-tab key={summary.id} id={summary.id} label={summary.name} class="slds-tabs_default__content slds-show" onactive={tabselect}><p style="color:aliceblue">
+                           Liste&nbsp;crée&nbsp;le  : 
+                              <lightning-formatted-date-time
+                                 value={summary.createdDate}
+                                 time-zone="UTC">
+                              </lightning-formatted-date-time></p>
+                         <c-wishlists-desktop-view-items-custom
+                           style="padding: 15px;"
+                            wishlistid={summary.id}
+                            productcount={summary.wishlistProductCount}
+                            effectiveaccountid={effectiveaccountid}
+                            communityid={communityid}
+                            name={summary.name}
+                            onupdatelistname={showListNameUpdateModal}
+                            onmultipleselect={handlemultipleselect}
+                            onremovefromwishlist={handleremovefromwishlist}>
+                         </c-wishlists-desktop-view-items-custom>
+                         <footer class="slds-m-top_medium">
+                            <button class="slds-button slds-button_brand" style=" " onclick={addselecteditemstocart}>
+                                ADD SELECTED ITEMS TO CART
+                            </button>
+                            <button class="slds-button slds-button_brand" style="border-radius: 0px;" onclick={refreshSummaries}>
+                                REFRESHTEST
+                            </button>
+                            <button class="slds-button slds-button_brand" style=" " onclick={addfullwishlisttocart}  id={summary.id}>
+                                ADD ALL ITEMS TO CART
+                            </button>
+                         </footer>
+                      </lightning-tab>
+                   <!-- </template> -->
+                </template>
+               </template>
+               <template if:false={hasWishlistSummaries}>
+                   <div  class="slds-text-align_center slds-text-color_weak slds-p-top_xx-large">
+                      <h3  class="slds-text-heading_medium">
+                         No items on this list yet
+                      </h3>
+                      <p  class="slds-text-body_regular slds-p-top_small">
+                         Add the products that you want to remember.
+                      </p>
+                   </div>
+                   <footer class="slds-m-top_medium"></footer>
+                </template>
+             </template>
+          </div>
+       </lightning-tabset>
+    </template>
+ </template>

@@ -1,0 +1,56 @@
+<aura:component implements="lightning:availableForFlowScreens" controller="PaymentMethodController">
+    <aura:attribute name="cartId" type="String" default="" /> 
+    <aura:attribute name="contactPointAddressId" type="String" default="" />
+
+    <aura:attribute name="paymentMethodOptions" type="List" />
+    <aura:attribute name="selectedPaymentType" type="String" />
+    <aura:attribute name="selectedOnlinePayment" type="String" />
+    <aura:attribute name="billingAddresses" type="List" />
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <div class="container">
+        <p class="stylingChoix"> Choix du mode de paiement </p>
+    </div>
+    <br/>
+   
+    <aura:iteration items="{! v.paymentMethodOptions }" var="item" indexVar="itemIndex">
+        <div style=" font-weight: 200;">
+        <lightning:input type="radio" label="{! item.label }" value="{!itemIndex}" checked="{! item.selected }" onchange="{!c.handleRadioClick}" />
+    </div>
+    </aura:iteration>
+    
+    <br/>
+    
+    <lightning:select  aura:id="select" name="billingAddressInput" label="Adresse de facturation" required="true" onchange="{! c.onChange }" >
+        <aura:iteration items="{!v.billingAddresses}" var="billingAddress">
+            <option value="{! billingAddress.value }">{! billingAddress.label }</option>
+        </aura:iteration>
+    </lightning:select>
+   
+
+    <br/> <br/> <br/>
+
+</aura:component>
+
+<!-- 
+<aura:component implements="lightning:availableForFlowScreens" controller="PaymentMethodController">
+    <aura:attribute name="cartId" type="String" default="" /> 
+    <aura:attribute name="contactPointAddressId" type="String" default="" />
+
+    <aura:attribute name="paymentMethodOptions" type="List" />
+    <aura:attribute name="selectedPaymentType" type="String" />
+    <aura:attribute name="selectedOnlinePayment" type="String" />
+    <aura:attribute name="billingAddresses" type="List" />
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+    <aura:text value="PAYMENT METHOD"> </aura:text>
+    <aura:iteration items="{! v.paymentMethodOptions }" var="item" indexVar="itemIndex">
+        <lightning:input type="radio" label="{! item.label }" value="{!itemIndex}" checked="{! item.selected }" onchange="{!c.handleRadioClick}" />
+    </aura:iteration>
+
+    <lightning:select aura:id="select" name="billingAddressInput" label="Addresse de facturation" required="true" onchange="{! c.onChange }" >
+        <aura:iteration items="{!v.billingAddresses}" var="billingAddress">
+            <option value="{! billingAddress.value }">{! billingAddress.label }</option>
+        </aura:iteration>
+    </lightning:select>
+
+</aura:component> -->

@@ -1,0 +1,91 @@
+<template>
+    <footer class="width-100 height-100 margin-auto " style={footerContainer}>
+        <div class="footer slds-container_x-large slds-grid slds-wrap slds-grid_vertical-align-center margin-auto slds-p-vertical_xx-small">
+            <div class="links slds-col">
+                <a href="https://www.google.com/"> 
+                    <img 
+                        class="c-promocash-logo"    
+                        src="/promocash/s/sfsites/c/resource/logo_footer" 
+                        >
+                </a>
+            </div>
+            <div class="slds-col slds-grid slds-wrap slds-grid_vertical-align-center"> 
+                <a class="slds-col" target="_blank" href="/s/nos-magasins"> 
+                        <span  
+                            class="field-title slds-m-horizontal_x-small">
+                            Nos magasins
+                        </span>
+                </a>
+                <a class="slds-col" href="/s/nos-services">
+                        <span class="field-title slds-m-horizontal_x-small">
+                            Nos services
+                        </span>
+                </a>
+                <a class="slds-col" href="/s/contactsupport"> 
+                        <span class="field-title slds-m-horizontal_x-small">
+                            Contact
+                        </span>
+                </a>
+            </div>
+            <div class="slds-col slds-grid_vertical-align-center">  
+                <a href="https://www.facebook.com" target="_blank">
+                        <img 
+                            class="iconfooter slds-m-horizontal_x-small" 
+                            src="/promocash/s/sfsites/c/resource/icone_facebook"/> 
+                </a>
+                <a href="https://www.pinterest.com" target="_blank">
+                        <img 
+                            class="iconfooter slds-m-horizontal_x-small" 
+                            src="/promocash/s/sfsites/c/resource/icone_pinterest"/>
+                </a>
+                <a href="https://www.youtube.com/" target="_blank" data-aura-rendered-by="323:0">
+                     <img 
+                        class="iconfooter slds-m-horizontal_x-small" 
+                        src="/promocash/s/sfsites/c/resource/icone_youtube"/>
+                    </a>
+                <a href="https://instagram.com/" target="_blank" data-aura-rendered-by="326:0">
+                    <img  
+                        class="iconfooter slds-m-horizontal_x-small" 
+                        src="/promocash/s/sfsites/c/resource/icone_instagram"/> 
+                </a>
+                <a href="https://linkedin.com/" target="_blank" data-aura-rendered-by="329:0">
+                    <img  
+                        class="iconfooter slds-m-horizontal_x-small" 
+                        src="/promocash/s/sfsites/c/resource/icone_linkedin"/>
+                </a>
+            </div>
+            <!-- <div class="slds-col slds-text-align_right slds-m-horizontal_x-small">            
+                <a href="https://uatuxui-promocash.cs129.force.com/promocash/s/"> 
+                    <span if:true={showCurrentYear} class="field-title slds-text-align_right" >
+                        Informations légales - CGV - {currentYear} - Promocash 
+                    </span>
+                    <span if:false={showCurrentYear} class="field-title slds-text-align_right" >
+                        Informations légales - CGV - 2022 - Promocash
+                    </span>
+                </a>
+            </div> -->
+
+            <div class="slds-col slds-text-align_right slds-m-horizontal_x-small">  
+                <a href="https://uat-promocash.cs100.force.com/promocash/s/"> 
+                    <span class="field-title" >
+                        &nbsp;Informations légales&nbsp;  
+                    </span>
+                </a>-&nbsp;      
+                <a href="https://uat-promocash.cs100.force.com/promocash/s/"> 
+                    <span if:true={showCurrentYear} >
+                        CGV&nbsp;-&nbsp;{currentYear}
+                    </span>
+                  <!--  <span if:false={showCurrentYear} class="field-title" >
+                        CGV&nbsp;-&nbsp;2022 
+                    </span> -->
+                </a>&nbsp;-&nbsp;
+                <a href="https://uat-promocash.cs100.force.com/promocash/s/"> 
+                    <span class="field-title" >
+                        Promocash
+                    </span>
+                </a>
+            </div>
+
+        </div>
+    </footer>
+</template>

@@ -1,0 +1,419 @@
+<!--
+   @description       : 
+   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+   @group             : 
+   @last modified on  : 02-24-2021
+   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+   Modifications Log 
+   Ver   Date         Author                               Modification
+   1.0   11-17-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+   -->
+   <template>
+      <div >
+         <template if:false={removed}>
+            <!-- <li class="slds-grid slds-gutters slds-wrap slds-p-vertical_medium slds-p-left_medium minwidth"> -->
+           <li class="list-container">
+               <!-- CHECKBOX SECTION  -->
+               <section class="remove" style="max-width: 50px;">
+                   <template if:true={hasDisplayedData}>
+                      <template if:false={isDisplayed.data}>
+                      <template if:true={hasPFT}>
+                         <lightning-input type="checkbox" id={productid} onchange={multipleselectevent} disabled={isPFT.data}>
+                         </lightning-input>
+                      </template>
+                      </template>
+                   </template>
+                </section>
+               <div style="width: 100%;" class="slds-grid slds-grid_vertical-align-center slds-gutters slds-p-small slds-p-left_medium">
+                   <div class="slds-col slds-align-top slds-grid slds-gutters imgContainerCol">
+                       <!-- IMAGE SECTION  -->
+                       <section class="image-area">
+                           <template if:true={hasPromotions}>
+                               <div class="bannerImage">
+                                   <img src={bannerPromo} alt ="Banner promo"/>
+                               </div>
+                           </template>
+                           <figure>
+                               <template if:true={product.data}>
+                                   <a tabindex="-1"
+                                   data-productid={productid}
+                                   onclick={handleProductDetailNavigation}>
+                                   <template if:true={hasProductDefaultImage}>
+                                       {hasNotProductDefaultImage}
+                                       <template if:true={hasProductDefaultImageUrl}>
+                                           <img class="figure" src={productDefaultImageUrl} alt={productDefaultImageAlt}>  
+                                       </template>
+                                   </template>
+                                   <template if:false={hasProductDefaultImage}>
+                                       <template if:true={hasThumbnail}>
+                                           <img class="figure" src={resolvedThumbnailUrl} alt={productDefaultImageAlt}>
+                                       </template>
+                                       <template if:false={hasThumbnail}>
+                                           <img class="figure" src={defaultImage} alt ="Image par défaut"/>
+                                       </template>
+                                   </template>
+                                   </a>  
+                               </template>
+                               <template if:false={product.data}>
+                                   <img class="figure" src={defaultImage} alt ="Image par défaut"/>
+                               </template>
+                           </figure>
+                       </section>
+                   </div>
+                   <div style="width: 100%;"  class="slds-col slds-wrap slds-grid slds-grid_vertical-align-center slds-gutters">
+                       <div class="slds-col slds-medium-size_3-of-5 slds-size--5-of-5 slds-grid containerListeItem">
+                            <!-- PRODUCT DETAILS SECTION  -->
+                               <section class="product-details slds-col slds-p-vertical_medium slds-has-flexi-truncate">
+                                   <template if:true={opm.data}>
+                                       <div class="slds-p-bottom_small slds-p-top_small product-info">
+                                           <div class="product-statut">
+                                               <template if:true={hasStatusLabel}>
+                                                   <div class="available-circle">
+                                                       <template if:true={ifProductStatutGreen}>
+                                                           <div class="circleBase circleGreen"></div>
+                                                       </template>
+                                                       <template if:true={ifProductStatutOrange}>
+                                                           <div class="circleBase circleOrange"></div>
+                                                       </template>
+                                                       <template if:true={ifProductStatutRed}>
+                                                           <div class="circleBase circleRed"></div>
+                                                       </template>
+                                                       <span style="color: #929292;">{statutLabel}</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                   </div>
+                                                   <!-- <span style="color: #929292; ">Code IFLS :&nbsp;</span> 
+                                                   <span style="color: #929292; " title={extraproduct.data.Code_IFLS__c}>{extraproduct.data.Code_IFLS__c}</span>  -->                            
+                                               </template>
+                                               <template if:true={hasCodeIFLS}> 
+                                                <span style="color: #929292; ">Code IFLS :&nbsp;</span> 
+                                                <span style="color: #929292; " title={extraproduct.data.Code_IFLS__c}>{extraproduct.data.Code_IFLS__c}</span> 
+                                            </template> 
+                                           </div>
+                                       </div>
+                                   </template>
+                                   <!-- <template if:true={extraproduct.data}>
+                                       <div class="product-info">
+                                           <span style="color: #929292; ">Code IFLS : </span>
+                                           <span style="color: #929292; " title={extraproduct.data.Code_IFLS__c}>{extraproduct.data.Code_IFLS__c}</span>
+                                       </div>
+                                           <div class="product-info">
+                                           <lightning-formatted-rich-text value={extraproduct.data.Picto_front__c}></lightning-formatted-rich-text>
+                                           </div>
+                                   </template> -->
+                                   <template if:true={name}>
+                                       <div class="slds-p-bottom_small">
+                                           <h3 class="slds-text-heading_medium product-name item-name" title={name}>
+                                           <a href=""  data-productid={productid} onclick={handleProductDetailNavigation} tabindex="0">
+                                               <lightning-formatted-rich-text
+                                               value={DisplayedProductName.data}
+                                           ></lightning-formatted-rich-text></a>
+                                           </h3>
+                                           <!-- TODO: think of an option to make it customizable (which field(s) is/are shown) w/ custom settings or smth-->
+                                       </div>
+                                   </template>
+                                   <template if:true={hasOrigines}>
+                                       <div class="product-info">
+                                           <span>Origine</span>&nbsp;:&nbsp;
+                                           <span>{extraproduct.data.Origines__c}</span>
+                                       </div>
+                                    </template>
+                                    <template if:true={hasConditionnement}>
+                                       <div class="product-info">
+                                           <span>Conditionnement</span>&nbsp;:&nbsp;
+                                           <span>{extraproduct.data.Conditionnement__c}</span>
+                                       </div>
+                                    </template>
+                                   <template if:false={name}>
+                                       <div class="slds-p-bottom_small">
+                                           <h3 class="slds-text-heading_medium product-name" title="No existing name">
+                                           <a href="" tabindex="0">Aucun nom n'a été trouvé pour ce produit</a>
+                                           </h3>
+                                           <!--TODO : think of an option to make it customizable (which field(s) is/are shown) w/ custom settings or smth-->
+                                       </div>
+                                   </template>
+                                   <template if:true={hasSku}>
+                                       <div class="product-info">
+                                           <span class="sku-label">SKU#</span>
+                                           <span title={sku}>{sku}</span>
+                                       </div>
+                                   </template>
+                                   <template if:false={opm.data}>
+                                       Ce produit n'a pas d'offre produit magasin.
+                                   </template>
+                               </section>
+                                 <!-- ICONS SECTION  -->
+                               <section class="icon-col slds-col slds-size_1-of-8 slds-p-horizontal_xx-small">
+                                    <template if:true={hasABCERTIFIEAGRIBIOvert}> 
+                                        <img class="pc-picto" style="" src="/promocash/s/sfsites/c/resource/icone_bio">
+                                    </template> &nbsp; &nbsp;
+                                    <template if:true={hasLabelRouge}> 
+                                        <img class="pc-picto" style="" src="/promocash/s/sfsites/c/resource/icone_rouge_cart"> 
+                                    </template>  
+                               </section>
+                           </div>
+                       <div class="slds-col slds-medium-size_2-of-5 slds-size--5-of-5 slds-grow-none slds-grid slds-grid_vertical-align-center slds-gutters">
+                       
+                           <div class="slds-col slds-size_1-of-3 slds-p-around_medium" style="height:100%;">
+                               <div class="" style="color: rgb(79, 79, 79);">
+                                   <template if:true={hasPromotions}>
+                                       <div class="priceAlignment">
+                                           <span class="promopriceContainer ">
+                                                <lightning-formatted-number 
+                                                   value={promotion.data.Prix_de_vente_promotion__c} 
+                                                   class="priceUnité negotiated-price " 
+                                                   format-style="currency" 
+                                                   currency-code={currencycode}>
+                                               </lightning-formatted-number> 
+                                              <!-- <span class="priceUnité negotiated-price ">{salesprice} €</span> 
+                                                                         <span class="ht-after-price">&nbsp;HT</span> -->
+                                              <span class="ht-after-price">&nbsp;HT</span>
+                                               <div  class="promotional-price"></div>  
+                                           </span>
+                                       </div>
+                                       <div class="priceAlignment"> 
+                                           <p class="priceAlignment au-lie-de slds-p-top_xx-small margin-right margin-left-auto">
+                                               au lieu de&nbsp; 
+                                               <!-- <span class="au-lie-de-prix">{salesprice}</span> € -->
+                                               <lightning-formatted-number
+                                               style="text-decoration:line-through;"
+                                               format-style="currency"
+                                               currency-code={currencyCode}
+                                               currency-display-as="symbol"
+                                               maximum-fraction-digits="2"
+                                               value={promotion.data.Prix_de_vente_promotion__c}>
+                                           </lightning-formatted-number> 
+                                           </p>
+                                       </div>
+                                   </template>
+       
+                                   <template if:false={hasPromotions}>
+                                        <template if:true={hasSalesPrice}>
+                                            <div class="priceAlignment">
+                                                <lightning-formatted-number 
+                                                    value={salesprice} 
+                                                    class="slds-text-heading_large priceUnité negotiated-price" 
+                                                    format-style="currency" 
+                                                    currency-code={currencycode}>
+                                                </lightning-formatted-number>
+                                                <span class="ht-after-price">&nbsp;HT</span>
+                                            </div>
+                                        </template>
+                                   </template>
+       
+                                   <template if:false={hasPromotions}>
+                                        <template if:true={hasOpms}>
+                                            <!-- prix au litre -->
+                                            <template if:true={hasPrixLitre}>
+                                                <div class="priceAlignment" > 
+                                                    <lightning-formatted-number
+                                                    format-style="currency"
+                                                    currency-code={currencyCode}
+                                                    class="priceUnité"
+                                                    currency-display-as="symbol"
+                                                    maximum-fraction-digits="2"
+                                                    value={opm.data.Prix_L__c}
+                                                    ></lightning-formatted-number>
+                                                    <span class="ht-after-price">/L</span>
+                                                </div>
+                                            </template>
+                                            <!-- prix au kilo -->
+                                            <template if:true={hasPrixKilo}>
+                                                <div class="priceAlignment" > 
+                                                    <lightning-formatted-number
+                                                    format-style="currency"
+                                                    currency-code={currencyCode}
+                                                    class="priceUnité"
+                                                    currency-display-as="symbol"
+                                                    maximum-fraction-digits="2"
+                                                    value={opm.data.Prix_kilo__c}
+                                                    ></lightning-formatted-number>
+                                                    <span class="ht-after-price">/Kg</span>
+                                                </div>
+                                            </template>
+                                            <!-- prix unite -->
+                                            <template if:true={hasPrixUnite}>
+                                                <div class="priceAlignment" > 
+                                                    <lightning-formatted-number
+                                                    format-style="currency"
+                                                    currency-code={currencyCode}
+                                                    class="priceUnité"
+                                                    currency-display-as="symbol"
+                                                    maximum-fraction-digits="2"
+                                                    value={opm.data.Prix_unite__c}
+                                                    ></lightning-formatted-number>
+                                                    <span class="ht-after-price">/unité</span>
+                                                </div>
+                                            </template>
+                                        </template>
+                                </template>
+                                
+                                   <template if:true={hasEcotaxe}>
+                                        <div class="priceAlignment"> 
+                                            <span class="priceAlignment" style=" padding-left:2px; font-size: 14px;font-weight: 400;line-height: 14px;">Ecotaxe&nbsp;:&nbsp;</span>
+                                            <lightning-formatted-number
+                                                class="priceUnité"
+                                                format-style="currency"
+                                                currency-code={currencyCode}
+                                                currency-display-as="symbol"
+                                                maximum-fraction-digits="2"    
+                                                value={extraproduct.data.Ecotaxe__c}
+                                            ></lightning-formatted-number>
+                                        </div>
+                                    </template>
+                                   
+                               </div>
+                       </div>
+                       
+                       <div class="slds-col slds-size_2-of-3 slds-grid slds-gutters" style="border-radius: 0px; min-width: 50%; min-height: 100%">
+                           
+                           <div class="slds-col slds-align_absolute-right slds-gutters">
+                               <!-- <lightning-button
+                                   variant="base"
+                                   icon-name="utility:delete"
+                                   icon-position="right"
+                                   onclick={removewishlistitem}>
+                               </lightning-button> -->
+                               <img  
+                                   src="/promocash/s/sfsites/c/resource/icon_trash_white" 
+                                   alt="Add to cart icon"
+                                   style=""
+                                   class="pcDeleteIcon slds-align_absolute-right"
+                                   onclick={removewishlistitem}
+                                   >
+                               <footer class="slds-m-top_large" style="flex-direction: row; display: flex;">
+                                   <template if:true={hasOPM}>
+                                   <template if:false={hasPFTAndStatutOut}> 
+                                       <input
+                                           class="qteInput selector-input slds-p-horizontal_small slds-p-vertical_x-small"
+                                           max="100000"
+                                           min="1"
+                                           data-my-id="in1"
+                                           required
+                                           type="number"
+                                           value={quantity}
+                                           onchange={handleQuanitytChange}
+                                           onmouseout={updateQuantity}
+                                       />
+                                   </template>   
+                                   </template>
+                                   <template if:true={hasOPM}>             
+                                   <c-add-to-cart-with-modal-choice   
+                                               
+                                       productid={productid}
+                                       effectiveaccountid={effectiveaccountid}
+                                       communityid={communityid}
+                                       quantity={quantity}
+                                       disabled={buttondisabledaddtocart}
+                                       opm={opm.data}
+                                       stock-and-en-cours={stockAndEnCours.data}
+                                       is-p-f-t={isPFT.data}
+                                       if-product-statut-orange={ifProductStatutOrange}
+                                       modallaunchedby="cart"
+                                       >
+                                   </c-add-to-cart-with-modal-choice>                  
+                                   </template>
+                                   <template if:true={hasDisplayedData}>
+                                   <template if:true={statutOut}>
+                                       <button
+                                       onclick={openModal}
+                                       class="slds-button slds-align_absolute-right slds-button_brand buttonReplace">
+                                       Remplacer
+                                       </button>
+                                   </template>
+                                   </template>
+                                   <template if:true={statutIndispo}>
+                                   <button
+                                   style="background: #72BF44;
+                                   border: none;
+                                   font-size: 12px;
+                                   border-radius: 5px;
+                                   min-width: fit-content;
+                                   padding-left: 12px;
+                                   padding-right: 12px;
+                                   color: white;
+                                   font-size: 12px;
+                                   height: 40px;"
+                                   onclick={openModal}
+                                   class="slds-button slds-button_brand">
+                                   Ajouter un produit similaire dans le panier
+                                   </button>
+                                   </template>
+                               </footer>
+                           </div>   
+                           <!-- Start - Modal de Substitution Produits // TODO : Mettre dans un composant à part -->
+                           <template if:true={hasDisplayedData}>
+                               <template if:true={bShowModal}>
+                                   <!-- <c-wishlists-Desktop-View-Item-Custom-Modal 
+                                                           communityid={communityid} 
+                                                           productid={productid}
+                                                           wishlistitemid={wishlistitemid}
+                                                           effectiveaccountid={effectiveaccountid}
+                                                           substitution={substitution}
+                                                           wishlistid={wishlistid}
+                                                           quantity={quantity}
+                                                           disabled={buttondisabledaddtocart}> 
+                                   </c-wishlists-Desktop-View-Item-Custom-Modal>-->
+                                   <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                   <div class="slds-modal__container">
+                                       <header class="slds-modal__header">
+                                           <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                               <lightning-icon icon-name="utility:close"
+                                               alternative-text="close"
+                                               variant="inverse"
+                                               size="small" ></lightning-icon>
+                                               <span class="slds-assistive-text">Quitter</span>
+                                           </button>
+                                           <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Remplacer votre produit par un autre</h2>
+                                       </header>
+                                       <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                           <template if:true={hasOpmsSPOverZero}>
+                                               <template if:true={statutOut}>
+                                               <p>Votre produit favori n'est plus disponible, nous vous proposons de le substituer dans votre liste d'achat par l'un des produits suivants :
+                                               </p>
+                                               </template>
+                                               <template if:true={statutIndispo}>
+                                               <p>Nous ne pouvons pas ajouter votre produit favori dans votre panier car il est indisponible temporairement. Vous pouvez ajouter un des produits similaires suivants à la place : 
+                                               </p>
+                                               </template>
+                                               <lightning-layout class="slds-grid_align-center slds-grow slds-size_1-of-1 slds-wrap">
+                                               <template for:each={listOPMs} for:item="listOPM">
+                                                   <lightning-layout-item key={listOPM.Id} size="6" padding="around-small">
+                                                           <c-wishlists-Desktop-View-Item-Custom-Modal-Similar-Product 
+                                                           communityid={communityid} 
+                                                           productid={listOPM.Produit__r.Id}
+                                                           wishlistitemid={wishlistitemid}
+                                                           effectiveaccountid={effectiveaccountid}
+                                                           substitution={substitution}
+                                                           wishlistid={wishlistid}
+                                                           quantity={quantity}
+                                                           disabled={buttondisabledaddtocart}>
+                                                           </c-wishlists-Desktop-View-Item-Custom-Modal-Similar-Product>
+                                                   </lightning-layout-item>
+                                               </template>
+                                               </lightning-layout>
+                                           </template>
+                                           <template if:false={hasOpmsSPOverZero}>
+                                               <p>Nous n'avons pas de produits à vous proposer. 
+                                               </p>
+                                           </template>
+                                       </div>
+                                       <footer class="slds-modal__footer">
+                                           <lightning-button 
+                                           variant="brand"
+                                           label="Quitter"
+                                           onclick={closeModal}></lightning-button>
+                                       </footer>
+                                   </div>
+                                   </section>
+                                   <div class="slds-backdrop slds-backdrop_open"></div>
+                               </template>
+                       </template>
+                       <!-- End - Modal de Substitution Produits // TODO : Mettre dans un composant à part -->
+                       </div>
+                       </div>
+                   </div>
+                   
+               </div>
+           </li>
+         </template>
+      </div>
+   </template>

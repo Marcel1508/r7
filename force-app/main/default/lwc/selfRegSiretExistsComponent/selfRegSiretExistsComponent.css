@@ -1,0 +1,10 @@
+.MagasinErrorMessage {
+    color: var(--lwc-colorTextError,rgb(194, 57, 52));
+    font-size: 0.75rem;
+    margin-top: var(--lwc-spacingXxxSmall,0.125rem);
+}
+
+.warningText{
+    color: rgb(200, 150, 0);
+    font-size: 0.8rem;
+}

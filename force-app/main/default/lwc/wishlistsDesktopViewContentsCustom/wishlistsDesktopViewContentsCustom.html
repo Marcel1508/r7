@@ -1,0 +1,90 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 01-16-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   12-06-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+   <lightning-spinner
+      if:false={retrievedWishlistSummaries}
+      class="slds-is-relative slds-align_absolute-center slds-m-around_large"
+      alternative-text="Loading wishlists information ..."
+      size="medium"
+      variant="brand">
+   </lightning-spinner>
+   <div style=" padding:15px; background: #FFFFFF; min-height:80vh;">
+      <lightning-tabset class="list-name" active-tab-value={defaultTab}>
+         <div class="slds-col slds-size--1-of-1">
+            <template if:true={hasWishlistSummaries}>
+               <template for:each={tabsData} for:item="summary">
+                  <lightning-tab key={summary.id} id={summary.id} data-tabname={summary.name} data-id={summary.id} 
+                  value={summary.id}
+                  label={summary.labelname} class="slds-tabs_default__content slds-show" onactive={tabselect}>
+                  Liste créée&nbsp;
+                     <!--<template if:true={hasCBCB}>-->
+                        <template if:true={CBCB}>
+                           par {CBCB}
+                        </template>
+                     <!--</template>-->
+                     &nbsp;le :&nbsp;
+                     <lightning-formatted-date-time
+                        value={summary.createdDate}
+                        time-zone="UTC">
+                     </lightning-formatted-date-time>
+                     </p>
+                     Dernière modification
+                     <!--<template if:true={hasLMB}>-->
+                        <template if:true={LMB}>
+                           &nbsp;par {LMB}
+                     </template>
+                  <!--</template>-->
+                  &nbsp;le :&nbsp;
+                     <lightning-formatted-date-time
+                        value={summary.modifiedDate}
+                        time-zone="UTC">
+                     </lightning-formatted-date-time>
+                     </p>
+                     <c-wishlists-desktop-view-items-custom
+                        realuserid={realuserid}
+                        realuser={realuser}
+                        wishlistid={summary.id}
+                        productcount={summary.wishlistProductCount}
+                        effectiveaccountid={effectiveaccountid}
+                        communityid={communityid}
+                        name={summary.name}
+                        onupdatelistname={showListNameUpdateModal}
+                        onmultipleselect={handlemultipleselect}
+                        onremovefromwishlist={handleremovefromwishlist}
+                        ondeletelist={handledeletelist}
+                        onfav={handleFav}>
+                     </c-wishlists-desktop-view-items-custom>
+                     <footer style=" background: #FFFFFF;">
+                        <button class="slds-button slds-button_brand addseveraltocartbutton" style="background: #FFFFFF; color:#000000; " onclick={addselecteditemstocart} disabled={buttonDisabledAddToCart}>
+                        Ajouter la selection au panier 
+                        </button>
+                        <button class="slds-button slds-button_brand addseveraltocartbutton" style="background: #CE394C;" onclick={addfullwishlisttocart}  id={summary.id} disabled={buttonDisabledAddToCart}>
+                        Ajouter tous les produits au panier 
+                        </button>
+                     </footer>
+                  </lightning-tab>
+               </template>
+               <template if:false={hasWishlistSummaries}>
+                  <div  class="slds-text-align_center slds-text-color_weak slds-p-top_xx-large">
+                     <h3  class="slds-text-heading_medium">
+                        No items on this list yet
+                     </h3>
+                     <p  class="slds-text-body_regular slds-p-top_small">
+                        Add the products that you want to remember.
+                     </p>
+                  </div>
+                  <footer class="slds-m-top_medium"></footer>
+               </template>
+            </template>
+         </div>
+      </lightning-tabset>
+   </div>
+</template>

@@ -1,0 +1,100 @@
+.b2BSection {
+    font-family: Helvetica Neue;
+    color:#509A23;  
+    font-size: 21px;
+    font-weight: 700px;
+    line-height: 110%;
+    text-align: left;
+}
+
+.b2BField {
+    font-family: Helvetica Neue;
+    font-size: 18px
+}
+
+.b2BValue {
+    font-size: 11px;
+}
+
+.iconClubImg {
+    height: 45px;
+}
+
+.b2BMargin {
+    margin-left: 15px;
+}
+
+.b2BPadding {
+    padding: 15px;
+}
+
+.b2BButton {
+    color:#FFFFFF; 
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 500;
+    width: 130px; 
+    height:50px; 
+    border-radius: 4px; 
+    background-color: #CE394C;
+    /*Center text in button*/
+    display:flex;
+    align-items: center;
+    justify-content: center;  
+}
+
+.b2BContactezNous {
+    color: #414141;
+    font-size:1.2em;
+}
+
+.b2BVotreEspace {
+    padding: 15px;
+}
+
+.b2BPromoImgContainer {
+    margin-top:65px; 
+    text-align:center;
+}
+
+.b2BPromoImg {
+    width:336px; 
+    height:auto;
+    object-fit: contain;
+}
+
+/* Small form factor: devices smaller than tablet (i.e. the SLDS mqMedium responsive threshold)*/
+@media only screen and (max-width: 64em) {
+    .b2BSection {
+        margin-top:1rem;
+    }
+}
+
+/* Small form factor: devices smaller than mobile (i.e. the SLDS mqSmall responsive threshold)*/
+@media only screen and (max-width: 47.9375em) {
+    
+
+    .b2bFideliteImgContainer {
+        margin-left:0;
+    }
+
+    .b2BMargin{
+        margin-left: 0;
+    }
+
+    .b2BButton {
+        width:100%;
+    }
+
+    .b2BSpace {
+        display:none;
+    }
+
+    .b2BPromoImgContainer {
+        margin-top:15px; 
+    }
+ 
+    .b2BPromoImg {
+        width:290px; 
+    }
+}

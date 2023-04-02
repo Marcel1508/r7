@@ -1,0 +1,219 @@
+<template>
+  <div class="slds-gutters slds-wrap login-main-container">       
+      <div class="logoContainer">
+        <img class="logoImage" src={PromocashFlowHeader} />
+      </div>
+  
+      <div>
+        <template if:true={createAccountStep}>
+          <h1 class="loginSubtitle">
+              Vous n’avez pas encore de compte Promocash ?
+            </h1>
+        </template>
+        <template if:false={createAccountStep}>
+          <h1 class="forgottenEmailText">
+            <b>E-mail oublié</b>
+          </h1>
+        </template>
+      </div>
+      <!--Center-->
+        <template if:true={createAccountStep}>
+          <div
+            class="slds-grid createAccountButtonContainer"
+            onclick={redirectToSelfReg}
+          >
+            <div class="createAccountButton">
+              Créer un compte&nbsp;&nbsp;
+                <lightning-icon 
+                    class="chevronIcon"
+                    size="x-small"
+                    icon-name="utility:chevronright">
+                </lightning-icon> 
+            </div>     
+            
+          </div>
+        </template>
+      
+      <!--Email oublié-->
+      <template if:false={createAccountStep}>
+        <template if:true={showSpinner}>
+          <lightning-spinner
+            alternative-text="Loading"
+            size="medium"
+          ></lightning-spinner>
+        </template>
+        <div style="line-height: 25px; padding: 3%; margin-top: 25%; margin-bottom: 25%;" >
+          <div
+            class=""
+            style="font-size: 1.5em;text-align: center; color: white"
+          >
+            Renseignez votre code client PROMOCASH
+          </div>
+          <div class="slds-col slds-grid" style="padding: 0;margin-top: 6%">
+            <div class="slds-col slds-size_6-of-12" style="padding: 0">
+              <input
+                type="text"
+                placeholder="Code Client"
+                class="in-element slds-input"
+                onchange={handleCodeClientChange}
+                style="border-top-left-radius: 80px 80px;border-bottom-left-radius: 80px 80px;"
+                required
+              />
+            </div>
+            <div class="slds-col slds-size_6-of-12" style="padding: 0">
+              <button
+                type="submit"
+                onclick={handleForgotUsername}
+                class="login-button slds-button"
+                style="background: rgb(176, 69, 64); color: white; font-size: 1em; border-top-right-radius: 80px 80px;border-bottom-right-radius: 80px 80px;box-shadow: 2px 2px 4px rgb(153 65 61);
+                  width: 100%; display: flex; align-items: center; justify-content: center;"
+              >
+                VALIDER
+              </button>
+            </div>
+            <div></div>
+          </div>
+          <template if:true={userNameFound}>
+            <h4 style="color: white">
+              Votre nom d'utilisateur est <b>{usernameResult}</b>
+            </h4>
+          </template>
+          <template if:true={usernameError}>
+            <div
+              class="slds-form-element__help usernameErrorMessage"
+              id="form-erzror"
+            >
+              {usernameErrorMessage}
+            </div>
+          </template>
+        </div>
+      </template>
+      <div style="border: 0.25px solid #D8D8D7; top:2%; margin-bottom: 5%;"></div>
+
+      <form>
+        <div>
+          <h1 class="loginSubtitle"> Ravi de vous (re)voir !</h1>
+          <p class="loginSmallerTitle">Accéder à votre compte Promocash</p>
+        </div>
+
+        <div class="slds-var-p-top_small">
+          <template if:true={errorCheck}>
+            <div
+              class="error slds-var-p-around_x-small slds-var-p-top_small"
+              role="alert"
+              style="text-align: center; color: #ff9e9e"
+            >
+              <span>{errorMessage}</span>
+            </div>
+          </template>
+
+          <div class="slds-form-element" style="padding-top:2em">
+            <p class="formLabel">
+                Adresse email
+            </p>
+            <div class="slds-form-element__control">
+              <input
+                type="email"
+                data-id="inputEmail"
+                placeholder="exemple@email.com"
+                class="in-element slds-input"
+                onchange={handleUserNameChange}
+                style="border: 1px solid #DDDBDA;border-radius: 4px;margin-top: 1%; height: 1.8em; font-size: 18px;"
+                required
+              />
+            </div>
+          </div>
+        
+
+          <div class="slds-form-element"  style="padding-top:2em">
+            <p class="formLabel">Mot de passe</p>
+            <div class="slds-form-element">
+              <div class="slds-form-element__control slds-input-has-icon--right slds-input-has-icon "> 
+               <!-- <lightning-icon 
+                  size="x-small" 
+                  class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" 
+                  icon-name="utility:preview">
+                </lightning-icon>     -->      
+                <input
+                  class="in-element slds-input" 
+                  type="password"
+                  data-id="inputPassword"
+                  placeholder=""
+                  onchange={handlePasswordChange}
+                  style="border: 1px solid #DDDBDA;border-radius: 4px;margin-top: 1%; height: 1.8em; font-size: 18px;"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-grid slds-grid_vertical-align-center slds-wrap slds-var-p-top_small"
+            style="line-height: normal; font-weight: 400;">
+                <div class="motPasseOublie slds-col slds-small-size_1-of-2 slds-medium-size_1-of-1">
+                    <a  style="text-align: left; cursor: pointer;text-decoration: underline; font-size: 15px; color:#CE394C;"
+                        onclick={redirectToForgotPassword}>
+                    Mot de passe oublié ?
+                    </a>
+                </div>
+                <!-- <div class=" slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-grid slds-wrap" style=" margin-top: 8%;"> -->
+                    <!-- <lightning:input type="checkbox" checked="{!v.toBeCalledBack}" label="J’accepte les Conditions Générales de Vente" onchange="{!c.handleCheckboxClick}" /> -->
+                    <div class="slds-col slds-small-size_1-of-2 slds-medium-size_1-of-2 resterConnecte" >
+                        <div class="slds-checkbox">
+                            <input type="checkbox" name="options" id="checkbox-unique-id-81" value="checkbox-unique-id-81" checked="" required />
+                            <label class="slds-checkbox__label" for="checkbox-unique-id-81">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label" style="font-size: 14px;font-weight: 500; "> &nbsp; Rester connecté</span>
+                            </label>
+                        </div>
+                    </div>  
+                    <div class="connexionCol slds-col slds-small-size_1-of-1 slds-medium-size_1-of-2">
+                      <lightning-button 
+                            class="connexionBtn"  
+                            type="submit" 
+                            variant="brand" 
+                            label="Connexion" 
+                            onclick={handleLogin}>
+                        </lightning-button>
+                    </div>
+                <!-- </div> -->
+              
+          </div>
+
+        </div>
+
+        
+
+      </form>
+      </br>
+      <div style=" margin-left:2%;margin-left:2%; border: 0.25px solid #D8D8D7; top:2%; width:95%"></div>
+      <div
+        class="slds-col slds-var-p-top_large"
+        style="line-height: normal; font-weight: 400;"
+        >
+        <div style="width:100%; text-align: center;">
+          <a
+            style="font-size: 14px;"
+            class="forgot-password-text"
+            >Employé Promocash ?</a
+          >&nbsp;
+          <a
+            style="text-align: center; cursor: pointer;text-decoration: underline; font-size: 15px; color:#CE394C;"
+            onclick={redirectToContactSupport}
+          >
+          Connectez-vous ici
+        </a>
+        </div>
+      </div>
+      <br/><br/>
+      <div style="text-align: right;" class="slds-p-around_medium">
+          <a
+          style="text-align: center; cursor: pointer;text-decoration: underline; font-size: 15px; color:#CE394C;"
+          onclick={redirectToContactSupport}
+        >
+        Une question ? Contactez votre magasin
+      </a>
+         
+      </div>
+          
+    </div>
+</template>

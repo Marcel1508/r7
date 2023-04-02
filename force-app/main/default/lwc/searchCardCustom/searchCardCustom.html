@@ -1,0 +1,347 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-06-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   03-12-2021   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <!--<template if:true={hasOpm}>-->
+    <article class={cardContainerClass}>
+        <!--Content Card Image and Link-->
+        <!-- <section class="fields-area"> -->
+        <section class="IFLS-area">
+            <template if:true={hasPromotions}>
+                <div class="bannerImage">
+                    <img src={bannerPromo} alt ="Banner promo"/>
+                </div>
+             </template>
+             <!-- <template if:true={hasIFLSOPM}> -->
+                <!-- Code IFLS : {opmResult.data.Produit__r.Code_IFLS__c} -->
+                <span if:true={hasProductCodeIFS} class="ifls-text">Code IFLS : {productCodeIFS} </span>
+            <!-- </template> -->
+        </section>
+        <!--Content Card Image and Link-->
+        <section class="image-area">
+
+            <figure if:true={showImage} onclick={notifyShowDetail}>
+                <template if:true={hasNotDefaultImage}>
+                    <img src={imageResult.data.Product_Image_URL__c} alt={imageResult.data.AlternativeText__c}/>
+                 </template>
+                 <template if:false={hasNotDefaultImage}>
+                    <img src={defaultImage} alt ="Image par défaut"/>
+                 </template>
+            </figure>
+        </section>
+        <!--Content card section-->
+        <section class="fields-area">
+             <!-- Display Status of product and its colored pin -->
+             <template if:true={hasopmStatut}>
+                <div class="product-statut">
+                    <template if:true={ifProductStatutGreen}>
+                       <div class="circleBase circleGreen"></div>
+                    </template>
+                    <template if:true={ifProductStatutOrange}>
+                       <div class="circleBase circleOrange"></div>
+                    </template>
+                    <template if:true={ifProductStatutRed}>
+                       <div class="circleBase circleRed"></div>
+                    </template>
+                    {getStatutLabel}
+                </div>
+            </template>
+            <template for:each={fields} for:item="field">
+                <a
+                    key={field.id}
+                    title={field.value}
+                    tabindex={field.tabIndex}
+                    class="field-item slds-text-link_reset slds-p-top_xx-small slds-p-bottom_xx-small"
+                    onclick={notifyShowDetail}>
+                    <!--<lightning-formatted-rich-text
+                        class={field.class}
+                        value={field.value}>
+                    </lightning-formatted-rich-text>-->
+                    <lightning-formatted-rich-text
+                        class={field.class}
+                        value={DisplayedProductName.data}>
+                    </lightning-formatted-rich-text>
+                </a>
+            </template>
+                    <!--Test if Client has a specifique prix and display price KG/L/unity-->
+            <template if:true={hasPrixSpecifique}>
+                <template if:true={hasPrixUnitePS}>
+                        Prix à l'unité : {prixUnitePS} {currencyEuro}
+                </template>
+                <br>
+                <template if:true={hasPrixKiloPS}>
+                        Prix au KG : {prixKiloPS} {currencyEuro}
+                </template>
+                <br>
+                <template if:true={hasPrixLitrePS}>
+                        Prix au litre : {prixLitrePS} {currencyEuro}
+                </template>
+            </template>
+            </br>
+            <template if:false={hasPrixSpecifique}>
+                <template if:true={hasOpm}>
+                        <template if:true={hasPrixUnite}>
+                            Prix à l'unité : {getPrixUnite} {currencyEuro}
+                        </template>
+                </template>
+                <br>
+                <template if:true={hasPrixKilo}>
+                        Prix au Kg : {getPrixKilo} {currencyEuro}
+                </template>
+                <br>
+                <template if:true={hasPrixLitre}>
+                        Prix au litre : {getPrixLitre} {currencyEuro}
+                </template>
+            </template>
+            </br>
+            <!-- Fields displayed-->
+            <template if:true={hasIFLSOPM}>Code IFLS : {opmResult.data.Produit__r.Code_IFLS__c}</template></br>
+            <template if:true={hasMarqueOPM}>Marque : {opmResult.data.Produit__r.Marque_text__c}</template></br>
+            <template if:true={hasConditionnementOPM}><div class='LibelleConditionnementClass'>{opmResult.data.Libelle_du_conditionnement_de_vente__c}</div></template></br>
+            <template if:true={hasOrigines}>Origines : {productOrigines}</template></br>
+            <template if:true={hasConditionnement}><div class='LibelleConditionnementClass'>Conditionnement : {productConditionnement}</div></template></br>
+            <div class="product-picto">
+                <lightning-formatted-rich-text value='{getPic}'></lightning-formatted-rich-text>
+            </div>       
+            <!-- Display Status of product and its colored pin -->
+            <!-- <template if:true={hasopmStatut}>
+                 <div class="product-statut">
+                     <template if:true={ifProductStatutGreen}>
+                        <div class="circleBase circleGreen"></div>
+                     </template>
+                     <template if:true={ifProductStatutOrange}>
+                        <div class="circleBase circleOrange"></div>
+                     </template>
+                     <template if:true={ifProductStatutRed}>
+                        <div class="circleBase circleRed"></div>
+                     </template>
+                     {getStatutLabel}
+                 </div>
+             </template> -->
+        </section>
+        <section class="price-area">
+            <template if:true={hasPromotions}>
+                <div if:true={hasProductPrice} class="container-promo center-margin-auto">
+                    <c-promotions-price-box
+                    product-id={productId}
+                    effective-account-id={effectiveaccountid}
+                    promotion={promotion}>
+                    </c-promotions-price-box>
+                </div>
+                                <!-- Adding static price for promotion for DEMO -->
+                <!-- TODO: Replace with dynamic content -->
+                <!-- Added for Client Demo: "au lieu de..." if there is promotion -->
+                <!-- Add dynamic content also if there is no promotion -->
+                <template if:true={hasPromotions}>
+                    <p if:true={hasPrice} class="au-lie-de slds-p-top_xx-small margin-right margin-left-auto">
+                        Au lieu de&nbsp;  
+                        <!-- <span class="au-lie-de-prix"> {price}</span>€ -->
+                        <lightning-formatted-number
+                        style="text-decoration:line-through;"
+                        format-style="currency"
+                        currency-code={currencyCode}
+                        currency-display-as="symbol"
+                        maximum-fraction-digits="2"
+                        value={promotion.data.Prix_de_vente_promotion__c}>
+                    </lightning-formatted-number> 
+                    </p>
+                    <p if:false={hasPrice} class="au-lie-de slds-p-top_xx-small margin-right margin-left-auto">
+                        This product has no price
+                    </p>
+                </template>
+                <span class="slds-p-top_xx-small slds-p-bottom_xx-small price-avec-promotion margin-right margin-left-auto">
+                    <lightning-formatted-number
+                        if:true={hasPrice}
+                        class="slds-text-heading_medium selling-price margin-left-auto "
+                        currency-code={currency}
+                        format-style="currency"
+                        value={prixPromo}>
+                    </lightning-formatted-number>
+                    <!-- <span if:true={canShowListingPrice} class="slds-align-bottom center-margin-auto">
+                        <span class="slds-assistive-text margin-right">Original Price</span>
+                        <lightning-formatted-number
+                            class="slds-p-left_xx-small listing-price margin-right"
+                            value={listingPrice}
+                            currency-code={currency}
+                            format-style="currency">
+                        </lightning-formatted-number>
+                    </span> -->
+                </span>
+            </template>
+            <template if:false={hasPromotions}>
+                
+              <!--  <span
+                    if:false={hasPrice}
+                    class="slds-text-align_center"
+                    >Pour voir le prix connectez-vous</span> -->
+                    <!-- IF produce has no price -->
+                    <span if:false={hasPrice}
+                    class="slds-text-align_center center-margin-auto"
+                    >{priceNotFoundMessage}
+                    </span>
+                    <!-- TODO: Replace with dynamic content -->
+                    <!-- Added for Client Demo: "au lieu de..." if there is no promotion -->
+                    <!-- Add dynamic content also if there is a promotion -->
+                    <!-- <p if:true={hasPrice} class="au-lie-de slds-p-top_xx-small margin-right margin-left-auto">
+                    Au lieu de <span class="au-lie-de-prix">{getPrixNonPromo},99</span>€
+                    if:false={hasPrice}
+                    </p> -->
+                    
+
+                <span class="slds-p-top_xx-small slds-p-bottom_xx-small margin-right margin-left-auto">
+                    <lightning-formatted-number
+                        if:true={hasPrice}
+                        class="slds-text-heading_medium selling-price margin-left-auto"
+                        currency-code={currency}
+                        format-style="currency"
+                        value={price}>
+                    </lightning-formatted-number>
+                    <span if:true={canShowListingPrice} class="slds-align-bottom center-margin-auto">
+                        <span class="slds-assistive-text margin-right">Original Price</span>
+                        <lightning-formatted-number
+                            class="slds-p-left_xx-small listing-price margin-right"
+                            value={listingPrice}
+                            currency-code={currency}
+                            format-style="currency">
+                        </lightning-formatted-number>
+                    </span>
+                </span>
+            </template>
+            <!--Test if Client has a specifique prix and display price KG/L/unity-->
+            <template if:true={hasPrixSpecifique}>
+                <span class="slds-text-align_right margin-right">
+                    <template if:true={hasPrixUnitePS}>
+                            <!-- Prix à l'unité : {prixUnitePS} {currencyEuro} -->
+                            <lightning-formatted-number
+                                format-style="decimal"
+                                maximum-fraction-digits="2"
+                                value={prixUnitePS}>
+                            </lightning-formatted-number>
+                                {currencyEuro}/unité
+                    </template>
+                    <br>
+                    <template if:true={hasPrixKiloPS}>
+                            <!-- Prix au KG : {prixKiloPS} {currencyEuro} -->
+                            <lightning-formatted-number
+                                format-style="decimal"
+                                maximum-fraction-digits="2"
+                                value={prixKiloPS}>
+                            </lightning-formatted-number>
+                                {currencyEuro}/Kg
+                    </template>
+                    <br>
+                    <template if:true={hasPrixLitrePS}>
+                            <!-- Prix au litre : {prixLitrePS} {currencyEuro} -->
+                            <lightning-formatted-number
+                                format-style="decimal"
+                                maximum-fraction-digits="2"
+                                value={prixLitrePS}>
+                            </lightning-formatted-number>
+                            {currencyEuro}/litre
+                    </template>
+                </span>
+            </template>
+            </br>
+            <template if:false={hasPrixSpecifique}>
+                <span class="slds-text-align_right margin-right">
+                    <template if:true={hasOpm}>
+                            <template if:true={hasPrixUnite}>
+                                <lightning-formatted-number
+                                    format-style="decimal"
+                                    maximum-fraction-digits="2"
+                                    value={getPrixUnite}>
+                                </lightning-formatted-number>
+                                    {currencyEuro}/unité
+                            </template>
+                    </template>
+                    <br>
+                    <template if:true={hasPrixKilo}>
+                            <!-- Prix au Kg : {getPrixKilo} {currencyEuro} -->
+                            {getPrixKilo} {currencyEuro}/Kg
+                    </template>
+                    <br>
+                    <template if:true={hasPrixLitre}>
+                            <!-- Prix au litre : {getPrixLitre} {currencyEuro} -->
+                            {getPrixLitre} {currencyEuro}/litre
+                    </template>
+                </span>
+            </template>
+        </section>
+        <section class="action-area">
+
+            <button
+            class="addtolistInput slds-p-horizontal_x-small slds-p-vertical_x-small buttonAddTo"
+            style="text-transform: var(--lwc-textTransform)"
+            onclick={notifyAddToList}>
+            <!-- Ajouter à une liste -->
+            <!-- <lightning-icon
+                icon-name="utility:record_create"
+                alternative-text="create record"
+                title="add to list"
+                size="xx-small">
+            </lightning-icon> -->
+            <img class="pc-icon"
+                src="/promocash/s/sfsites/c/resource/icone_add_colored"
+                alt="Add to list icon"/>
+        </button>
+
+            <template if:false={hasPFTAndStatutOut}>
+               <!-- class="slds-col qteInput slds-grid_align-center slds-medium-size_12-of-12 selector-input slds-m-top_small slds-p-horizontal_medium slds-p-vertical_x-small" -->
+                <input
+                    class="qteInput selector-input slds-m-top_small slds-p-horizontal_x-small slds-p-vertical_x-small"
+                    max="100000"
+                    min="1"
+                    data-my-id="in1"
+                    required
+                    type="number"
+                    value={quantity}
+                    onchange={handleQuanitytChange}/>
+            </template>
+            <c-add-to-cart-with-modal-choice 
+                class="slds-l-left_large addtocartbutton buttonAddTo"
+                productid={displayData.id}
+                effectiveaccountid={effectiveaccountid}
+                communityid={communityid}
+                quantity={quantity}
+                is-p-f-t={isPFT.data}
+                stock-and-en-cours={loadedStock}
+                opm={opmResult.data}
+                disabled={actionDisabled}
+				if-product-statut-orange={ifProductStatutOrange}
+				modallaunchedby="plp">
+            </c-add-to-cart-with-modal-choice>
+ 
+         <!--   <button
+                class="slds-button slds-button_brand slds-button_stretch buttonAddTo"
+                style="border-radius: 0px; min-width: 100%;text-transform: var(--lwc-textTransform)"
+                onclick={notifyAddToList}>
+                Ajouter à une listej
+            </button> -->
+
+             <c-list-add-itemsor-create-custom
+                product-id={displayData.id}
+                account-id={effectiveaccountid}
+                quantity={quantity}
+                show-modal={showModal}>
+            </c-list-add-itemsor-create-custom>
+          <!--    <c-add-to-cart-with-modal-choice
+            class="slds-l-left_large addtocartbutton buttonAddTo"
+            productid={displayData.id}
+            effectiveaccountid={effectiveaccountid}
+            communityid={communityid}
+            quantity={quantity}
+            disabled={actionDisabled}
+            if-product-statut-orange={ifProductStatutOrange}
+            >
+        </c-add-to-cart-with-modal-choice> -->
+        </section>
+    </article>
+<!--</template>-->
+</template>

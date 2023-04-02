@@ -1,0 +1,15 @@
+<!--
+* @author       jan.straka@bluewolf
+* @date         2021-05-03
+* @description  Cancel Order QA aura component
+-->
+<aura:component implements="force:hasRecordId,force:lightningQuickActionWithoutHeader" controller="CancelOrderQAController">
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+
+    <p>La commande en cours doit être annulée. Voulez-vous poursuivre?</p>
+
+    <div align="right">
+        <lightning:button name="no" label="Non" variant="destructive" onclick="{!c.onNoClick}" />
+        <lightning:button name="yes" label="Oui" variant="brand" onclick="{!c.onYesClick}" />
+    </div>
+</aura:component>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Tile Navigation Menu</masterLabel>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="myMenuName" type="String" label="Menu à afficher" description="Entrer le nom technique du menu à utiliser"/>
+            <property name="classCSS" type="String"  label="Classe CSS à appliquer" description="Entrer le nom d'une classe CSS qui sera injectée dans le div du menu"/>
+        </targetConfig>
+    </targetConfigs>
+
+</LightningComponentBundle>

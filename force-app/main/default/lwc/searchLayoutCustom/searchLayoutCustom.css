@@ -1,0 +1,65 @@
+ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.layout-grid li {
+    display: grid;
+    flex-basis: 25%;
+    border-color: transparent;
+}
+
+.layout-list ul {
+    width: 100%;
+}
+
+.layout-list li {
+    width: 100%;
+}
+
+.layout-card {
+    padding: 1rem;
+    width:33.3%;
+    padding: 0 9px;
+    position: relative;
+    min-width: 295px;
+}
+
+.slds-accordion__section {
+    padding-bottom: 1.5rem;
+}
+
+.scrollTopButton{
+    position: fixed;
+    bottom:5%;
+    right:8%;
+}
+
+.layout-card .LibelleConditionnementClass {
+    position: absolute;
+    top: 37%;
+    left: 35%;
+    border: 1px solid #f1f1f1;
+    font-size: 11px;
+    border-radius: 14px;
+    background-color: #fff;
+    padding: 0px 7px;
+    color: #ccc;
+    border-radius: 9px;
+    box-shadow: 0 0 5px #ccc;
+}
+
+
+@media only screen and (max-width: 47.9375em) {
+    /* SLDS token: mqSmall */
+    ul {
+        display: block;
+        padding: 0;
+    }
+
+    .layout-card {
+        padding: 1rem 0;
+        width:auto;
+    }
+}

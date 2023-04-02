@@ -1,0 +1,14 @@
+.THIS {
+    background-color: white; 
+    
+   /* min-height: 80px;*/
+}
+.THIS .stylingAdress {
+    font-family: Helvetica Neue;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 34px;
+    letter-spacing: 0em;
+    text-align: left;
+    color:red;
+}

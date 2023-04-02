@@ -1,0 +1,144 @@
+<!--
+  @description       : custom cart content for Promocash
+  @author            : edeclercq
+  @group             : 
+  @last modified on  : 04-25-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   04-01-2020   edeclercq                             Initial Version
+-->
+<template>
+    <!-- Cart Header-->
+    <template if:true={isCartDisabled}>
+        <c-cart-cancel-checkout-banner-custom
+            cart-id={recordId}
+            oncartunlockevent={handleCartUnlock}
+        >
+        </c-cart-cancel-checkout-banner-custom>
+    </template>
+
+    <header>
+    <h2 class="cartHeader">{cartHeader}</h2>
+    <br/>  <br/>
+        <lightning-combobox
+            if:false={isCartEmpty}
+            class="sort-menu"
+            label={labels.sortBy}
+            value={sortParam}
+            options={sortOptions}
+            onchange={handleChangeSortSelection}
+        >
+        </lightning-combobox>
+    </header>
+
+    <!-- Active Cart with Cart Items -->
+    <template if:false={isCartClosed}>
+        <!-- instock cart items section -->
+        <template if:true={showInStock}>
+            <c-cart-items-custom
+                cart-items={inStockCartItems}
+                effectiveaccountid={effectiveAccountId}
+                communityid={communityId}
+                currency-code={currencyCode}
+                onquantitychanged={handleQuantityChanged}
+                onsinglecartitemdelete={handleCartItemDelete}
+                is-cart-disabled={isCartDisabled}
+                section-title={labels.inStockItemsSection}
+                header-icon-name="utility:success"
+                header-icon-variant="success"
+                typearticle="dispo"
+                showpromos=true
+                showtaxes=true
+                promos={promotions}
+                taxes={taxes}
+                offres={offres}
+                cartid={recordId}
+                productimages={productimages}
+            >
+            </c-cart-items-custom>
+        </template>
+        <div class="slds-space"></div>
+        <!-- out of stock cart items section -->
+        <template if:true={showOutOfStock}>
+            <c-cart-items-custom
+                cart-items={outOfStockCartItems}
+                effectiveaccountid={effectiveAccountId}
+                communityid={communityId}
+                currency-code={currencyCode}
+                onquantitychanged={handleQuantityChanged}
+                onsinglecartitemdelete={handleCartItemDelete}
+                is-cart-disabled={isCartDisabled}
+                section-title={labels.outOfStockItemsSection}
+                header-icon-name="utility:warning"
+                header-icon-variant="warning"
+                typearticle="indispo"
+                showpromos=false
+                showtaxes=false
+                offres={offres}
+                cartid={recordId}
+                productimages={productimages}>
+                
+            </c-cart-items-custom>
+        </template>
+        <lightning-spinner
+            if:true={isCartItemListIndeterminate}
+            alternative-text={labels.loadingCartItems}
+            class="slds-is-relative slds-align_absolute-center slds-m-around_large"
+            variant="brand"
+        >
+        </lightning-spinner>
+        <div
+            if:true={isCartEmpty}
+            class="slds-text-align_center slds-text-color_weak slds-p-top_xx-large"
+        >
+            <h3 class="slds-text-heading_medium">
+                {labels.emptyCartHeaderLabel}
+            </h3>
+            <p class="slds-text-body_regular slds-p-top_small">
+                {labels.emptyCartBodyLabel}
+            </p>
+        </div>
+        <footer>
+            <!-- <lightning-button
+                if:false={isCartEmpty}
+                class="footer-action"
+                variant="base"
+                label={labels.addtolist}
+                onclick={openlistmodal}
+            >
+            </lightning-button>    -->
+            <span class="show-more"></span>
+            <lightning-button
+                if:false={isCartEmpty}
+                class="footer-action StylingFooter"
+                variant="base"
+                label={labels.clearCartButton}
+                icon-name="utility:delete"
+                onclick={handleClearCartButtonClicked}
+            >
+            </lightning-button>         
+        </footer>
+    </template>
+
+    <!-- Closed/Deleted Cart -->
+    <template if:true={isCartClosed}>
+        <div
+            class="slds-text-align_center slds-text-color_weak slds-p-top_xx-large"
+        >
+            <h3 class="slds-text-heading_medium">{labels.closedCartLabel}</h3>
+        </div>
+    </template>
+
+
+    <!-- Modal for add to  wishlist -->
+    <c-list-add-itemsor-create-custom 
+    show-modal={isWLModalOpen} 
+    account-id={resolvedEffectiveAccountId} 
+    cart-id={recordId} 
+    onclosemodal={handleclosemodal}>
+    </c-list-add-itemsor-create-custom>
+
+
+    <c-stock-has-changed-modal show-modal={isStockChangedModalOpen} currency-code={currencyCode} changed-items={changedItems} onclosestockmodal={handleCloseStockChangedModal}></c-stock-has-changed-modal>
+</template>

@@ -1,0 +1,138 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 12-10-2020
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   12-04-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <div class="cardProduct slds-p-around_medium">
+            <template if:true={product.data}>
+                    <a tabindex="-1" onclick={handleProductDetailNavigation} style="text-decoration:none;">
+                            <div class=" similarProductContainer">
+                                <div class="similarProductImage-container containerImage">
+                                    <template if:false={hasProductDefaultImageUrl}>
+                                        <img src={defaultImage} alt ="Image par défaut"/>
+                                    </template>
+                                    <template if:true={hasProductDefaultImageUrl}>
+                                        <img src={productDefaultImageUrl} alt={productDefaultImageAlt} />
+                                    </template>
+                                </div>
+                                <div class="similarProductInfo-container">
+                                    <!-- <template if:true={hasCodeIFLS}> -->
+                            <div class="slds-p-top_x-small">
+                                <p style="font-family: Helvetica Neue;font-size: 12px;font-style: normal;font-weight: 500;line-height: 15px;text-align: right;color:#929292;">Code IFLS : {product.data.fields.Code_IFLS__c}</p>
+                            </div>
+                        <!-- </template> -->
+
+                        <!-- <template if:true={hasOpms}>
+                            <div class="product-statut">
+                                <template if:true={hasStatusLabel}>
+                                    <template if:true={ifProductStatutGreen}>
+                                        <div class="circleBase circleGreen"></div>
+                                    </template>
+                                    <template if:true={ifProductStatutOrange}>
+                                        <div class="circleBase circleOrange"></div>
+                                    </template>
+                                    <template if:true={ifProductStatutRed}>
+                                    <div class="circleBase circleRed"></div>
+                                    </template>
+                                    {statutLabel}
+                                </template>
+                                </div>
+                        </template> -->
+                        <!-- <template if:true={hasSku}>
+                            <div class="slds-p-top_x-small slds-p-bottom_medium" style="font-family: Helvetica Neue;font-size: 12px;font-style: normal;font-weight: 500;line-height: 15px;text-align: right; color:grey;">SKU: 39000222 </div> -->
+                        <!-- </template> -->
+                        <!-- <template if:false={hasOpms}>
+                            <div class="product-statut">
+                                <template if:true={hasStatusLabel}>
+                                    <template if:true={ifProductStatutRed}>
+                                        <div class="circleBase circleRed"></div>
+                                    </template>
+                                    Indisponible
+                                </template>
+                                </div>
+                        </template> -->
+
+                        <template if:true={product.data}>
+                            <a tabindex="-1" onclick={handleProductDetailNavigation} >
+                                <p style="text-align: left;" class="productName">{product.data.fields.Libell_Final_TA__c}</p>
+                            </a>
+                        </template>
+
+                        <template if:true={hasOrigines}>
+                            <div class="slds-p-top_x-small" style="text-align: left;" > Origines : {product.data.fields.Origines__c}</div>
+                        </template>
+
+                        <template if:true={hasConditionnement}>
+                            <div class="slds-p-top_x-small" style="text-align: left;" >Conditionnements : {product.data.fields.Conditionnement__c}</div>
+                        </template>
+
+                        <template if:true={productPrice.data}>
+                           <!-- <p><span class="productPrice">{productPrice.data.unitPrice}€</span>HT</p> -->
+                            <p>
+                                <lightning-formatted-number
+                                    format-style="currency"
+                                    class="productPrice"
+                                    currency-display-as="symbol"
+                                    maximum-fraction-digits="2"
+                                    value={productPrice.data.unitPrice}>
+                                </lightning-formatted-number>
+                                HT
+                            </p>
+                        </template>
+                        <div style="border-radius: 0px; text-align: right; margin:0;">
+                            <template if:true={product.data}>
+                                <c-add-to-cart-button-custom
+                                    productid={productid}
+                                    effectiveaccountid={effectiveaccountid}
+                                    communityid={communityid}
+                                    disabled={disabled}>
+                                </c-add-to-cart-button-custom>
+                            </template>
+                        </div>
+                        </div>
+                    </div>
+            </a>
+            </template>
+
+
+    </div>
+</template>
+
+
+<!-- <template>
+    <lightning-card class="cardProduct">
+        <template if:true={product.data}>
+            <a tabindex="-1" onclick={handleProductDetailNavigation} >
+                <div class="containerImage">
+                    <template if:false={hasProductDefaultImageUrl}>
+                        <img src={defaultImage} alt ="Image par défaut"/>
+                     </template>
+                     <template if:true={hasProductDefaultImageUrl}>
+                        <img src={productDefaultImageUrl} alt={productDefaultImageAlt} />
+                    </template>
+                </div>
+                <p class="productName">{product.data.fields.Name}</p>
+            </a>
+        </template>
+        <template if:true={productPrice.data}>
+            <p class="productPrice">Votre prix : {productPrice.data.unitPrice} {productPrice.data.currencyIsoCode}</p>
+        </template>
+        <div class={addcartButtonCSS}
+            style="border-radius: 0px; min-width: 50%; min-height: 100%">
+            <template if:true={product.data}>
+                <c-add-to-cart-button-custom 
+                    productid={productid} 
+                    effectiveaccountid={effectiveaccountid}
+                    communityid={communityid}
+                    disabled={disabled}>
+                </c-add-to-cart-button-custom>
+            </template>
+        </div>
+    </lightning-card>
+</template> -->

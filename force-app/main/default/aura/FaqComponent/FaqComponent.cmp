@@ -1,0 +1,28 @@
+<aura:component controller='FAQCtrl' implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access='global'>
+    <aura:attribute name="category" type="String" default="Cat TEST" access="global" />
+    
+    <aura:attribute name='contentList' type='SObject[]' />
+    <aura:attribute name='language' type='String' />
+    <aura:attribute name='contentType' type='String' />
+    
+    <aura:handler name='init' value='{!this}' action='{!c.doInit}' />
+    
+    <h2 class="current-cat">{!v.category}</h2>
+    <aura:if isTrue="{!v.contentList.length != 0}">
+        <lightning:accordion >
+            <aura:iteration items='{!v.contentList}' var='record'>
+                <aura:if isTrue="{!v.category == record.category}">
+                    <lightning:accordionSection name="{!record.question}" label="{!record.question}">
+                        <aura:set attribute="body">                                
+                            <aura:unescapedHtml value="{!record.answer}"/>
+                        </aura:set>
+                    </lightning:accordionSection>
+                </aura:if>
+                
+                
+            </aura:iteration>
+        </lightning:accordion>
+        
+    </aura:if>
+    
+</aura:component>

@@ -1,0 +1,4 @@
+<design:component >
+    <design:attribute name="orderId" label="Order Id" description="Order to be payed" />
+    <design:attribute name="errorCode" label="Error code" description="Error received from MarketPay" />
+</design:component>

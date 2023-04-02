@@ -1,0 +1,58 @@
+<template>
+  <lightning-card title="Nom d'utilisateur oublié">
+    <template if:true={showSpinner}>
+      <lightning-spinner
+        alternative-text="Loading"
+        size="medium"
+      ></lightning-spinner>
+    </template>
+    <div class="slds-p-horizontal_small">
+      <template if:true={isHomeStep}>
+        <lightning-input
+          type="text"
+          name="codeCarte"
+          label="Code carte"
+          onchange={onChangeCodeCarte}
+          value={codeCarte}
+          required
+        ></lightning-input>
+
+        <template if:true={isUsernameError}>
+          <div
+            class="slds-form-element__help usernameErrorMessage"
+            id="form-erzror"
+          >
+            {usernameErrorMessage}
+          </div>
+        </template>
+      </template>
+      <template if:true={isResultStep}>
+        <h4>Votre nom d'utilisateur est <b>{usernameResult}</b></h4>
+      </template>
+
+      <div class="slds-form-element" style="margin-top: 3%;">
+        <template if:true={isHomeStep}>
+          <lightning-button
+            variant="brand"
+            label="Suivant"
+            onclick={handleSubmitClick}
+          ></lightning-button>
+        </template>
+
+        <template if:true={isResultStep}>
+          <lightning-button
+            label="Retour"
+            onclick={handleRetourClick}
+            style="margin-right: 2%"
+          ></lightning-button>
+
+          <lightning-button
+            variant="brand"
+            label="Terminer"
+            onclick={handleTerminerClick}
+          ></lightning-button>
+        </template>
+      </div>
+    </div>
+  </lightning-card>
+</template>

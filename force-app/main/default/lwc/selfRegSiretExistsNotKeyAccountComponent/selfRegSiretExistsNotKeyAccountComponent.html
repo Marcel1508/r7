@@ -1,0 +1,24 @@
+<template>
+    <div class="slds-theme_default">
+        <template if:false={errorPage}>
+            <lightning-progress-indicator type="path" current-step={selectedStep}>
+                <lightning-progress-step label="Step1" onstepfocus={selectStep1} value="Step1">
+                </lightning-progress-step>
+                <lightning-progress-step label="Step2" onstepfocus={selectStep2} value="Step2">
+                </lightning-progress-step>
+                <lightning-progress-step label="Step3" onstepfocus={selectStep3} value="Step3">
+                </lightning-progress-step>
+            </lightning-progress-indicator>
+        </template>
+        <div class="slds-m-bottom_x-small"></div>
+
+        <template if:false={errorPage}>
+            <!--Content For Step 1-->
+        <template if:true={isSelectStep1}>
+            <div class="slds-form">
+                Step 1 content
+            </div>
+        </template>
+    </template>
+    </div>
+</template>

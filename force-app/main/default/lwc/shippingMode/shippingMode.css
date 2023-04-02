@@ -1,0 +1,79 @@
+.stylingMode{
+    font-family: Helvetica Neue;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    
+}
+
+.styleLivraisonMode{
+    color: #414141;
+}
+.styleDisponiblilite{
+    color: #509A23;
+    text-align: right;
+}
+
+.RestantPourLivraison{
+    text-align:right;
+    color: #414141;
+}
+.stylingLivraison {
+    height: 50px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #72BF44;
+    background: #FFFFFF;
+    margin-top: 10px;
+    align-self: center;
+
+}
+
+.stylingLivraison2 {
+    height: 50px;
+    width: 100%;
+    border-radius: 4px;
+    top: 6px;
+    padding: 5px;
+   /* border: 1px solid #CE394C;*/
+    background: #FFFFFF;
+    align-self: center;
+
+}
+
+.stylingMode{
+    font-family: Helvetica Neue;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    
+}
+.stylingMode2{
+    color: #9D9D9C;
+    margin-top: 5px;
+    padding: 5px;
+    font-family: Helvetica Neue;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+
+    
+}
+
+.LivraisonModeIcon{
+    top: 2px;
+    padding: 5px;
+}
+.styleLivraisonModePart1{
+    color:#000000;
+    top: 4px;
+    padding: 5px;
+}
+
+.checkMarkIcon{
+    size: 10px;
+   
+}

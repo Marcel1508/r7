@@ -1,0 +1,41 @@
+.footer-action:hover {text-decoration: underline;}
+.show-more{flex-grow: 1;text-align: center;}
+
+.addseveraltocartbutton {
+    font-family: Helvetica Neue;
+    border: 1px solid rgb(206, 57, 76);
+    margin-top: 10px;
+    Size: Medium;
+    width: 239px;
+    border-radius: 4px;
+    padding: 1px 16px;
+    line-height: 20px;
+    text-align: center; 
+    height: 3rem;
+    flex-grow: 0.1;
+    display: inline-flex;
+    margin-left: 20px;
+}
+
+.gold {
+    background-color: gold;
+}
+
+
+/* Tablet sized screens or smaller (smaller than the SLDS mqLarge responsive threshold) */
+@media only screen and (max-width: 64em) {
+    
+
+    
+
+}
+
+/* Small form factor: devices smaller than tablet (i.e. the SLDS mqSmall responsive threshold)*/
+@media only screen and (max-width: 47.9375em) {
+
+    .addseveraltocartbutton {
+        width: 100%;
+        margin-left:0;
+    }
+
+}

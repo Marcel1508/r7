@@ -1,0 +1,133 @@
+:host{
+    --sds-c-icon-color-foreground :black;
+	 /* rgb(46, 132, 74);; */
+    --sds-c-icon-color-foreground-default :black;
+	 /* rgb(46, 132, 74);; */
+	 
+}
+
+.forceCommunityThemeLogo .logoImage {
+    background-image: url(/sfsites/c/file-asset/asset_2cffd10fe4a742a0a704c29865f72142p?v=1&height=300&width=300);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 50px;
+}
+.c-logo, .c-icon {
+	cursor: pointer;
+	
+}
+
+.c-logo:hover {
+	box-shadow: 0px 0px 1px;
+}
+.c-icon{
+
+	height: 11.000203132629395px;
+	width: 14.512283325195312px;
+	top: 1px;
+	border-radius: 0px;
+	color: black;
+
+}
+
+.headerContainer {
+    padding:0.5rem 1rem;
+    min-height:55px;
+    background-color:#fff; 
+    box-shadow: 0px 5px 6px 0px #0000001A;
+}
+
+.RetourPanier {
+	cursor: pointer;
+	height: 40px;
+	width: 156px;
+	padding-top: 5px;
+	border-radius: 4px;
+	border: 1px solid #9D9D9C;
+	text-align: center;
+}
+
+.paymentSecureCol {
+	text-align: right;
+}
+
+.paymentSecureCol span {
+    width: fit-content;
+    display:flex;
+    flex-direction: row;
+    font-size: 16px;
+    line-height: 20px;
+    color: #72BF44;
+    margin-left:auto;
+}
+
+.icon-padlock {
+    height: 20px; 
+    width: 15px;
+}
+
+.RetourPanierStyle {
+	font-family: Helvetica Neue;
+	font-size: 14px;
+	font-weight: 450;
+	line-height: 20px;
+	letter-spacing: 0px;
+	text-align: center;
+	color: #000000;
+
+}
+.RetourPanier:hover {
+	--sds-c-icon-color-foreground-default: black ;
+	/* brgb(80, 140, 81); */
+}
+
+/* .icon-padlock {
+    
+} */
+
+.pcLogoCol img {
+    width: 220px;
+}
+
+
+/* Tablet screens */
+@media only screen and (max-width: 64em) {
+    .pcLogoCol {
+        width: 33.333%;
+    }
+}
+
+/* Phone screens */
+@media only screen and (max-width: 47.9375em) {
+    /* Hide the cart text on mobile */
+    .retourPanierCol {
+        min-width:200px;
+    }
+
+    .RetourPanierText {
+        display:none;
+    }
+
+    .pcLogoCol {
+        text-align: left;
+    }
+
+    .pcLogoCol {
+        width: 100%;
+    }
+
+    .pcLogoCol img {
+        width: 180px;
+    }
+
+    .paymentSecureCol {
+        text-align: left;
+    }
+
+    /* Align left and change placement of padlock */
+    .paymentSecureCol span {
+        margin-left:0;
+        flex-direction: row-reverse;
+    }
+}

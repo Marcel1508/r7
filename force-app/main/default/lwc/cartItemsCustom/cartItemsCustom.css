@@ -1,0 +1,487 @@
+/*
+* — Cart Items —
+*/
+/* ul {
+    display: flex;
+    flex-direction: column;
+} */
+
+li {
+    display: flex;
+    font-size: 0.875rem;
+    border-bottom: 2px solid #F3F6F4;
+    width: 97%;
+ 
+}
+
+.styleHelp {
+    padding-top: 18px;
+}
+li:last-child {
+    border-bottom:none;
+}
+
+/* .details {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+} */
+
+lightning-icon {
+    margin-right:5px;
+}
+
+.image-area {
+    position:relative;
+    padding: auto;
+}
+
+.bannerImage{
+    z-index:2;
+    position:absolute;
+    top:0;
+}
+
+a {
+    color: #111111;
+    font-weight: var(--lwc-fontWeightRegular);
+    text-decoration: none;
+}
+
+figure {
+    cursor: pointer;
+    height: auto;
+    max-width: 130px;
+    width:100%;
+    margin-right: 10px;
+    object-fit: contain;
+}
+
+figure a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+img {
+    flex: 0 0 auto; /* IE11 sizing quirk that is resolved by flexbox */
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.bannerPromo {
+    width: 60px; 
+}
+
+figure + .details {
+    padding-left: var(--lwc-spacingSmall);
+}
+
+.containerPictoSubstitution{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.containerPictoSubstitution {
+    display:flex;
+    align-items: center;
+}
+
+.containerSubstitution {
+    margin:25px;
+}
+
+.line-item-properties {
+    /* display: grid;
+    justify-content: stretch;
+    grid-template-columns: 1fr 1fr 1fr 1fr; */
+    border:0;
+    background-color: #fff;
+}
+
+.product-fields {
+    color: #4f4f4f;
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: var(--lwc-fontWeightRegular);
+}
+
+.product-fields dt {
+    /* padding-right: var(--lwc-spacingMedium); */
+    width: 100%;
+    color: #383838;
+}
+
+.quantity-price-remove {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.price {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 2%; 
+    padding-top: 10%;
+}
+
+.price > div {
+    text-align:right;
+}
+
+.original-price {
+    color: #979797;
+    text-decoration: line-through;
+}
+
+.promo-price, .negotiated-price {
+    color: #CE394C;
+    text-align: right;
+    font-size: 1.5rem;
+    font-family: 'HelveticaNeueBold02';
+}
+
+.promo-price-container {
+    border-bottom: 12px solid rgba(255, 255, 20, 0.5);
+    width:fit-content;
+    margin-left:auto;
+    height: 29px;
+}
+/* .promo-price {
+    
+} */
+
+.errorContainer {
+    margin: auto;
+    color: var(--lwc-colorTextError);
+    padding-top: 1rem;
+}
+
+.product-statut{
+    width:100%;
+    display: flex;
+    align-items: center;
+    margin:10px auto;
+}
+
+.item-name {
+    font-family: 'HelveticaNeueBold02';
+
+    /* Truncate 2-lines text*/
+    max-height:60px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.circleBase {
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    margin-right: var(--lwc-spacingXSmall,0.5rem);
+}
+
+.circleGreen {
+    background: #71BF43;
+}
+
+.circleOrange {
+    background: orange;
+}
+
+.circleRed {
+    background: #C92439;
+}
+
+.container-promo {
+    width:50%;
+    margin:10px auto;
+}
+
+/*
+    Screens larger than a tablet (i.e. the default "desktop" size).
+    These settings are specific to the "desktop" view, i.e. the SLDS mqLarge responsive threshold
+*/
+/* @media only screen and (min-width: 64.01em) {
+    .product-fields {
+        width: 40%;
+    }
+
+    .quantity-price-remove {
+        width: 50%;
+    }
+} */
+
+
+/*
+* — Quantity Selector Input —
+*/
+.quantity-selector {
+    align-items: right;
+}
+
+.selector-input {
+    max-width: 4rem;
+    height: 2.5rem;
+    border: 1px solid  #DDDBDA;
+    text-align: center;
+    outline: 0;
+    border-radius: 4px;
+    color: black;
+    font-size: .9rem;
+}
+
+.selector-input:focus {
+    border-color: var(--lwc-colorBorderBrand);
+    box-shadow: 0 0 3px #0070d2;
+}
+
+.selector-input:invalid:not(:focus) {
+    border: var(--lwc-borderWidthThick) solid #c23934;
+    box-shadow: none;
+}
+
+.error-msg {
+    position: absolute;
+    margin-left: 2.2rem;
+}
+
+.disabled {
+    color: var(--lwc-brandDisabled);
+}
+
+.deleteCartItem {
+    cursor: pointer;
+    padding: 0.2rem 0rem 0.5rem 50%;
+}
+
+
+.circleGreen {
+    background: #71BF43;
+}
+
+.circleOrange {
+    background: orange;
+}
+
+.circleBase {
+    border-radius: 50%;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: var(--lwc-spacingXSmall,0.5rem);
+}
+
+.slds-card__body-promo{
+    margin-top: var(--lwc-varSpacingVerticalSmall,0.5rem);
+    margin-bottom: var(--lwc-varSpacingVerticalSmall,0.5rem);
+    margin-left: 5px;
+}
+
+.slds-card__body{
+    margin-top: var(--lwc-varSpacingVerticalSmall,0.75rem);
+    margin-bottom: var(--lwc-varSpacingVerticalSmall,0.75rem);
+    margin-left: 5px;
+}
+
+.item-error{
+    display: inline-flex;
+    border: 2px solid var(--lwc-colorBorderError);
+    font-size: 1.0rem;
+}
+
+.error-container {
+    color: var(--lwc-colorTextError);
+    padding-top: 1rem;
+}
+
+.product-container {
+    max-height: fit-content;
+    width: 796px;
+    border-radius: 0px;
+    padding: 10px, 7px, 10px, 7px;
+}
+
+.IflsStyle {
+    color: #929292 !important;
+    margin-top: 1.2rem;
+}
+
+.StatuStyle {
+    color: #414141;
+    font-family: Helvetica Neue;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+}
+.stylingOrigine{
+    width: 100%;
+}
+
+.stylingPriceHT {
+    font-family: Helvetica Neue;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    color: #000000;
+}
+
+.stylingPriceHT , .priceUnité, .ecoTax, .au-lie-de, .tva  {
+    text-align: right;
+}
+
+.label {
+    height: 30px;
+    width: 30px;
+    border-radius: 0px;
+    border: none;
+    margin-top: 1.2rem;
+}
+
+.labelBio {
+    left: 3.375px;
+    top: 1.125px;
+    font-size: 12px;
+}
+.labelRouge{
+    left: 1.125px;
+    top: 2.25px;
+}
+
+
+
+/* Tablet sized screens or smaller (smaller than the SLDS mqLarge responsive threshold) */
+@media only screen and (max-width: 64em) {
+    .item-name {
+        font-size: 0.875rem;
+    }
+    .quantity-selector {
+        /* flex-direction: column; */
+        flex-direction: none;
+    }
+
+    figure {
+        height: 100px;
+        width: 100px;
+        height:auto;
+        width:auto;
+    }
+
+    .quantity-price-remove {
+        padding-top: var(--lwc-spacingMedium);
+    }
+
+    .product-fields {
+        font-size: 0.75rem;
+    }
+
+    .product-fields dt {
+        width: 100%;
+    }
+
+    .original-price {
+        font-size: 0.625rem;
+    }
+
+    .negotiated-price {
+        font-size: 1.3rem;
+        font-weight: var(--lwc-fontWeightBold);
+    }
+
+    .price {
+        align-self: center;
+    }
+
+    .remove {
+        align-self: left;
+    }
+    .styleHelp {
+        padding-top: 2px;
+    }
+}
+
+/* Small form factor: devices smaller than tablet (i.e. the SLDS mqSmall responsive threshold)*/
+@media only screen and (max-width: 47.9375em) {
+
+    .sort-menu .slds-form-element__label {
+        display: none;
+    }
+
+    .quantity-selector {
+        /* flex-direction: column; */
+        flex-direction: none;
+    }
+    .error-msg {
+        position: static;
+        margin-left: 0;
+    }
+    .selector-label {
+        font-size: 0.5rem;
+    }
+
+    figure {
+        min-width: 50px;
+        min-height: auto;
+    }
+
+    /* When promo have promo banner showing, smaller in mobile */
+    .bannerPromo {
+        width: 50px; 
+    }
+
+    .promo-price-container {
+        margin-left:0;
+    }
+
+    /*Less side padding on mobile*/
+    .line-item-properties {
+        padding:0.6rem 0.1rem;
+    }
+
+    .price {
+        padding: 0
+        ;
+    }
+
+    .price > div, .priceUnité, .ecoTax, .tva  {
+        text-align:left;
+        color: #414141;
+    }
+
+    .priceUnité, .ecoTax, .au-lie-de, .tva  {
+        text-align: left;
+    }
+
+    .au-lie-de {
+        color: #656565;
+    }
+    
+    .au-lie-de-prix {
+        text-decoration: line-through;
+        color: #656565;
+    }
+
+    .styleHelp {
+        padding-top: 2px;
+    }
+    .deleteCartItem {
+        cursor: pointer;
+        padding:0.8rem 0 0 60%;
+    }
+
+    .item-name {
+        /* Truncate 2-lines text*/
+        max-height:45px;
+    }
+
+}

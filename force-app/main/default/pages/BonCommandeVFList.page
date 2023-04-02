@@ -1,0 +1,31 @@
+<apex:page standardController="Order" recordSetVar="orders" extensions="OrdersController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1">
+                <apex:selectCheckboxes style="" label="Les rayons à inclure: " value="{!rayons}">
+                    <apex:selectOptions value="{!items}"/>
+                </apex:selectCheckboxes>
+                <apex:inputCheckbox label="Inclure les images des produits: " value="{!inclureimage}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Orders selectionnés">
+            <apex:pageMessages id="showmsg"></apex:pageMessages>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Imprimer" action="{!imprimer}" disabled="{!imprimerDisabled}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockTable value="{!selected}" var="order">
+                <apex:column value="{!order.OrderNumber}"/>
+                <apex:column value="{!order.Date_de_livraison__c}"/>
+                <apex:column value="{!order.Status}"/>                
+                <apex:column value="{!order.TotalAmount}"/>
+                <apex:column value="{!order.Origine_de_la_commande__c}"/>
+                <apex:column value="{!order.Tournee__c}"/>	
+                <apex:column value="{!order.Poids_de_la_commande_en_kg__c}"/>
+                <apex:column value="{!order.Commande_en_stock__c}"/>
+                <apex:column value="{!order.Libelles_rayons__c}"/>
+            </apex:pageBlockTable> 
+        </apex:pageBlock>
+    </apex:form> 
+</apex:page>

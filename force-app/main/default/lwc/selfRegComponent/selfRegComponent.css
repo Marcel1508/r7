@@ -1,0 +1,22 @@
+.container {
+    background: white;
+    padding: var(--sds-c-card-header-spacing-block-start, var(--sds-c-card-header-spacing-block, var(--lwc-varSpacingVerticalSmall,0.75rem)));
+    color: var(--sds-c-card-text-color);
+    font-family: var(--lwc-fontFamily,Roboto Condensed);
+    font-size: 14px;
+    border-radius: 7px;
+}
+
+.header {
+    margin: 0 0 var(--sds-c-card-header-spacing-block-end, var(--lwc-varSpacingVerticalSmall,0.75rem));
+}
+
+.submitButton {
+    margin-top: 4%;
+}
+
+.addressErrorMessage {
+    color: var(--lwc-colorTextError,rgb(194, 57, 52));
+    font-size: 0.75rem;
+    margin-top: var(--lwc-spacingXxxSmall,0.125rem);
+}

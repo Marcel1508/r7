@@ -1,0 +1,38 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 03-15-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  Modifications Log 
+  Ver   Date         Author                               Modification
+  1.0   12-09-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    <ul role="listbox" class={layoutContainerClass}>
+        <template iterator:it={displayExtraData}>
+                <c-search-card-custom
+                    key={it.value.id}
+                    display-data={it.value}
+                    config={config.cardConfig}
+                    class="layout-card"
+                    effectiveaccountid={effectiveaccountid}
+                    communityid={communityid}
+                    cartid={cartid}
+                    images-data={imagesData}
+                    fields-data={fieldsData}
+                >
+                {it.value.id}
+                </c-search-card-custom>
+        </template>
+        <lightning-button-icon 
+            class="scrollTopButton slds-button_large" 
+            icon-name="utility:arrowup" 
+            variant="brand" 
+            size="large" 
+            alternative-text="ScrollTop" 
+            title="ScrollTop"
+            onclick={topFunction}>
+        </lightning-button-icon>
+    </ul>
+</template>

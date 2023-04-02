@@ -1,0 +1,6 @@
+<design:component >
+    <design:attribute name="cartId" label="Cart ID" description="Enter or choose the unique variable that represents your cart ID." /> 
+    <design:attribute name="contactPointAddressId" label="Contact Point Address ID" description="The address chosen from the Billing component to update." />
+    <design:attribute name="selectedPaymentType" label="Selected Payment Type" description="Selected payment type e.g. Card Bancaire, Paiement differe" />
+    <design:attribute name="selectedOnlinePayment" label="Selected Online Payment" description="Selected to pay online? O/N" />
+</design:component>

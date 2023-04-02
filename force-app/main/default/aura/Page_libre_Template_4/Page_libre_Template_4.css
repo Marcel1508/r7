@@ -1,0 +1,19 @@
+.THIS .contentPanel:before,
+.THIS .contentPanel:after {
+    content: " ";
+    display: table;
+}
+.THIS .contentPanel:after {
+    clear: both;
+}
+.THIS .sidebar {
+}
+.THIS .content {
+    padding-left: 35px;
+}
+@media (max-width: 765px)
+{
+    .THIS .content {
+        padding-left: 5px;
+    }
+}

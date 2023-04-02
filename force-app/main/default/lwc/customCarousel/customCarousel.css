@@ -1,0 +1,118 @@
+.containerCarousel{
+    margin: auto;
+}
+
+.containerCarousel figure {
+    display: flex;
+    align-items: center;
+    object-fit: contain;
+}
+
+.containerCarousel img {
+    width:100%;
+    max-width:25vw;
+    margin:0 auto;
+    object-fit: contain;
+}
+
+.text-section{
+    position: absolute;
+    color: #f2f2f2;
+    font-size: 15px;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    background: rgba(0,0,0, 0.7);
+}
+.prev, .next{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 16px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background: rgba(0,0,0, 0.2);
+}
+.next{
+    right:0;
+    border-radius: 3px 0 0 3px;
+}
+.prev:hover, .next:hover{
+    background: rgba(0,0,0, 0.8);
+}
+
+.slideNumbers{
+    font-size: 12px;
+    position: absolute;
+    padding: 8px 12px;
+    top: 0;
+    color: #f2f2f2;
+}
+
+.dot{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #bbb;
+    margin:0 2px;
+    display: inline-block;
+}
+.active, .dot:hover{
+    background-color: #717171;
+}
+
+.fade{
+    animation-name:fade;
+    animation-duration: 1.5s;
+}
+
+.c-carousel-img {
+    height:auto; 
+    width: 96px; 
+    padding:16px 16px; 
+    margin-right:1px; 
+    margin-top:-15px; 
+    left: 105px;
+    top:477px;
+    border-radius: 3px;
+    object-fit: contain;
+}
+
+@keyframes fade{
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+
+/* Tablet sized screens or smaller (smaller than the SLDS mqLarge responsive threshold) */
+@media only screen and (max-width: 64em) {
+    .c-img-container {
+        /* display:flex;
+        flex-direction: row; */
+        padding:2rem 0;
+    }
+
+    .c-carousel-img {
+        height:auto;
+        width:100%;
+        padding:0.5rem; 
+        max-width:90px;
+    }
+
+    .containerCarousel img {
+        width:100%;
+        max-width: none;
+        margin:0 auto;
+        object-fit: contain;
+    }
+}
+
+/* Small form factor: devices smaller than tablet (i.e. the SLDS mqSmall responsive threshold)*/
+@media only screen and (max-width: 47.9375em) {
+  
+}

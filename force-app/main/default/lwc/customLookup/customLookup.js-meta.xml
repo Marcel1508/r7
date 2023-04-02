@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Custom Lookup</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="Search Field API Name" name="searchfield" type="String"/>
+            <property label="Object API Name" name="objectname" type="String"/>
+            <property label="Limit of characters of the search input" name="charlimit" type="Integer"/>
+            <property name="selectedRecordId" type="String"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

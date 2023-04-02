@@ -1,0 +1,99 @@
+<!--
+* @author       Preethi.u@ibm.com
+* @date         2021-04-26
+* @description  Checkout Order Summary component
+-->
+<aura:component implements="lightning:availableForFlowScreens" controller="CheckoutOrderSummaryCtrl">
+    <aura:attribute name="cartId" type="String" />
+    <aura:attribute name="inStockOrderId" type="String" />
+    <aura:attribute name="outStockOrderId" type="String" />
+    <aura:attribute name="slotID" type="String" />
+    <aura:attribute name="indicateurFEF" type="String" />
+    <aura:attribute name="montantLivraison" type="Decimal" />
+    <aura:attribute name="totalTaxesConsigne" type="Decimal" />
+    <aura:attribute name="summary" type="object"/>
+
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+    
+    <h2 class="slds-text-title_caps slds-m-top_large">{!$Label.c.CheckoutSummary_shippingAddress}</h2>
+    <div class="slds-box" style="background-color: lightgray;">
+        <aura:if isTrue="{!v.summary.orderDeliveryGroup.OrderDeliveryMethod.Name == 'Livraison'}">
+            {!v.summary.inStockOrder.ShippingStreet}<br/>
+            {!v.summary.inStockOrder.ShippingPostalCode + ' ' + v.summary.inStockOrder.ShippingCity}<br/>
+            {!v.summary.inStockOrder.ShippingCountry}
+        </aura:if>
+        <aura:if isTrue="{!v.summary.orderDeliveryGroup.OrderDeliveryMethod.Name == 'Drive déporté'}">
+            {!v.summary.magasin.Adresse_du_drive_deporte__c}<br/>
+        </aura:if>
+        <aura:if isTrue="{!v.summary.orderDeliveryGroup.OrderDeliveryMethod.Name == 'Drive'}">
+            {!v.summary.magasin.Adresse_1_drive__c}<br/>
+        </aura:if>
+    </div>
+    
+    <h2 class="slds-text-title_caps slds-m-top_large">{!$Label.c.CheckoutSummary_shippingInstructions}</h2>
+    <div class="slds-box" style="background-color: lightgray;">
+        {!v.summary.inStockOrder.Instructions_de_livraison__c}
+    </div>
+
+    <h2 class="slds-text-title_caps slds-m-top_large">{!$Label.c.CheckoutSummary_deliveryMethod}</h2>
+    <div class="slds-box" style="background-color: lightgray;">
+        {!v.summary.orderDeliveryGroup.OrderDeliveryMethod.Name}
+    </div>
+    
+    <h2 class="slds-text-title_caps slds-m-top_large">{!$Label.c.CheckoutSummary_selectedSlot}</h2>
+    <div class="slds-box" style="background-color: lightgray;">
+        {!v.summary.slotDate},  {!v.summary.slotTime} 
+    </div>
+
+    <h2 class="slds-text-title_caps slds-m-top_large">{!$Label.c.CheckoutSummary_inStockSummary}</h2>
+    <div class="slds-box" style="background-color: lightgray;">
+        <div class="slds-p-vertical_xx-small">
+            {!$Label.c.CheckoutSummary_subTotal} : <div class="slds-text-align_right">{!v.summary.inStockOrder.TotalAmount} €</div>
+        </div>       
+        <aura:if isTrue="{!v.summary.indicateurFEF == 'O'}"> 
+             <aura:if isTrue="{!v.summary.montantLivraison >=0}"> 
+             <div class="slds-p-vertical_xx-small">
+            {!$Label.c.CheckoutSummary_deliveryAmount} : <div class="slds-text-align_right">{!v.summary.montantLivraison} €</div>
+        	</div>
+            <div class="slds-p-vertical_xx-small">
+            {!$Label.c.CheckoutSummary_FraisDeFacturation} : <div class="slds-text-align_right">{!v.summary.magasin.Montant_FEF__c} €</div>
+        	</div>
+            <aura:set attribute="else">
+      	     <div class="slds-p-vertical_xx-small">
+            {!$Label.c.CheckoutSummary_deliveryAmount} : <div class="slds-text-align_right">{!v.summary.inStockOrder.TotalAdjustedDeliveryAmount} €</div>
+        	</div>
+    	    </aura:set>
+            </aura:if>      
+        </aura:if>
+        <aura:if isTrue="{!v.summary.indicateurFEF != 'O'}">  
+             <div class="slds-p-vertical_xx-small">
+            {!$Label.c.CheckoutSummary_deliveryAmount} : <div class="slds-text-align_right">{!v.summary.inStockOrder.TotalAdjustedDeliveryAmount} €</div>
+        	</div>
+        </aura:if>
+        
+        <div class="slds-p-vertical_xx-small">
+            {!$Label.c.CheckoutSummary_taxEstimation} : <div class="slds-text-align_right">{!v.summary.inStockOrder.TotalTaxAmount} €</div>
+        </div>
+        <aura:if isTrue="{!v.summary.totalTaxesConsigne}">  
+             <div class="slds-p-vertical_xx-small">
+            Total Montant Emballage : <div class="slds-text-align_right">{!v.summary.totalTaxesConsigne} €</div>
+        	</div>
+        </aura:if>
+    </div>
+    
+    <aura:if isTrue="{!v.summary.outStockOrder.TotalAmount != null}">
+    <h2 class="slds-text-title_caps slds-m-top_large">{!$Label.c.CheckoutSummary_outOfStockSummary}</h2>
+    <div class="slds-box" style="background-color: lightgray;">
+        <div class="slds-p-vertical_xx-small">
+            {!$Label.c.CheckoutSummary_subTotal} :<div class="slds-text-align_right">{!v.summary.outStockOrder.TotalAmount} €</div>
+        </div>
+        <div class="slds-p-vertical_xx-small">
+            {!$Label.c.CheckoutSummary_taxEstimation} : <div class="slds-text-align_right">{!v.summary.outStockOrder.TotalTaxAmount} €</div>
+        </div>
+    </div>
+       
+    <p>{!$Label.c.CheckoutSummary_outOfStockProductsNotPaid}</p>
+    </aura:if>
+    <br/>
+</aura:component>

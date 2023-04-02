@@ -1,0 +1,25 @@
+<!--
+* @author       ajay.tiwari3@ibm
+* @date         2021-04-22
+* @description  Checkout Summary component
+-->
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:availableForFlowScreens" controller="ShippingAddressCustomCntrl">
+    <aura:attribute name="cartId" type="String" default="" />
+
+    <aura:attribute name="WrapperData" type="sObject" description="to store page load data on page load" access="public" />
+    <aura:attribute name="selectedAddressId" type="String" description="store the selected contact address" />
+    <aura:registerEvent name="sampleComponentEvent" type="c:compEvent"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:flow aura:id="flowId" />
+
+    <div style=" font-weight: 200;">
+    <lightning:layout>
+        <lightning:layoutItem padding="around-small" > 
+            <lightning:radioGroup  aura:id="mygroup" name="Address" label="Adresse de livraison" class="stylingAdress"
+                options="{! v.WrapperData.contactPointAddresses }" value="{! v.selectedAddressId }"
+                 onchange="{!c.handleChange}" type="radio" required="true"/>
+        </lightning:layoutItem>
+    </lightning:layout>
+</div>
+</aura:component>

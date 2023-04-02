@@ -1,0 +1,53 @@
+<aura:component description="footer" implements="forceCommunity:availableForAllPageTypes" access="global">
+	<aura:attribute name="linkFb" type="String" default="facebook.com" access="global" />
+	<aura:attribute name="linkPint" type="String" default="https://www.pinterest.com" access="global" />
+    <aura:attribute name="linkYb" type="String" default="https://www.youtube.com/" access="global" />
+   <aura:attribute name="linkLogo" type="String" default="https://www.google.com/" access="global" />
+    <aura:attribute name="linkInst" type="String" default="https://instagram.com/" access="global" />
+   <aura:attribute name="linkInk" type="String" default="https://linkedin.com/" access="global" />
+    
+    <footer class="footer">
+        <div id="bottom-footer">
+            <div class="container">
+                <p>
+                    <a href="{!v.linkLogo}"><img src="/promocash/s/sfsites/c/resource/logo_footer"/></a>
+                </p>
+                
+                <div class="links">
+                    
+                    <a href="{!v.linkFb}" target="_blank"><span><img src="/promocash/s/sfsites/c/resource/icone_facebook"/></span></a>
+                    <a href="{!v.linkPint}" target="_blank"><span><img src="/promocash/s/sfsites/c/resource/icone_pinterest"/></span></a>
+                    <a href="{!v.linkYb}" target="_blank"><span><img src="/promocash/s/sfsites/c/resource/icone_youtube"/></span></a>
+                    <a href="{!v.linkInst}" target="_blank"><span><img src="/promocash/s/sfsites/c/resource/icone_instagram"/></span></a>
+                    <a href="{!v.linkInk}" target="_blank"><span><img src="/promocash/s/sfsites/c/resource/icone_linkedin"/></span></a>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size--1-of-1 slds-large-size--1-of-4">
+                        <h3>Titre colone</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer luctus ex quis orci tempor, non tincidunt dui tempor. 
+                        </p>
+                    </div>
+                    <div class="slds-col slds-size--1-of-1 slds-large-size--1-of-4">
+                        <h3>Titre colone</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer luctus ex quis orci tempor, non tincidunt dui tempor. 
+                        </p>
+                    </div>
+                    <div class="slds-col slds-size--1-of-1 slds-large-size--1-of-4">
+                        <h3>Titre colone</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer luctus ex quis orci tempor, non tincidunt dui tempor. 
+                        </p>
+                    </div>
+                    <div class="slds-col slds-size--1-of-1 slds-large-size--1-of-4">
+                        <h3>Titre colone</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer luctus ex quis orci tempor, non tincidunt dui tempor. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</aura:component>

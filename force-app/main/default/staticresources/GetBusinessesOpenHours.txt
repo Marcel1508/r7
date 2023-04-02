@@ -1,0 +1,50 @@
+{
+	"@CreatedBy": "Suliman A",
+    "@Date": "29/03/2021",
+    "@Company": "IBM, Bluewolf",
+    "@Description": "A test Data for OpenHours_Magasin_SVC_TST test class, simulates the API Partoo response",
+    
+    "max_page": 5,
+    "count": 140,
+    "businesses": [{
+        "status": "open",
+        "code": "10101",
+        "videos": [],
+        "facebook_page_id": null,
+        "description_long": "Pros de la restauration, nous vous accompagnons depuis plus de 55 ans. Premier R\u00e9seau de franchis\u00e9s ind\u00e9pendants de France, nous vous offrons proximit\u00e9, souplesse, r\u00e9activit\u00e9 et qualit\u00e9 au quotidien. Confront\u00e9s aux m\u00eames d\u00e9fis que vous, nous nous engageons \u00e0 progresser tous les jours et \u00e0 \u00eatre \u00e0 votre \u00e9coute pour d\u00e9velopper de nouvelles id\u00e9es et une relation gagnant-gagnant pour grandir ensemble.",
+        "id": "60117d15711f7f16e9c8608b",
+        "city": "Toulouse",
+        "address_details": {
+            "street_name": "des Etats-Unis",
+            "street_type": "avenue",
+            "number": "200",
+            "number_supplement": ""
+        },
+        "open_hours": {
+            "monday": ["07:00-17:00"],
+            "tuesday": ["07:00-17:00"],
+            "friday": ["07:00-17:00"],
+            "wednesday": ["07:00-17:00"],
+            "thursday": ["07:00-17:00"],
+            "sunday": [],
+            "saturday": ["07:00-12:30"]
+        },
+        "specific_hours": {
+            "open": [
+                {
+                "starts_at": "2020-01-20",
+                "ends_at": "2020-01-20",
+                    "open_hours": [
+                        "10:00-14:00"
+                    ]
+                }
+            ],
+            "close": [
+                {
+                    "starts_at": "2020-01-20",
+                    "ends_at": "2020-01-22"
+                }
+            ]
+        }
+    }]
+}
